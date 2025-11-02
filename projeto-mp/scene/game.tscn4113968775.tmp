@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://d13t43o7ag6pv"]
 
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="1_5kiuu"]
-[ext_resource type="Script" path="res://scripts/gameManager.gd" id="1_p1ry8"]
+[ext_resource type="Script" uid="uid://dlkaahifu4c7p" path="res://scripts/gameManager.gd" id="1_p1ry8"]
 [ext_resource type="TileSet" uid="uid://dk1qfi3hmp7p8" path="res://Tiles/terrain.tres" id="2_33cqm"]
 [ext_resource type="Texture2D" uid="uid://bxmuicmm4p51l" path="res://sprites/Pixel Adventure 1/Background/Gray.png" id="3_xwcet"]
 [ext_resource type="PackedScene" uid="uid://c8hs307w0kbou" path="res://entities/espinho.tscn" id="4_xwcet"]
@@ -34,10 +34,10 @@ texture = ExtResource("3_xwcet")
 stretch_mode = 1
 
 [node name="Espinho" parent="." instance=ExtResource("4_xwcet")]
-position = Vector2(159, 136)
+position = Vector2(146, 136)
 
 [node name="checkpoint" parent="." instance=ExtResource("6_xlg7c")]
-position = Vector2(104, 112)
+position = Vector2(85, 112)
 
 [node name="caixa" parent="." instance=ExtResource("7_qpk70")]
-position = Vector2(246, 70)
+position = Vector2(118, 135)

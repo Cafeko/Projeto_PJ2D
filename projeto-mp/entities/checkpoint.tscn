@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://65h8fdenwlx8"]
+
+[ext_resource type="Script" uid="uid://blggesj5efadr" path="res://scripts/checkpoint.gd" id="1_hjeaj"]
+[ext_resource type="Texture2D" uid="uid://cqp6sgm1ml14j" path="res://sprites/Pixel Adventure 1/Items/Checkpoints/Checkpoint/Checkpoint (No Flag).png" id="1_wpuaw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hjeaj"]
+radius = 3.0
+height = 46.0
+
+[node name="checkpoint" type="Area2D"]
+script = ExtResource("1_hjeaj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wpuaw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8, 9)
+shape = SubResource("CapsuleShape2D_hjeaj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
