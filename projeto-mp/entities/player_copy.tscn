@@ -1,64 +1,64 @@
-[gd_scene load_steps=22 format=3 uid="uid://tsvnbubb6bg4"]
+[gd_scene load_steps=19 format=3 uid="uid://d0ef6ooao23eh"]
 
-[ext_resource type="Script" uid="uid://b0f3mbd042g1f" path="res://scripts/player.gd" id="1_merdl"]
-[ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://sprites/1 - Penguin/Idle (16 x 16).png" id="2_b0kkn"]
-[ext_resource type="Texture2D" uid="uid://5bkfhmxp1j7i" path="res://sprites/1 - Penguin/Lying_On_Ground (16 x 16).png" id="2_qly61"]
-[ext_resource type="Texture2D" uid="uid://cf7ymtg110npq" path="res://sprites/1 - Penguin/Waddling (16 x 16).png" id="3_e4p34"]
-[ext_resource type="Texture2D" uid="uid://bfc7nichnufc8" path="res://sprites/1 - Penguin/Jump (16 x 16).png" id="3_rfe5m"]
+[ext_resource type="Script" uid="uid://c066uqel8nsfw" path="res://scripts/player_copy.gd" id="1_ugwka"]
+[ext_resource type="Texture2D" uid="uid://5bkfhmxp1j7i" path="res://sprites/1 - Penguin/Lying_On_Ground (16 x 16).png" id="2_v2mfr"]
+[ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://sprites/1 - Penguin/Idle (16 x 16).png" id="3_ypvnm"]
+[ext_resource type="Texture2D" uid="uid://bfc7nichnufc8" path="res://sprites/1 - Penguin/Jump (16 x 16).png" id="4_6qwxa"]
+[ext_resource type="Texture2D" uid="uid://cf7ymtg110npq" path="res://sprites/1 - Penguin/Waddling (16 x 16).png" id="5_6p2kb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e4p34"]
-atlas = ExtResource("2_b0kkn")
+atlas = ExtResource("3_ypvnm")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rfe5m"]
-atlas = ExtResource("2_b0kkn")
+atlas = ExtResource("3_ypvnm")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qly61"]
-atlas = ExtResource("2_b0kkn")
+atlas = ExtResource("3_ypvnm")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qsoyl"]
-atlas = ExtResource("2_b0kkn")
+atlas = ExtResource("3_ypvnm")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nm46"]
-atlas = ExtResource("2_b0kkn")
+atlas = ExtResource("3_ypvnm")
 region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q0i8f"]
-atlas = ExtResource("3_rfe5m")
+atlas = ExtResource("4_6qwxa")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i623q"]
-atlas = ExtResource("3_e4p34")
+atlas = ExtResource("5_6p2kb")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ef06p"]
-atlas = ExtResource("3_e4p34")
+atlas = ExtResource("5_6p2kb")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tjdhl"]
-atlas = ExtResource("3_e4p34")
+atlas = ExtResource("5_6p2kb")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x08pd"]
-atlas = ExtResource("3_e4p34")
+atlas = ExtResource("5_6p2kb")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dchgp"]
-atlas = ExtResource("3_e4p34")
+atlas = ExtResource("5_6p2kb")
 region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kdgjc"]
-atlas = ExtResource("3_e4p34")
+atlas = ExtResource("5_6p2kb")
 region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q0i8f"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_qly61")
+"texture": ExtResource("2_v2mfr")
 }],
 "loop": true,
 "name": &"die",
@@ -116,40 +116,9 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qly61"]
-height = 20.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u3f3p"]
-radius = 6.0
-height = 14.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qly61"]
-
 [node name="player" type="CharacterBody2D"]
-script = ExtResource("1_merdl")
+script = ExtResource("1_ugwka")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q0i8f")
 animation = &"idle"
-
-[node name="HoldingSpot" type="Node2D" parent="."]
-position = Vector2(16, -1)
-
-[node name="PickupArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
-visible = false
-shape = SubResource("CapsuleShape2D_qly61")
-
-[node name="PlayerCollider" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("CapsuleShape2D_u3f3p")
-
-[node name="BoxCast" type="ShapeCast2D" parent="."]
-visible = false
-position = Vector2(0, -6)
-shape = SubResource("RectangleShape2D_qly61")
-target_position = Vector2(0, -8)
-
-[node name="RespawnTimer" type="Timer" parent="."]
-one_shot = true

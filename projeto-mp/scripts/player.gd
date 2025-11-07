@@ -27,6 +27,8 @@ var is_box_colliding: bool = false
 # Posição para onde o jogador voltará ao morrer
 var respawn_position: Vector2 = Vector2.ZERO
 
+var can_start_recording : bool = false
+
 func _ready() -> void:
 	go_to_idle_state()
 	
@@ -68,6 +70,10 @@ func _physics_process(delta: float) -> void:
 		elif grabbable_object:
 			# Se não estamos segurando, mas podemos pegar algo, pegue.
 			grab_object(grabbable_object)
+		elif can_start_recording:
+			global.start_recording.emit(self)
+			global.play_recording.emit()
+	
 		# -------- MUDANÇA AQUI --------
 	# Chamamos a nova função antes de mover
 	update_held_object_position()
@@ -296,6 +302,7 @@ func die_and_respawn():
 	if held_object:
 		drop_object()
 		
+	global.finalize_recording.emit()
 	# 5. Inicia o timer de 1 segundo
 	$RespawnTimer.start()
 
@@ -315,3 +322,8 @@ func update_checkpoint(new_position: Vector2):
 	if new_position != respawn_position:
 		print("Checkpoint salvo!")
 		respawn_position = new_position
+# --- Recording -------------------------------------------------------------- #
+func get_record_data():
+	return {"position" : self.global_position, "animation" : anim.animation,
+			"flip_h": anim.flip_h}
+# ---------------------------------------------------------------------------- #

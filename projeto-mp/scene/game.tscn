@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://d13t43o7ag6pv"]
 
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="1_5kiuu"]
-[ext_resource type="Script" path="res://scripts/gameManager.gd" id="1_p1ry8"]
+[ext_resource type="PackedScene" uid="uid://hs6k4ti572kx" path="res://record_actions/recorder.tscn" id="1_qpk70"]
 [ext_resource type="TileSet" uid="uid://dk1qfi3hmp7p8" path="res://Tiles/terrain.tres" id="2_33cqm"]
 [ext_resource type="Texture2D" uid="uid://bxmuicmm4p51l" path="res://sprites/Pixel Adventure 1/Background/Gray.png" id="3_xwcet"]
 [ext_resource type="PackedScene" uid="uid://c8hs307w0kbou" path="res://entities/espinho.tscn" id="4_xwcet"]
@@ -9,9 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://boj7wo8p32vi5" path="res://entities/caixa.tscn" id="7_qpk70"]
 
 [node name="Game" type="Node2D"]
-script = ExtResource("1_p1ry8")
 metadata/_edit_vertical_guides_ = [70.0]
 metadata/_edit_horizontal_guides_ = [128.0]
+
+[node name="recorder" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_qpk70")]
+player = NodePath("../player")
 
 [node name="player" parent="." instance=ExtResource("1_5kiuu")]
 z_index = 1
