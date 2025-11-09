@@ -13,7 +13,7 @@ enum PlayerState {
 	dead
 }
 
-const SPEED = 50.0
+const SPEED = 70.0
 const JUMP_VELOCITY = -350.0
 
 var status: PlayerState
