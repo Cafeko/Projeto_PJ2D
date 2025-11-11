@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dg8sf7fnqspnf"]
+
+[ext_resource type="Script" uid="uid://12t5r8ub8qvr" path="res://Scripts/grabable.gd" id="1_f4r5c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tfncm"]
+
+[node name="Grabable" type="Area2D" node_paths=PackedStringArray("shape")]
+monitoring = false
+script = ExtResource("1_f4r5c")
+shape = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tfncm")

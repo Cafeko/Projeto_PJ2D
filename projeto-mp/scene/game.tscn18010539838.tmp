@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://d13t43o7ag6pv"]
+[gd_scene load_steps=9 format=4 uid="uid://d13t43o7ag6pv"]
 
 [ext_resource type="PackedScene" uid="uid://hs6k4ti572kx" path="res://Components/recorder.tscn" id="1_h8jt7"]
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://Entities/player.tscn" id="2_sagxc"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c8hs307w0kbou" path="res://Entities/espinho.tscn" id="5_c6b8m"]
 [ext_resource type="PackedScene" uid="uid://65h8fdenwlx8" path="res://Entities/checkpoint.tscn" id="6_0ka5k"]
 [ext_resource type="PackedScene" uid="uid://boj7wo8p32vi5" path="res://Entities/caixa.tscn" id="7_ha7wd"]
+[ext_resource type="PackedScene" uid="uid://dg8sf7fnqspnf" path="res://Components/grabable.tscn" id="8_sagxc"]
 
 [node name="Game" type="Node2D"]
 metadata/_edit_vertical_guides_ = [70.0]
@@ -42,4 +43,8 @@ position = Vector2(159, 136)
 position = Vector2(104, 112)
 
 [node name="caixa" parent="." instance=ExtResource("7_ha7wd")]
-position = Vector2(259, 69)
+position = Vector2(246, 70)
+
+[node name="Grabable" parent="caixa" instance=ExtResource("8_sagxc")]
+
+[editable path="caixa/Grabable"]

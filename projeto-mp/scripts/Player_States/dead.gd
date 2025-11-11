@@ -14,8 +14,8 @@ func enter():
 	respawn_ready = false
 	parent_object.anim.play("die")
 	parent_object.velocity = Vector2.ZERO
-	if parent_object.held_object:
-		parent_object.drop_object()
+	if parent_object.graber.is_holding():
+		parent_object.graber.drop_object()
 	global.finalize_recording.emit()
 	# 5. Inicia o timer de 1 segundo
 	respawn_timer.start()
