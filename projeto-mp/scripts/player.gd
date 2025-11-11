@@ -1,36 +1,30 @@
 extends CharacterBody2D
 
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
-#Novo
-@onready var holding_spot: Node2D = $HoldingSpot
-#Novo - colisão caixa
-@onready var box_cast: ShapeCast2D = $BoxCast
+class_name Player
 
-enum PlayerState {
-	idle,
-	walk,
-	jump,
-	dead
-}
+# --- Vars ------------------------------------------------------------------- #
+@export var state_machine : StateMachine
+@export var anim : AnimatedSprite2D
+
+@onready var holding_spot: Node2D = $HoldingSpot
+@onready var box_cast: ShapeCast2D = $BoxCast
 
 const SPEED = 50.0
 const JUMP_VELOCITY = -350.0
 
-var status: PlayerState
-
-#novo
 var grabbable_object = null
 var held_object = null
-#novo 2
-var is_box_colliding: bool = false 
-#novo 3
+
+var is_box_colliding: bool = false
+
 # Posição para onde o jogador voltará ao morrer
 var respawn_position: Vector2 = Vector2.ZERO
 
 var can_start_recording : bool = false
-
+# ---------------------------------------------------------------------------- #
+# --- Ready and Physics Process ---------------------------------------------- #
 func _ready() -> void:
-	go_to_idle_state()
+	state_machine.init()
 	
 	## NOVO: Conectar os sinais da nossa Area2D
 	## Certifique-se de que o nome "PickupArea" bate com o nó que você criou
@@ -50,20 +44,21 @@ func _ready() -> void:
 	
 	# --- ADICIONE ESTA LINHA ---
 	# Conecta o sinal "timeout" do Timer a uma nova função
-	$RespawnTimer.timeout.connect(_on_respawn_timer_timeout)
+	#$RespawnTimer.timeout.connect(_on_respawn_timer_timeout)
 	
 func _physics_process(delta: float) -> void:
+	state_machine.process_physics(delta)
 	# --- ADICIONE ESTAS DUAS LINHAS ---
-	# Se o jogador estiver morto, não execute NENHUMA física.
-	if status == PlayerState.dead:
+	# Se o jogador estiver morto, não execute NENHUMA ação e física.
+	if state_machine.get_current_state() == "Dead":
 		return
-		
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
 	## NOVO: Lógica de Interação (Pegar/Largar)
 	## Verificamos isso antes dos estados, pois queremos pegar/largar em qualquer estado (exceto pulando)
-	if Input.is_action_just_pressed("interact") and status != PlayerState.jump:
+	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
 		if held_object:
 			# Se estamos segurando algo, largue.
 			drop_object()
@@ -78,58 +73,47 @@ func _physics_process(delta: float) -> void:
 	# Chamamos a nova função antes de mover
 	update_held_object_position()
 	# ------------------------------
-	
-	match status:
-		PlayerState.idle:
-			idle_state()
-		PlayerState.walk:
-			walk_state()
-		PlayerState.jump:
-			jump_state()
 
 	move_and_slide()
-			
-func go_to_idle_state():
-	status = PlayerState.idle
-	anim.play("idle")
+# ---------------------------------------------------------------------------- #
+# ---  ----------------------------------------------------------------------- #
+#func go_to_walk_state():
+	#status = PlayerState.walk
+	#anim.play("walk")
+	#
+#func go_to_jump_state():
+	#status = PlayerState.jump
+	#anim.play("jump")
+	#velocity.y = JUMP_VELOCITY
+	
+#func idle_state():
+	#move()
+	#if velocity.x != 0:
+		#go_to_walk_state()
+		#return
+	#
+	#if Input.is_action_just_pressed("jump"):
+		#go_to_jump_state()
+		#return
+	#
+#func walk_state():
+	#move()
+	#if velocity.x == 0:
+		#go_to_idle_state()
+		#return		
+	#
+	#if Input.is_action_just_pressed("jump"):
+		#go_to_jump_state()
+		#return		
 
-func go_to_walk_state():
-	status = PlayerState.walk
-	anim.play("walk")
-	
-func go_to_jump_state():
-	status = PlayerState.jump
-	anim.play("jump")
-	velocity.y = JUMP_VELOCITY
-	
-func idle_state():
-	move()
-	if velocity.x != 0:
-		go_to_walk_state()
-		return
-	
-	if Input.is_action_just_pressed("jump"):
-		go_to_jump_state()
-		return
-	
-func walk_state():
-	move()
-	if velocity.x == 0:
-		go_to_idle_state()
-		return		
-	
-	if Input.is_action_just_pressed("jump"):
-		go_to_jump_state()
-		return		
-
-func jump_state():
-	move()
-	if is_on_floor():
-		if velocity.x == 0:
-			go_to_idle_state()
-		else:
-			go_to_walk_state()
-		return
+#func jump_state():
+	#move()
+	#if is_on_floor():
+		#if velocity.x == 0:
+			#go_to_idle_state()
+		#else:
+			#go_to_walk_state()
+		#return
 
 func move():
 	var direction := Input.get_axis("left", "right")
@@ -283,38 +267,39 @@ func update_held_object_position():
 		
 # Esta função será chamada PELO ESPINHO
 func die_and_respawn():
-# Se já estivermos mortos, não faça nada (evita morrer 2x)
-	if status == PlayerState.dead:
-		return
-
-	print("Morri! Iniciando timer de respawn...")
-	
-	# 1. Define o estado para DEAD (isso congela o jogador, como vimos no physics_process)
-	status = PlayerState.dead
-	
-	# 2. Toca a sua animação de morte
-	anim.play("die") # (Certifique-se de que você tem uma animação chamada "die" no seu AnimatedSprite2D)
-	
-	# 3. Reseta a velocidade
-	velocity = Vector2.ZERO
-	
-	# 4. Larga a caixa se estiver segurando
-	if held_object:
-		drop_object()
-		
-	global.finalize_recording.emit()
-	# 5. Inicia o timer de 1 segundo
-	$RespawnTimer.start()
+	state_machine.go_to_state.emit("Dead")
+## Se já estivermos mortos, não faça nada (evita morrer 2x)
+	#if status == PlayerState.dead:
+		#return
+#
+	#print("Morri! Iniciando timer de respawn...")
+	#
+	## 1. Define o estado para DEAD (isso congela o jogador, como vimos no physics_process)
+	#status = PlayerState.dead
+	#
+	## 2. Toca a sua animação de morte
+	#anim.play("die") # (Certifique-se de que você tem uma animação chamada "die" no seu AnimatedSprite2D)
+	#
+	## 3. Reseta a velocidade
+	#velocity = Vector2.ZERO
+	#
+	## 4. Larga a caixa se estiver segurando
+	#if held_object:
+		#drop_object()
+		#
+	#global.finalize_recording.emit()
+	## 5. Inicia o timer de 1 segundo
+	#$RespawnTimer.start()
 
 # Esta função é chamada AUTOMATICAMENTE pelo RespawnTimer após 1 segundo
-func _on_respawn_timer_timeout():
-	print("Revivendo no checkpoint!")
-	
-	# 1. Move o jogador de volta para a posição salva
-	global_position = respawn_position
-	
-	# 2. Traz o jogador de volta à vida
-	go_to_idle_state() # Isso define o status de volta para IDLE e toca a animação "idle"
+#func _on_respawn_timer_timeout():
+	#print("Revivendo no checkpoint!")
+	#
+	## 1. Move o jogador de volta para a posição salva
+	#global_position = respawn_position
+	#
+	## 2. Traz o jogador de volta à vida
+	#go_to_idle_state() # Isso define o status de volta para IDLE e toca a animação "idle"
 	
 # Esta função será chamada PELO CHECKPOINT
 func update_checkpoint(new_position: Vector2):

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://65h8fdenwlx8"]
 
-[ext_resource type="Script" uid="uid://blggesj5efadr" path="res://scripts/checkpoint.gd" id="1_hjeaj"]
-[ext_resource type="Texture2D" uid="uid://cqp6sgm1ml14j" path="res://sprites/Pixel Adventure 1/Items/Checkpoints/Checkpoint/Checkpoint (No Flag).png" id="1_wpuaw"]
+[ext_resource type="Script" uid="uid://blggesj5efadr" path="res://Scripts/checkpoint.gd" id="1_hjeaj"]
+[ext_resource type="Texture2D" uid="uid://cqp6sgm1ml14j" path="res://Assets/sprites/Pixel Adventure 1/Items/Checkpoints/Checkpoint/Checkpoint (No Flag).png" id="1_wpuaw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hjeaj"]
 radius = 3.0

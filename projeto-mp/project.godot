@@ -10,14 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Novo Projeto de Jogo"
+config/name="Nechronia"
 run/main_scene="uid://d13t43o7ag6pv"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-global="*res://scripts/global.gd"
+global="*res://Scripts/global.gd"
 
 [display]
 
