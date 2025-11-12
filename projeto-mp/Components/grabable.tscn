@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://12t5r8ub8qvr" path="res://Scripts/grabable.gd" id="1_f4r5c"]
 
-[node name="Grabable" type="Area2D" node_paths=PackedStringArray("shape")]
+[node name="Grabable" type="Area2D"]
+collision_layer = 8
+collision_mask = 8
 monitoring = false
 script = ExtResource("1_f4r5c")
-shape = NodePath("")
