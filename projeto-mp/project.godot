@@ -26,6 +26,10 @@ window/size/viewport_height=200
 window/size/mode=2
 window/stretch/mode="canvas_items"
 
+[dotnet]
+
+project/assembly_name="Novo Projeto de Jogo"
+
 [input]
 
 left={

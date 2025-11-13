@@ -7,7 +7,7 @@ class_name Player
 @export var anim : AnimatedSprite2D
 @export var graber : Graber
 
-const SPEED = 50.0
+const SPEED = 70.0
 const JUMP_VELOCITY = -350.0
 
 enum direcion {LEFT, RIGHT}
