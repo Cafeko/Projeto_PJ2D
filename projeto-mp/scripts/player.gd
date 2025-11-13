@@ -37,6 +37,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 # ---------------------------------------------------------------------------- #
 # --- Internal Funcs --------------------------------------------------------- #
+# Ajusta player de acordo com direção que está olhando.
 func flit_to_look_side():
 	if look_direction == direcion.LEFT:
 		anim.flip_h = true
@@ -46,11 +47,13 @@ func flit_to_look_side():
 		graber.set_direction(1)
 
 
+# Aplica gravidade no player.
 func gravity(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
 
+# Executa interações e agarra objetos.
 func interactions_and_grab():
 	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
 		graber.grab_and_drop()
@@ -59,6 +62,7 @@ func interactions_and_grab():
 			global.play_recording.emit()
 # ---------------------------------------------------------------------------- #
 # --- External Funcs --------------------------------------------------------- #
+# Faz movimento do player.
 func move():
 	var direction := Input.get_axis("left", "right")
 	
@@ -73,16 +77,19 @@ func move():
 		look_direction = direcion.RIGHT
 
 
+# Faz player ir para o estado morto.
 func die_and_respawn():
 	state_machine.go_to_state.emit("Dead")
 
 
+# Atualiza a posição que vai respawnar.
 func update_checkpoint(new_position: Vector2):
 	if new_position != respawn_position:
 		print("Checkpoint salvo!")
 		respawn_position = new_position
 
 
+# Retorna o estado atual do player para a recording_tape gravar as ações dele.
 func get_record_data():
 	return {"position" : self.global_position, "animation" : anim.animation,
 			"flip_h": anim.flip_h}
