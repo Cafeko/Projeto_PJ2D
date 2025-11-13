@@ -1,10 +1,16 @@
-[gd_scene load_steps=22 format=3 uid="uid://tsvnbubb6bg4"]
+[gd_scene load_steps=27 format=3 uid="uid://tsvnbubb6bg4"]
 
-[ext_resource type="Script" uid="uid://b0f3mbd042g1f" path="res://scripts/player.gd" id="1_merdl"]
-[ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://sprites/1 - Penguin/Idle (16 x 16).png" id="2_b0kkn"]
-[ext_resource type="Texture2D" uid="uid://5bkfhmxp1j7i" path="res://sprites/1 - Penguin/Lying_On_Ground (16 x 16).png" id="2_qly61"]
-[ext_resource type="Texture2D" uid="uid://cf7ymtg110npq" path="res://sprites/1 - Penguin/Waddling (16 x 16).png" id="3_e4p34"]
-[ext_resource type="Texture2D" uid="uid://bfc7nichnufc8" path="res://sprites/1 - Penguin/Jump (16 x 16).png" id="3_rfe5m"]
+[ext_resource type="Script" uid="uid://b0f3mbd042g1f" path="res://Scripts/player.gd" id="1_merdl"]
+[ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://Assets/sprites/1 - Penguin/Idle (16 x 16).png" id="2_b0kkn"]
+[ext_resource type="Texture2D" uid="uid://5bkfhmxp1j7i" path="res://Assets/sprites/1 - Penguin/Lying_On_Ground (16 x 16).png" id="2_qly61"]
+[ext_resource type="Script" uid="uid://sqtn8ax7hofh" path="res://Scripts/state_machine.gd" id="2_s1j76"]
+[ext_resource type="Script" uid="uid://d3w67si0hig14" path="res://Scripts/Player_States/idle.gd" id="3_6jj0l"]
+[ext_resource type="Texture2D" uid="uid://cf7ymtg110npq" path="res://Assets/sprites/1 - Penguin/Waddling (16 x 16).png" id="3_e4p34"]
+[ext_resource type="Texture2D" uid="uid://bfc7nichnufc8" path="res://Assets/sprites/1 - Penguin/Jump (16 x 16).png" id="3_rfe5m"]
+[ext_resource type="Script" uid="uid://m63k3widbfml" path="res://Scripts/Player_States/walk.gd" id="4_6jj0l"]
+[ext_resource type="Script" uid="uid://dp3h2ot6f2eih" path="res://Scripts/Player_States/jump.gd" id="5_ua6mu"]
+[ext_resource type="Script" uid="uid://bddx73ca1yvhg" path="res://Scripts/Player_States/dead.gd" id="6_xy0x1"]
+[ext_resource type="PackedScene" uid="uid://whdgu748wqwy" path="res://Components/graber.tscn" id="11_xakct"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e4p34"]
 atlas = ExtResource("2_b0kkn")
@@ -116,33 +122,55 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qly61"]
-height = 20.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u3f3p"]
 radius = 6.0
 height = 14.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qly61"]
 
-[node name="player" type="CharacterBody2D"]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "anim", "graber")]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_merdl")
+state_machine = NodePath("StateMachine")
+anim = NodePath("AnimatedSprite2D")
+graber = NodePath("Graber")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("parent_object", "initial_state")]
+script = ExtResource("2_s1j76")
+parent_object = NodePath("..")
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://sqtn8ax7hofh"
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("walk_state", "jump_state")]
+script = ExtResource("3_6jj0l")
+walk_state = NodePath("../Walk")
+jump_state = NodePath("../Jump")
+metadata/_custom_type_script = "uid://b8guly7wlabi7"
+
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state")]
+script = ExtResource("4_6jj0l")
+idle_state = NodePath("../Idle")
+jump_state = NodePath("../Jump")
+metadata/_custom_type_script = "uid://b8guly7wlabi7"
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "walk_state")]
+script = ExtResource("5_ua6mu")
+idle_state = NodePath("../Idle")
+walk_state = NodePath("../Walk")
+metadata/_custom_type_script = "uid://b8guly7wlabi7"
+
+[node name="Dead" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "respawn_timer")]
+script = ExtResource("6_xy0x1")
+idle_state = NodePath("../Idle")
+respawn_timer = NodePath("../../RespawnTimer")
+metadata/_custom_type_script = "uid://b8guly7wlabi7"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q0i8f")
 animation = &"idle"
 
-[node name="HoldingSpot" type="Node2D" parent="."]
-position = Vector2(16, -1)
-
-[node name="PickupArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
-visible = false
-shape = SubResource("CapsuleShape2D_qly61")
-
 [node name="PlayerCollider" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CapsuleShape2D_u3f3p")
 
 [node name="BoxCast" type="ShapeCast2D" parent="."]
@@ -153,3 +181,23 @@ target_position = Vector2(0, -8)
 
 [node name="RespawnTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Graber" parent="." node_paths=PackedStringArray("big_object_position", "small_object_position", "drop_object_position", "graber_object") instance=ExtResource("11_xakct")]
+big_object_position = NodePath("BigHoldingSpot")
+small_object_position = NodePath("SmallHoldingSpot")
+drop_object_position = NodePath("DropSpot")
+graber_object = NodePath("..")
+
+[node name="CollisionShape2D" parent="Graber" index="0"]
+position = Vector2(8, -1.65625)
+
+[node name="SmallHoldingSpot" type="Marker2D" parent="Graber"]
+position = Vector2(7, 3)
+
+[node name="BigHoldingSpot" type="Marker2D" parent="Graber"]
+position = Vector2(0, -8)
+
+[node name="DropSpot" type="Marker2D" parent="Graber"]
+position = Vector2(11, 0)
+
+[editable path="Graber"]
