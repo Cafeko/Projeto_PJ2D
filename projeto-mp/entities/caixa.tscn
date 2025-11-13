@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://boj7wo8p32vi5"]
+[gd_scene load_steps=6 format=3 uid="uid://boj7wo8p32vi5"]
 
 [ext_resource type="Texture2D" uid="uid://co4t0fampb8kv" path="res://Assets/sprites/Pixel Adventure 1/Items/Boxes/Box3/Idle.png" id="1_50p3q"]
+[ext_resource type="Script" uid="uid://blrc8rn53qmbd" path="res://Scripts/item.gd" id="1_wqvmm"]
 [ext_resource type="PackedScene" uid="uid://dg8sf7fnqspnf" path="res://Components/grabable.tscn" id="2_eultm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50p3q"]
@@ -12,6 +13,9 @@ position = Vector2(2, 0)
 collision_layer = 4
 collision_mask = 7
 lock_rotation = true
+script = ExtResource("1_wqvmm")
+usable = false
+metadata/_custom_type_script = "uid://blrc8rn53qmbd"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_50p3q")

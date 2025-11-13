@@ -56,10 +56,15 @@ func gravity(delta):
 # Executa interações e agarra objetos.
 func interactions_and_grab():
 	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
-		graber.grab_and_drop()
-		if can_start_recording:
+		if graber.is_holding() or graber.has_grabable():
+			graber.grab_and_drop()
+		elif can_start_recording:
 			global.start_recording.emit(self)
 			global.play_recording.emit()
+	if Input.is_action_just_pressed("use") and graber.is_holding():
+		var item = graber.get_held_grabable().get_object()
+		if is_instance_of(item, Item) and item.is_usable():
+			item.use_item()
 # ---------------------------------------------------------------------------- #
 # --- External Funcs --------------------------------------------------------- #
 # Faz movimento do player.

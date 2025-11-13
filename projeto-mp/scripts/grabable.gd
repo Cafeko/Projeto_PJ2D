@@ -20,4 +20,9 @@ func set_object_position(target_position:Vector2):
 # Retorna o tamanho do shape do grabable.
 func get_size():
 	return shape.shape.size
+
+
+# Retorna objeto do grabable.
+func get_object():
+	return object
 # ---------------------------------------------------------------------------- #

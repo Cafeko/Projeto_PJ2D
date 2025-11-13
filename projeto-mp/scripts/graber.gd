@@ -74,6 +74,14 @@ func _update_held_object_position():
 # Retorna se tem um objeto sendo agarrado ou não.
 func is_holding():
 	return held_object != null
+
+# Retorna se tem umn grabable na area do graber.
+func has_grabable():
+	return grabbable_object != null
+
+# Retorna o grabable que está sendo segurado.
+func get_held_grabable():
+	return held_object
 # ---------------------------------------------------------------------------- #
 # --- Set Object Positions --------------------------------------------------- #
 # Função responsavel por posicionar o objeto segurado de acordo com as
