@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://jqb0j6hygtdp"]
+[gd_scene load_steps=8 format=3 uid="uid://jqb0j6hygtdp"]
 
 [ext_resource type="Script" uid="uid://cf8jeyll2u272" path="res://scripts/keycard.gd" id="1_h742u"]
 [ext_resource type="Script" uid="uid://12t5r8ub8qvr" path="res://scripts/grabable.gd" id="2_h742u"]
@@ -19,21 +19,26 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8uon"]
-size = Vector2(10, 14)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h742u"]
+size = Vector2(9, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i82wh"]
+size = Vector2(6, 8.5)
 
 [node name="Keycard" type="RigidBody2D" node_paths=PackedStringArray("anim") groups=["grabbable"]]
+collision_layer = 16
+lock_rotation = true
 script = ExtResource("1_h742u")
 anim = NodePath("AnimatedSprite2D")
+usable = false
+metadata/_custom_type_script = "uid://blrc8rn53qmbd"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_pbcut")
 animation = &"keycard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_e8uon")
+shape = SubResource("RectangleShape2D_h742u")
 
 [node name="Grabable" type="Area2D" parent="." node_paths=PackedStringArray("object", "shape")]
 collision_layer = 8
@@ -44,5 +49,5 @@ shape = NodePath("CollisionShape2D")
 metadata/_custom_type_script = "uid://12t5r8ub8qvr"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grabable"]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_e8uon")
+position = Vector2(0, 0.75)
+shape = SubResource("RectangleShape2D_i82wh")

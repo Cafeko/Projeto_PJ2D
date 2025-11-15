@@ -1,34 +1,30 @@
 # scripts/CardReader.gd
-extends Area2D
+extends Activator
 class_name CardReader
 
 @export var anim: AnimatedSprite2D
+@export var detection_area: Area2D
 
 # --- Ready ---
 func _ready():
-	# Conecta o sinal 'body_entered' a uma função interna para detecção de colisão.
-	# O Keycard é um RigidBody2D, que é um tipo de 'Body' em um Area2D.
-	body_entered.connect(_on_body_entered)
-	
-	# Inicia com a animação "locked" (assumindo que seja o frame inicial)
-	if anim:
+	detection_area.body_entered.connect(_on_body_entered)
+	if not is_active():
 		anim.play("locked")
+	else:
+		anim.play("unlocked")
 
 # --- Detecção de Colisão ---
 # Esta função é chamada quando um Corpo (Body) entra nesta Area2D.
-func _on_body_entered(body: Node2D):
-	# Tenta converter o 'body' para o tipo 'Keycard'.
-	# A classe 'Keycard' foi exportada no script keycard.gd (class_name Keycard).
-	if body is Keycard:
+func _on_body_entered(body):
+	if body is Keycard and not is_active():
 		var keycard_instance: Keycard = body
 		
 		# Mudar a animação do CardReader para "unlocked"
 		if anim and anim.animation != "unlocked":
 			anim.play("unlocked")
-			print("Keycard detectado e CardReader desbloqueado!")
-			
-			# FAZ O CARTÃO SUMIR AQUI!
-			keycard_instance.queue_free()
-
-		# Por enquanto, vamos apenas garantir que o Keycard chame sua própria lógica de uso.
-		keycard_instance.use_item()
+		
+		# Muda estado para ativo.
+		activate()
+		
+		# Deleta o keycard.
+		keycard_instance.queue_free()

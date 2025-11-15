@@ -50,4 +50,4 @@ position = Vector2(259, 69)
 position = Vector2(33, 47)
 
 [node name="Keycard" parent="." instance=ExtResource("9_yq8tf")]
-position = Vector2(86, 50)
+position = Vector2(85, 39)
