@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://jqb0j6hygtdp"]
+
+[ext_resource type="Script" uid="uid://cf8jeyll2u272" path="res://scripts/keycard.gd" id="1_h742u"]
+[ext_resource type="Script" uid="uid://12t5r8ub8qvr" path="res://scripts/grabable.gd" id="2_h742u"]
+[ext_resource type="Texture2D" uid="uid://cn1p3eie8cpgt" path="res://Assets/sprites/keycard-projeto-Sheet.png" id="3_i82wh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io687"]
+atlas = ExtResource("3_i82wh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pbcut"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io687")
+}],
+"loop": true,
+"name": &"keycard",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8uon"]
+size = Vector2(10, 14)
+
+[node name="Keycard" type="RigidBody2D" node_paths=PackedStringArray("anim") groups=["grabbable"]]
+script = ExtResource("1_h742u")
+anim = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pbcut")
+animation = &"keycard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_e8uon")
+
+[node name="Grabable" type="Area2D" parent="." node_paths=PackedStringArray("object", "shape")]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("2_h742u")
+object = NodePath("..")
+shape = NodePath("CollisionShape2D")
+metadata/_custom_type_script = "uid://12t5r8ub8qvr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grabable"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_e8uon")

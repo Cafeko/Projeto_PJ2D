@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbi2id2f6lmus"]
+
+[ext_resource type="Script" uid="uid://dmjqovtpdlm4s" path="res://scripts/card_reader.gd" id="1_5il6n"]
+[ext_resource type="Texture2D" uid="uid://cy7qw8vd1e2b8" path="res://Assets/sprites/leitor_keycard.png" id="1_br7ob"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5il6n"]
+atlas = ExtResource("1_br7ob")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmyud"]
+atlas = ExtResource("1_br7ob")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k1pid"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5il6n")
+}],
+"loop": true,
+"name": &"locked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmyud")
+}],
+"loop": true,
+"name": &"unlocked",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lajxq"]
+size = Vector2(16, 16)
+
+[node name="CardReader" type="Area2D" node_paths=PackedStringArray("anim") groups=["card_readers"]]
+collision_layer = 6
+collision_mask = 7
+script = ExtResource("1_5il6n")
+anim = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k1pid")
+animation = &"unlocked"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 5
+visibility_layer = 2
+shape = SubResource("RectangleShape2D_lajxq")
