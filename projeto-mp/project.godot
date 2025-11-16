@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="Nechronia"
-run/main_scene="uid://d13t43o7ag6pv"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
