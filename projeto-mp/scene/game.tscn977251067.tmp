@@ -47,15 +47,13 @@ position = Vector2(159, 136)
 position = Vector2(104, 112)
 
 [node name="caixa" parent="." instance=ExtResource("7_ha7wd")]
-position = Vector2(85, 52)
+position = Vector2(259, 69)
 
 [node name="CardReader" parent="." instance=ExtResource("8_17rxn")]
-position = Vector2(261, 61)
+position = Vector2(33, 47)
 
 [node name="Keycard" parent="." instance=ExtResource("9_yq8tf")]
-position = Vector2(33, 48)
+position = Vector2(86, 50)
 
-[node name="Porta" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("10_yq8tf")]
-position = Vector2(296, 64)
-scale = Vector2(0.13, 0.13)
-activators_list = [NodePath("../CardReader")]
+[node name="Porta" parent="." instance=ExtResource("10_yq8tf")]
+position = Vector2(296, 70)
