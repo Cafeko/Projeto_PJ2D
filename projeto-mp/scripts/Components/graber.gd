@@ -55,7 +55,7 @@ func drop_object():
 	if not held_object:
 		return
 	set_held_object_position(positions.DROP)
-	held_object.object.freeze = false
+	held_object.object.set_deferred("freeze", false)
 	held_object.object.remove_collision_exception_with(graber_object)
 	grabbable_object = held_object
 	held_object = null

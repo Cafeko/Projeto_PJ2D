@@ -3,6 +3,10 @@ class_name Activable
 
 # --- Vars ------------------------------------------------------------------- #
 @export var activators_list : Array[Activator]
+
+enum states {ACTIVE, INACTIVE}
+
+var state : states
 # ---------------------------------------------------------------------------- #
 # --- Ready ------------------------------------------------------------------ #
 func _ready():
@@ -33,9 +37,13 @@ func check_activators_active():
 # Adiva e desativa o ativavel de acordo com o estado dos ativadores.
 func update_state():
 	if check_activators_active():
-		active()
+		if state == states.INACTIVE:
+			active()
+			state = states.ACTIVE
 	else:
-		inactive()
+		if state == states.ACTIVE:
+			inactive()
+			state = states.INACTIVE
 # ---------------------------------------------------------------------------- #
 # --- Signal Funcs ----------------------------------------------------------- #
 # Executada quando o estado de um activator mudar;

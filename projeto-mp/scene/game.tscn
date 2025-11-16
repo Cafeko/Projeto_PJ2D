@@ -24,6 +24,7 @@ z_index = 1
 position = Vector2(77, 136)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
+zoom = Vector2(0.5, 0.5)
 
 [node name="Tiles" type="Node2D" parent="."]
 
@@ -59,7 +60,7 @@ position = Vector2(33, 48)
 [node name="Porta" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("10_ho680")]
 position = Vector2(296, 64)
 scale = Vector2(0.13, 0.13)
-activators_list = [NodePath("../CardReader")]
+activators_list = [NodePath("../CardReader"), NodePath("../Botao")]
 
 [node name="Botao" parent="." instance=ExtResource("11_f3xty")]
-position = Vector2(38, 167)
+position = Vector2(39, 173)

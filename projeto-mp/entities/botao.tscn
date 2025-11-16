@@ -1,10 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpagmvgnjn4sw"]
+[gd_scene load_steps=8 format=3 uid="uid://cpagmvgnjn4sw"]
 
 [ext_resource type="Script" uid="uid://boyp64yys7q1i" path="res://scripts/Entities/botao.gd" id="1_6kmju"]
+[ext_resource type="Texture2D" uid="uid://1vk3m2jlnbk3" path="res://Assets/sprites/Botao-1.png" id="2_j4h5i"]
+[ext_resource type="Texture2D" uid="uid://84k4e2jtpll0" path="res://Assets/sprites/Botao-2.png" id="3_jry63"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkjk4"]
+atlas = ExtResource("2_j4h5i")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6woe"]
+atlas = ExtResource("3_jry63")
+region = Rect2(0, 0, 100, 100)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6kmju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkjk4")
+}],
+"loop": true,
+"name": &"Not_Pressed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6woe")
+}],
+"loop": false,
+"name": &"Pressed",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abock"]
+size = Vector2(20, 6)
 
 [node name="Botao" type="Node2D" node_paths=PackedStringArray("detection_area", "anim")]
 script = ExtResource("1_6kmju")
@@ -13,7 +41,10 @@ anim = NodePath("AnimatedSprite2D")
 metadata/_custom_type_script = "uid://f006jkw4s2fx"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2.842171e-14, -7)
+scale = Vector2(0.19999997, 0.2)
 sprite_frames = SubResource("SpriteFrames_6kmju")
+animation = &"Not_Pressed"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 8
