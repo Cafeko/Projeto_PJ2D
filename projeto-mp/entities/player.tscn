@@ -124,7 +124,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u3f3p"]
 radius = 6.0
-height = 14.0
+height = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qly61"]
 
@@ -192,10 +192,10 @@ graber_object = NodePath("..")
 position = Vector2(8, -1.65625)
 
 [node name="SmallHoldingSpot" type="Marker2D" parent="Graber"]
-position = Vector2(7, 3)
+position = Vector2(7, 2)
 
 [node name="BigHoldingSpot" type="Marker2D" parent="Graber"]
-position = Vector2(0, -8)
+position = Vector2(0, -8.2)
 
 [node name="DropSpot" type="Marker2D" parent="Graber"]
 position = Vector2(11, 0)
