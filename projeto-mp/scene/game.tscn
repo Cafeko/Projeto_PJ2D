@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://d13t43o7ag6pv"]
+[gd_scene load_steps=12 format=4 uid="uid://d13t43o7ag6pv"]
 
 [ext_resource type="PackedScene" uid="uid://hs6k4ti572kx" path="res://Components/recorder.tscn" id="1_h8jt7"]
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="2_sagxc"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dbi2id2f6lmus" path="res://entities/card_reader.tscn" id="8_17rxn"]
 [ext_resource type="PackedScene" uid="uid://jqb0j6hygtdp" path="res://entities/keycard.tscn" id="9_yq8tf"]
 [ext_resource type="PackedScene" uid="uid://divjwei35kd32" path="res://entities/porta.tscn" id="10_yq8tf"]
+[ext_resource type="PackedScene" uid="uid://cpagmvgnjn4sw" path="res://entities/botao.tscn" id="11_ym5sv"]
 
 [node name="Game" type="Node2D"]
 metadata/_edit_vertical_guides_ = [70.0]
@@ -59,3 +60,6 @@ position = Vector2(33, 48)
 position = Vector2(296, 64)
 scale = Vector2(0.13, 0.13)
 activators_list = [NodePath("../CardReader")]
+
+[node name="Botao" parent="." instance=ExtResource("11_ym5sv")]
+position = Vector2(38, 167)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d2ktueu6pua8l"]
 
-[ext_resource type="Script" uid="uid://b0cqvpbuql5bj" path="res://Scripts/activable.gd" id="1_1y7ml"]
+[ext_resource type="Script" uid="uid://b0cqvpbuql5bj" path="res://scripts/Components/activable.gd" id="1_1y7ml"]
 
 [node name="Activable" type="Node2D"]
 scale = Vector2(1, 1.0192307)

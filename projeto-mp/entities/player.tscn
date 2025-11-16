@@ -1,9 +1,9 @@
 [gd_scene load_steps=27 format=3 uid="uid://tsvnbubb6bg4"]
 
-[ext_resource type="Script" uid="uid://b0f3mbd042g1f" path="res://scripts/player.gd" id="1_merdl"]
+[ext_resource type="Script" uid="uid://b0f3mbd042g1f" path="res://scripts/Entities/player.gd" id="1_merdl"]
 [ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://Assets/sprites/1 - Penguin/Idle (16 x 16).png" id="2_b0kkn"]
 [ext_resource type="Texture2D" uid="uid://5bkfhmxp1j7i" path="res://Assets/sprites/1 - Penguin/Lying_On_Ground (16 x 16).png" id="2_qly61"]
-[ext_resource type="Script" uid="uid://sqtn8ax7hofh" path="res://scripts/state_machine.gd" id="2_s1j76"]
+[ext_resource type="Script" uid="uid://sqtn8ax7hofh" path="res://scripts/Components/state_machine.gd" id="2_s1j76"]
 [ext_resource type="Script" uid="uid://d3w67si0hig14" path="res://scripts/Player_States/idle.gd" id="3_6jj0l"]
 [ext_resource type="Texture2D" uid="uid://cf7ymtg110npq" path="res://Assets/sprites/1 - Penguin/Waddling (16 x 16).png" id="3_e4p34"]
 [ext_resource type="Texture2D" uid="uid://bfc7nichnufc8" path="res://Assets/sprites/1 - Penguin/Jump (16 x 16).png" id="3_rfe5m"]

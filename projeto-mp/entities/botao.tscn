@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpagmvgnjn4sw"]
+
+[ext_resource type="Script" uid="uid://boyp64yys7q1i" path="res://scripts/Entities/botao.gd" id="1_6kmju"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6kmju"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abock"]
+
+[node name="Botao" type="Node2D" node_paths=PackedStringArray("detection_area", "anim")]
+script = ExtResource("1_6kmju")
+detection_area = NodePath("Area2D")
+anim = NodePath("AnimatedSprite2D")
+metadata/_custom_type_script = "uid://f006jkw4s2fx"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6kmju")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_abock")

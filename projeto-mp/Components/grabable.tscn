@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dg8sf7fnqspnf"]
 
-[ext_resource type="Script" uid="uid://12t5r8ub8qvr" path="res://Scripts/grabable.gd" id="1_f4r5c"]
+[ext_resource type="Script" uid="uid://12t5r8ub8qvr" path="res://scripts/Components/grabable.gd" id="1_f4r5c"]
 
 [node name="Grabable" type="Area2D"]
 collision_layer = 8

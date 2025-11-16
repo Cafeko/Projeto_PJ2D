@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://d0ef6ooao23eh"]
 
-[ext_resource type="Script" uid="uid://c066uqel8nsfw" path="res://Scripts/player_copy.gd" id="1_ugwka"]
+[ext_resource type="Script" uid="uid://c066uqel8nsfw" path="res://scripts/Entities/player_copy.gd" id="1_ugwka"]
 [ext_resource type="Texture2D" uid="uid://5bkfhmxp1j7i" path="res://Assets/sprites/1 - Penguin/Lying_On_Ground (16 x 16).png" id="2_v2mfr"]
 [ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://Assets/sprites/1 - Penguin/Idle (16 x 16).png" id="3_ypvnm"]
 [ext_resource type="Texture2D" uid="uid://bfc7nichnufc8" path="res://Assets/sprites/1 - Penguin/Jump (16 x 16).png" id="4_6qwxa"]
