@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://1csqx0xe7ih7"]
+[gd_scene load_steps=13 format=4 uid="uid://1csqx0xe7ih7"]
 
 [ext_resource type="PackedScene" uid="uid://hs6k4ti572kx" path="res://Components/recorder.tscn" id="1_18owm"]
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="2_7f62q"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://jqb0j6hygtdp" path="res://entities/keycard.tscn" id="9_p40wv"]
 [ext_resource type="PackedScene" uid="uid://divjwei35kd32" path="res://entities/porta.tscn" id="10_ho680"]
 [ext_resource type="PackedScene" uid="uid://cpagmvgnjn4sw" path="res://entities/botao.tscn" id="11_f3xty"]
+[ext_resource type="PackedScene" uid="uid://brtm4ryn3w7wh" path="res://entities/plataforma_ativavel.tscn" id="12_sng2h"]
 
 [node name="Game" type="Node2D"]
 metadata/_edit_vertical_guides_ = [70.0]
@@ -24,7 +25,6 @@ z_index = 1
 position = Vector2(77, 136)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-zoom = Vector2(0.5, 0.5)
 
 [node name="Tiles" type="Node2D" parent="."]
 
@@ -64,3 +64,13 @@ activators_list = [NodePath("../CardReader"), NodePath("../Botao")]
 
 [node name="Botao" parent="." instance=ExtResource("11_f3xty")]
 position = Vector2(39, 173)
+
+[node name="PlataformaAtivavel" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("12_sng2h")]
+position = Vector2(371, 55)
+activators_list = [NodePath("../CardReader2")]
+
+[node name="Keycard2" parent="." instance=ExtResource("9_p40wv")]
+position = Vector2(216, 140)
+
+[node name="CardReader2" parent="." instance=ExtResource("8_hifqx")]
+position = Vector2(327, 62)

@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://brtm4ryn3w7wh"]
+
+[ext_resource type="Script" uid="uid://dtg2eul8rppsa" path="res://scripts/Entities/plataforma_ativavel.gd" id="1_3v4i5"]
+[ext_resource type="Texture2D" uid="uid://nccbxmqh03ad" path="res://Assets/sprites/Pixel Adventure 1/Terrain/Terrain (16x16).png" id="2_1wyl8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_he6qo"]
+atlas = ExtResource("2_1wyl8")
+region = Rect2(192, 64, 48, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3v4i5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_he6qo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3v4i5"]
+size = Vector2(46, 15)
+
+[node name="PlataformaAtivavel" type="Node2D" node_paths=PackedStringArray("anim", "collision")]
+script = ExtResource("1_3v4i5")
+anim = NodePath("AnimatedSprite2D")
+collision = NodePath("StaticBody2D/CollisionShape2D")
+metadata/_custom_type_script = "uid://b0cqvpbuql5bj"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3v4i5")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_3v4i5")

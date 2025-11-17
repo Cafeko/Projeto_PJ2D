@@ -7,12 +7,12 @@ extends Activable
 # --- Activable Funcs -------------------------------------------------------- #
 # Função abstrata, executada para deixar o activable ativo.
 func active():
-	anim.play("Open")
-	collision.set_deferred("disabled", true)
+	anim.modulate.a = 1.0
+	collision.set_deferred("disabled", false)
 
 
 # Função abstrata, executada para deixar o activable inativo.
 func inactive():
-	anim.play("Close")
-	collision.set_deferred("disabled", false)
+	anim.modulate.a = 0.3
+	collision.set_deferred("disabled", true)
 # ---------------------------------------------------------------------------- #
