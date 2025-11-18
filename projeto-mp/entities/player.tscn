@@ -128,7 +128,7 @@ height = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qly61"]
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "anim", "graber")]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "anim", "graber") groups=["player"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_merdl")

@@ -1,0 +1,179 @@
+[gd_scene load_steps=9 format=3 uid="uid://l2lir18835mh"]
+
+[ext_resource type="Script" uid="uid://cppwrhf2hh0yr" path="res://scripts/Entities/laser.gd" id="1_byvr5"]
+[ext_resource type="Texture2D" uid="uid://lfm74d2r38aa" path="res://Assets/sprites/laser.png" id="2_pwb0i"]
+[ext_resource type="Script" uid="uid://b2y1rukh8xbq2" path="res://scripts/Entities/laser_collider.gd" id="3_pwb0i"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xlfry"]
+texture = ExtResource("2_pwb0i")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.4173164, -0.8992939, 3.5971737, -1.4388695, 3.956892, 8, -3.4173164, 8)
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.7770338, -8, 3.2374573, -8, 3.5971737, 8, -3.5971746, 8)
+4:1/0 = 0
+5:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.956892, -8, 4.3166084, -8, 4.6763268, 8, -3.956892, 8)
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+14:2/0 = 0
+15:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+15:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_fgm52"]
+physics_layer_0/collision_layer = 0
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_xlfry")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_byvr5"]
+texture = ExtResource("2_pwb0i")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+14:2/0 = 0
+15:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+15:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_pwb0i"]
+sources/0 = SubResource("TileSetAtlasSource_byvr5")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_byvr5"]
+size = Vector2(10, 40)
+
+[node name="laser" type="Node2D" node_paths=PackedStringArray("tile_on", "tile_off", "collision")]
+script = ExtResource("1_byvr5")
+tile_on = NodePath("laser_on_tilemap")
+tile_off = NodePath("laser_off_tilemap")
+collision = NodePath("laser_collider/CollisionShape2D")
+
+[node name="laser_on_tilemap" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 3, 0, 2, 0, 0, 0)
+tile_set = SubResource("TileSet_fgm52")
+
+[node name="laser_off_tilemap" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_pwb0i")
+collision_enabled = false
+
+[node name="laser_collider" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("3_pwb0i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="laser_collider"]
+position = Vector2(8, 28)
+shape = SubResource("RectangleShape2D_byvr5")
+
+[connection signal="body_entered" from="laser_collider" to="." method="_on_laser_collider_body_entered"]
+[connection signal="body_entered" from="laser_collider" to="laser_collider" method="_on_body_entered"]

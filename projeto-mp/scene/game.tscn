@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://1csqx0xe7ih7"]
+[gd_scene load_steps=14 format=4 uid="uid://1csqx0xe7ih7"]
 
 [ext_resource type="PackedScene" uid="uid://hs6k4ti572kx" path="res://Components/recorder.tscn" id="1_18owm"]
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="2_7f62q"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://divjwei35kd32" path="res://entities/porta.tscn" id="10_ho680"]
 [ext_resource type="PackedScene" uid="uid://cpagmvgnjn4sw" path="res://entities/botao.tscn" id="11_f3xty"]
 [ext_resource type="PackedScene" uid="uid://brtm4ryn3w7wh" path="res://entities/plataforma_ativavel.tscn" id="12_sng2h"]
+[ext_resource type="PackedScene" uid="uid://l2lir18835mh" path="res://entities/laser.tscn" id="13_5g16k"]
 
 [node name="Game" type="Node2D"]
 metadata/_edit_vertical_guides_ = [70.0]
@@ -49,7 +50,7 @@ position = Vector2(159, 136)
 position = Vector2(104, 112)
 
 [node name="caixa" parent="." instance=ExtResource("7_ed2gt")]
-position = Vector2(85, 52)
+position = Vector2(112, 135)
 
 [node name="CardReader" parent="." instance=ExtResource("8_hifqx")]
 position = Vector2(261, 61)
@@ -74,3 +75,7 @@ position = Vector2(216, 140)
 
 [node name="CardReader2" parent="." instance=ExtResource("8_hifqx")]
 position = Vector2(327, 62)
+
+[node name="laser" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("13_5g16k")]
+position = Vector2(171, 64)
+activators_list = [NodePath("../Botao")]

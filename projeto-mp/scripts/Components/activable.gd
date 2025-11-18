@@ -28,11 +28,11 @@ func inactive():
 
 # Verifica se todos os activators estão ativos.
 func check_activators_active():
+
 	for activator in activators_list:
 		if is_instance_of(activator, Activator) and not activator.is_active():
 			return false
 	return true
-
 
 # Adiva e desativa o ativavel de acordo com o estado dos ativadores.
 func update_state():

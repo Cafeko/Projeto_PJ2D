@@ -21,14 +21,18 @@ global="*res://Scripts/global.gd"
 
 [display]
 
-window/size/viewport_width=300
-window/size/viewport_height=200
+window/size/viewport_width=643
+window/size/viewport_height=300
 window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [dotnet]
 
 project/assembly_name="Novo Projeto de Jogo"
+
+[global_group]
+
+player=""
 
 [input]
 
