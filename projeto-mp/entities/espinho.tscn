@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c8hs307w0kbou"]
 
 [ext_resource type="Texture2D" uid="uid://ib5mbpwxom2c" path="res://Assets/sprites/Pixel Adventure 1/Traps/Spikes/Idle.png" id="1_4gbj6"]
-[ext_resource type="Script" uid="uid://sgtpmlqkek0r" path="res://Scripts/espinho.gd" id="1_8iin7"]
+[ext_resource type="Script" uid="uid://sgtpmlqkek0r" path="res://scripts/Entities/espinho.gd" id="1_8iin7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gbj6"]
 size = Vector2(15, 7)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dbi2id2f6lmus"]
 
-[ext_resource type="Script" uid="uid://dmjqovtpdlm4s" path="res://scripts/card_reader.gd" id="1_5il6n"]
+[ext_resource type="Script" uid="uid://dmjqovtpdlm4s" path="res://scripts/Entities/card_reader.gd" id="1_5il6n"]
 [ext_resource type="Texture2D" uid="uid://cy7qw8vd1e2b8" path="res://Assets/sprites/leitor_keycard.png" id="1_br7ob"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5il6n"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://whdgu748wqwy"]
 
-[ext_resource type="Script" uid="uid://bn4xbdu8ywtkq" path="res://Scripts/graber.gd" id="1_mgwef"]
+[ext_resource type="Script" uid="uid://bn4xbdu8ywtkq" path="res://scripts/Components/graber.gd" id="1_mgwef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgwef"]
 size = Vector2(10, 14.6875)
