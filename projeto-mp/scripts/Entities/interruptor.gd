@@ -63,5 +63,4 @@ func update_visuals():
 
 
 func _on_interaction(_kargs:Dictionary):
-	print("OK")
 	trigger_switch()
