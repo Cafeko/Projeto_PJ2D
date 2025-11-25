@@ -35,7 +35,62 @@ func _physics_process(delta: float) -> void:
 	interactions_and_grab()
 
 	move_and_slide()
+	# Chama a nova função de detecção de esmagamento após o move_and_slide()
+	check_for_squish()
 # ---------------------------------------------------------------------------- #
+# --- Nova Função ------------------------------------------------------------ #
+# Verifica se o player está sendo esmagado.
+func check_for_squish():
+	# Só checamos se não estamos mortos ou pulando (por simplicidade inicial)
+	if state_machine.get_current_state() == "Dead":
+		return
+		
+	# A detecção de esmagamento pode ser complexa e depende do jogo.
+	# Uma forma simples é verificar se há colisões ativas e fortes em direções opostas.
+	
+	# O CharacterBody2D é movido pelo move_and_slide().
+	# Se ele tiver **mais de duas colisões** E **velocidade muito baixa** # (sugere que ele não está mais se movendo por estar preso/esmagado),
+	# ou colisões em direções críticas (topo e base, ou lados opostos) 
+	# com pouca ou nenhuma velocidade, é um forte indicativo de esmagamento.
+	
+	# 1. Colisão vertical: Pego entre chão e teto/plataforma acima
+	# Note: is_on_ceiling() não é garantido para colisões ativas/movimento.
+	# Vamos checar se is_on_floor() E tem colisões no topo.
+	
+	var is_squished_vertical = false
+	var is_squished_horizontal = false
+	
+	if is_on_floor():
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+			# Se há uma colisão onde a normal aponta para baixo (colisão no topo)
+			if collision.get_normal().y > 0: 
+				is_squished_vertical = true
+				break
+	
+	# 2. Colisão horizontal: Pego entre paredes ou objetos laterais.
+	var collision_left_count = 0
+	var collision_right_count = 0
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var normal = collision.get_normal()
+		
+		# Colisão no lado esquerdo (normal.x > 0)
+		if normal.x > 0.5:
+			collision_left_count += 1
+		# Colisão no lado direito (normal.x < 0)
+		elif normal.x < -0.5:
+			collision_right_count += 1
+			
+	if collision_left_count > 0 and collision_right_count > 0:
+		is_squished_horizontal = true
+
+	# Se for esmagado (vertical ou horizontal), o player morre.
+	if is_squished_vertical or is_squished_horizontal:
+		print("Player Esmagado!")
+		die_and_respawn()
+
 # --- Internal Funcs --------------------------------------------------------- #
 # Ajusta player de acordo com direção que está olhando.
 func flit_to_look_side():
