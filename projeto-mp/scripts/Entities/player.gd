@@ -6,6 +6,7 @@ class_name Player
 @export var state_machine : StateMachine
 @export var anim : AnimatedSprite2D
 @export var graber : Graber
+@export var interactor : Interactor
 
 const SPEED = 70.0
 const JUMP_VELOCITY = -350.0
@@ -33,25 +34,49 @@ func _physics_process(delta: float) -> void:
 	gravity(delta)
 	
 	interactions_and_grab()
-
+	
 	move_and_slide()
-	# Chama a nova função de detecção de esmagamento após o move_and_slide()
+	
 	check_for_squish()
 # ---------------------------------------------------------------------------- #
-# --- Nova Função ------------------------------------------------------------ #
+# --- Internal Funcs --------------------------------------------------------- #
+# Ajusta player de acordo com direção que está olhando.
+func flit_to_look_side():
+	if look_direction == direcion.LEFT:
+		anim.flip_h = true
+		graber.set_direction(-1)
+	elif look_direction == direcion.RIGHT:
+		anim.flip_h = false
+		graber.set_direction(1)
+
+
+# Aplica gravidade no player.
+func gravity(delta):
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+
+# Executa interações e agarra objetos.
+func interactions_and_grab():
+	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
+		if interactor.get_interactable_target():
+			interactor.do_interaction()
+		elif graber.is_holding() or graber.has_grabable():
+			graber.grab_and_drop()
+		elif can_start_recording:
+			global.start_recording.emit(self)
+			global.play_recording.emit()
+	if Input.is_action_just_pressed("use") and graber.is_holding():
+		var item = graber.get_held_grabable().get_object()
+		if is_instance_of(item, Item) and item.is_usable():
+			item.use_item()
+
+
 # Verifica se o player está sendo esmagado.
 func check_for_squish():
 	# Só checamos se não estamos mortos ou pulando (por simplicidade inicial)
 	if state_machine.get_current_state() == "Dead":
 		return
-		
-	# A detecção de esmagamento pode ser complexa e depende do jogo.
-	# Uma forma simples é verificar se há colisões ativas e fortes em direções opostas.
-	
-	# O CharacterBody2D é movido pelo move_and_slide().
-	# Se ele tiver **mais de duas colisões** E **velocidade muito baixa** # (sugere que ele não está mais se movendo por estar preso/esmagado),
-	# ou colisões em direções críticas (topo e base, ou lados opostos) 
-	# com pouca ou nenhuma velocidade, é um forte indicativo de esmagamento.
 	
 	# 1. Colisão vertical: Pego entre chão e teto/plataforma acima
 	# Note: is_on_ceiling() não é garantido para colisões ativas/movimento.
@@ -90,36 +115,6 @@ func check_for_squish():
 	if is_squished_vertical or is_squished_horizontal:
 		print("Player Esmagado!")
 		die_and_respawn()
-
-# --- Internal Funcs --------------------------------------------------------- #
-# Ajusta player de acordo com direção que está olhando.
-func flit_to_look_side():
-	if look_direction == direcion.LEFT:
-		anim.flip_h = true
-		graber.set_direction(-1)
-	elif look_direction == direcion.RIGHT:
-		anim.flip_h = false
-		graber.set_direction(1)
-
-
-# Aplica gravidade no player.
-func gravity(delta):
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-
-# Executa interações e agarra objetos.
-func interactions_and_grab():
-	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
-		if graber.is_holding() or graber.has_grabable():
-			graber.grab_and_drop()
-		elif can_start_recording:
-			global.start_recording.emit(self)
-			global.play_recording.emit()
-	if Input.is_action_just_pressed("use") and graber.is_holding():
-		var item = graber.get_held_grabable().get_object()
-		if is_instance_of(item, Item) and item.is_usable():
-			item.use_item()
 # ---------------------------------------------------------------------------- #
 # --- External Funcs --------------------------------------------------------- #
 # Faz movimento do player.

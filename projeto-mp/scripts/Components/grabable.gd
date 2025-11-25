@@ -5,6 +5,11 @@ class_name Grabable
 @export var object : RigidBody2D
 @export var shape : CollisionShape2D
 @export var small_object : bool = true
+@export var can_be_grabed : bool = true
+# ---------------------------------------------------------------------------- #
+# --- Ready ------------------------------------------------------------------ #
+func _ready():
+	update_grabability()
 # ---------------------------------------------------------------------------- #
 # --- Funcs ------------------------------------------------------------------ #
 # Retorna se o grabable é pequeno ou não.
@@ -25,4 +30,18 @@ func get_size():
 # Retorna objeto do grabable.
 func get_object():
 	return object
+
+
+# Update nodes to make object can be grabed or not.
+func update_grabability():
+	if can_be_grabed:
+		shape.set_deferred("disabled", false)
+	else:
+		shape.set_deferred("disabled", true)
+
+
+# set can_be_grabed value and update grabability.
+func set_can_be_grabed(value:bool):
+	can_be_grabed = value
+	update_grabability()
 # ---------------------------------------------------------------------------- #

@@ -27,4 +27,4 @@ func _on_body_entered(body):
 		activate()
 		
 		# Deleta o keycard.
-		keycard_instance.queue_free()
+		keycard_instance.card_inserted()
