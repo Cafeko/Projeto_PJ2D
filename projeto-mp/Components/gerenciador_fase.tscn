@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://cv1twspi0a7ji" path="res://scripts/Components/gerenciador_fase.gd" id="1_bxmma"]
 
-[node name="GerenciadorFase" type="Node2D"]
+[node name="GerenciadorFase" type="Node"]
 script = ExtResource("1_bxmma")

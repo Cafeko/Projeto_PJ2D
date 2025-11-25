@@ -9,10 +9,12 @@ func enter():
 	pass
 
 # Executes at a rate of 60 fps.
+@warning_ignore("unused_parameter")
 func process_physics(delta : float):
 	return null
 
 # Executed when recive a InputEvent.
+@warning_ignore("unused_parameter")
 func process_input(event : InputEvent):
 	return null
 

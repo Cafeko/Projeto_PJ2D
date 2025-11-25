@@ -1,15 +1,12 @@
 extends Node
 
+@warning_ignore("unused_signal")
 signal start_recording(checkpoint:Node)
+@warning_ignore("unused_signal")
 signal finalize_recording
+@warning_ignore("unused_signal")
 signal play_recording
-
-var current_fase : GerenciadorFase
-
-
-func set_current_fase(fase:GerenciadorFase):
-	print("OK")
-	current_fase = fase
-
-func get_current_fase():
-	return current_fase
+@warning_ignore("unused_signal")
+signal update_current_fase(fase:Fase)
+@warning_ignore("unused_signal")
+signal reset_current_fase

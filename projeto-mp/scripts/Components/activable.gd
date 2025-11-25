@@ -14,10 +14,7 @@ func _ready():
 	for activator in activators_list:
 		if is_instance_of(activator, Activator):
 			activator.state_change.connect(_on_activator_state_change)
-	if reverse_activable:
-		state = states.INACTIVE
-	else:
-		state = states.ACTIVE
+	_set_initial_state()
 	update_state()
 # ---------------------------------------------------------------------------- #
 # --- Funcs ------------------------------------------------------------------ #
@@ -67,6 +64,20 @@ func _active_to_inactive():
 	if state == states.ACTIVE:
 			inactive()
 			state = states.INACTIVE
+
+
+# Define estado inicial.
+func _set_initial_state():
+	if reverse_activable:
+		if len(activators_list) == 0:
+			state = states.ACTIVE
+		else:
+			state = states.INACTIVE
+	else:
+		if len(activators_list) == 0:
+			state = states.INACTIVE
+		else:
+			state = states.ACTIVE
 # ---------------------------------------------------------------------------- #
 # --- Signal Funcs ----------------------------------------------------------- #
 # Executada quando o estado de um activator mudar;

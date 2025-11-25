@@ -15,6 +15,9 @@ enum direcion {LEFT, RIGHT}
 var look_direction = direcion.RIGHT
 var respawn_position: Vector2 = Vector2.ZERO
 var can_start_recording : bool = false
+var safe_to_reset_current_fase : bool = false
+var respawn_time : float = 0.1
+var current_respawn_time : float
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready() -> void:
@@ -22,7 +25,7 @@ func _ready() -> void:
 	respawn_position = global_position
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float):
 	state_machine.process_physics(delta)
 	
 	if state_machine.get_current_state() == "Dead":
@@ -37,6 +40,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	check_for_squish()
+	
+	make_safe_reset_current_fase(delta)
 # ---------------------------------------------------------------------------- #
 # --- Internal Funcs --------------------------------------------------------- #
 # Ajusta player de acordo com direção que está olhando.
@@ -114,6 +119,15 @@ func check_for_squish():
 	if is_squished_vertical or is_squished_horizontal:
 		print("Player Esmagado!")
 		die_and_respawn()
+
+
+# Emite sinal para resetar fase atual, depois de um delay.
+func make_safe_reset_current_fase(delta):
+	if safe_to_reset_current_fase:
+		current_respawn_time -= delta
+		if current_respawn_time <= 0:
+			safe_to_reset_current_fase = false
+			global.reset_current_fase.emit()
 # ---------------------------------------------------------------------------- #
 # --- External Funcs --------------------------------------------------------- #
 # Faz movimento do player.
@@ -133,13 +147,20 @@ func move():
 
 # Faz player ir para o estado morto.
 func die_and_respawn():
-	state_machine.go_to_state.emit("Dead")
+	if not state_machine.get_current_state() == "Dead":
+		state_machine.go_to_state.emit("Dead")
+
+
+# Enable to reset current fase when is safe.
+func safely_reset_current_fase():
+	current_respawn_time = respawn_time
+	safe_to_reset_current_fase = true
 
 
 # Atualiza a posição que vai respawnar.
 func update_checkpoint(new_position: Vector2):
 	if new_position != respawn_position:
-		print("Checkpoint salvo!")
+		#print("Checkpoint salvo!")
 		respawn_position = new_position
 
 
