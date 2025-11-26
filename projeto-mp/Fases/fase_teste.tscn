@@ -52,7 +52,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(159, 136)
 
 [node name="checkpoint" parent="." instance=ExtResource("5_0plgs")]
-position = Vector2(104, 112)
+position = Vector2(102, 136)
 
 [node name="caixa" parent="." instance=ExtResource("6_b5ys8")]
 position = Vector2(237, 70)
@@ -70,6 +70,7 @@ activators_list = [NodePath("../CardReader"), NodePath("../Botao")]
 
 [node name="Botao" parent="." instance=ExtResource("10_essxy")]
 position = Vector2(39, 173)
+scale = Vector2(5, 5)
 
 [node name="PlataformaAtivavel" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("11_17quf")]
 position = Vector2(371, 55)
