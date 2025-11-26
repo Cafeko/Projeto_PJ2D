@@ -3,7 +3,6 @@ class_name GerenciadorFase
 
 # --- Vars ------------------------------------------------------------------- #
 @export var fases_parent : Node2D
-@export var fases : Array[Fase]
 
 var current_fase : Fase
 # ---------------------------------------------------------------------------- #

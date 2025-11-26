@@ -66,7 +66,7 @@ position = Vector2(33, 48)
 [node name="Porta" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("9_snkw5")]
 position = Vector2(296, 64)
 scale = Vector2(0.13, 0.13)
-activators_list = [NodePath("../CardReader"), NodePath("../Botao")]
+activators_list = [NodePath("../Botao"), NodePath("../CardReader")]
 
 [node name="Botao" parent="." instance=ExtResource("10_essxy")]
 position = Vector2(39, 173)
