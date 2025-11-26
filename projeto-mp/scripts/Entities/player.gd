@@ -13,7 +13,7 @@ const JUMP_VELOCITY = -350.0
 enum direcion {LEFT, RIGHT}
 
 var look_direction = direcion.RIGHT
-var respawn_position: Vector2 = Vector2.ZERO
+var current_checkpoint : Checkpoint
 var can_start_recording : bool = false
 var safe_to_reset_current_fase : bool = false
 var respawn_time : float = 0.1
@@ -22,7 +22,6 @@ var current_respawn_time : float
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready() -> void:
 	state_machine.init()
-	respawn_position = global_position
 
 
 func _physics_process(delta: float):
@@ -67,9 +66,6 @@ func interactions_and_grab():
 			interactor.do_interaction()
 		elif graber.is_holding() or graber.has_grabable():
 			graber.grab_and_drop()
-		elif can_start_recording:
-			global.start_recording.emit(self)
-			global.play_recording.emit()
 	if Input.is_action_just_pressed("use") and graber.is_holding():
 		var item = graber.get_held_grabable().get_object()
 		if is_instance_of(item, Item) and item.is_usable():
@@ -145,6 +141,11 @@ func move():
 		look_direction = direcion.RIGHT
 
 
+# Retorna se o player está movendo ou não.
+func is_moving():
+	return state_machine.get_current_state() == "Walk" or state_machine.get_current_state() == "Jump"
+
+
 # Faz player ir para o estado morto.
 func die_and_respawn():
 	if not state_machine.get_current_state() == "Dead":
@@ -158,10 +159,25 @@ func safely_reset_current_fase():
 
 
 # Atualiza a posição que vai respawnar.
-func update_checkpoint(new_position: Vector2):
-	if new_position != respawn_position:
-		#print("Checkpoint salvo!")
-		respawn_position = new_position
+func update_checkpoint(new_checkpoint: Checkpoint):
+	if new_checkpoint != current_checkpoint:
+		if current_checkpoint != null:
+			current_checkpoint.player_desativa_checkpoint()
+		current_checkpoint = new_checkpoint
+
+
+# Retorna posição de respawn que o player deve ir quando respawnar.
+func get_respawn_position():
+	if current_checkpoint:
+		return current_checkpoint.global_position
+
+
+func set_can_start_recording(valor:bool):
+	can_start_recording = valor
+
+
+func get_can_start_recording():
+	return can_start_recording
 
 
 # Retorna o estado atual do player para a recording_tape gravar as ações dele.

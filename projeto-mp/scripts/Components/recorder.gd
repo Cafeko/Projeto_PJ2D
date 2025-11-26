@@ -1,36 +1,46 @@
 extends Node
-
 class_name Recorder
 
 # --- Vars ------------------------------------------------------------------- #
-@export_category("Nodes")
-@export var timer : Timer
-@export var player : CharacterBody2D
-@export_category("Variables")
-
-var player_copy = preload("res://entities/player_copy.tscn")
-
-@onready var max_record_tapes : int = 3
+@onready var player_copy = preload("res://entities/player_copy.tscn")
+var timer : Timer
+var player : Player
+var max_record_tapes : int
+var can_start_recording : bool = false
 var is_recording : bool = false
 var is_playing_recording : bool = false
 var recording_tapes = []
 var player_copy_list = []
 # ---------------------------------------------------------------------------- #
-# --- Ready and Physics Process ---------------------------------------------- #
+# --- Init, Ready and Physics Process ---------------------------------------- #
+func _init(p:Player, n_record_tapes:int):
+	player = p
+	max_record_tapes = n_record_tapes
+
+
 func _ready():
-	# Conectar timer timeout a função de timeout.
-	timer.timeout.connect(_on_timeout)
-	global.start_recording.connect(_on_start_recording)
+	setup_timer()
 	global.finalize_recording.connect(_on_finalize_recording)
-	global.play_recording.connect(_on_play_recording)
+
 
 func _physics_process(_delta: float):
+	# Verifica se pode começar a gravar as ações do player.
+	if can_start_recording and player.is_moving():
+		start_recording()
+	
 	if len(recording_tapes) > 0:
 		var rt = recording_tapes[-1]
 		print(rt.recording_data[-1], rt.current_recording_time)
 # ---------------------------------------------------------------------------- #
 # --- Record ----------------------------------------------------------------- #
+# Preparar para iniciar a gravação de ações do player;
+# Executada quando player interagi com checkpoint.
+func prepare_start_recording():
+	can_start_recording = true
+
+
 func start_recording():
+	can_start_recording = false
 	var new_recording_tape = RecordingTape.new(10.0, player)
 	new_recording_tape.recording_timeout.connect(_recording_time_out)
 	if len(recording_tapes) > 0 and not recording_tapes[-1].finalized:
@@ -41,6 +51,7 @@ func start_recording():
 	new_recording_tape.add_recording_frame(0.0)
 	is_recording = true
 	timer.start()
+
 
 func _record():
 	if len(recording_tapes) > 0:
@@ -69,17 +80,17 @@ func play_recording():
 	timer.start()
 
 func _play():
-	var tween = create_tween()
 	for i in range(len(recording_tapes)):
 		if recording_tapes[i].finalized:
 			var data = recording_tapes[i].get_next_frame_data()
 			var copy = player_copy_list[i]
 			if copy != null and data != null:
+				var tween = create_tween()
 				tween.tween_property(copy, "global_position", data["position"], timer.wait_time)
 				copy.current_anim = data["animation"]
 				copy.anim.flip_h = data["flip_h"]
 	timer.start()
-# -----------------dded----------------------------------------------------------- #
+# ---------------------------------------------------------------------------- #
 # --- On Signal -------------------------------------------------------------- #
 func _on_start_recording(_checkpoin:Node):
 	start_recording()
@@ -103,4 +114,11 @@ func _on_timeout():
 		_record()
 	if is_playing_recording:
 		_play()
+# ---------------------------------------------------------------------------- #
+# --- Funcs ------------------------------------------------------------------ #
+func setup_timer():
+	timer = Timer.new()
+	add_child(timer)
+	timer.set_wait_time(0.1)
+	timer.timeout.connect(_on_timeout)
 # ---------------------------------------------------------------------------- #

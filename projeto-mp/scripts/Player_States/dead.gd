@@ -35,6 +35,6 @@ func exit():
 
 func _on_respawn_timer_timeout():
 	#print("Revivendo no checkpoint!")
-	parent_object.global_position = parent_object.respawn_position
+	parent_object.global_position = parent_object.get_respawn_position()
 	parent_object.safely_reset_current_fase()
 	respawn_ready = true
