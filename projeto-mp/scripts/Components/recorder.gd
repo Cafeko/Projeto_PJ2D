@@ -2,15 +2,18 @@ extends Node
 class_name Recorder
 
 # --- Signals ---------------------------------------------------------------- #
+signal recording_timeout
 signal recording_canceled
 # ---------------------------------------------------------------------------- #
 # --- Vars ------------------------------------------------------------------- #
 @onready var player_copy = preload("res://entities/player_copy.tscn")
-var timer : Timer
+var frame_timer : Timer
+var recording_timer : Timer
 var player : Player
 var max_record_tapes : int
-var max_record_tapes_time : float
-var time_per_frame : float = 0.01
+var max_record_time : float
+var current_record_time : float
+var time_per_frame : float = 0.001
 var can_start_recording : bool = false
 var can_start_playing : bool = false
 var is_recording : bool = false
@@ -23,11 +26,12 @@ var current_recording_tape : RecordingTape
 func _init(p:Player, n_record_tapes:int, record_time:float):
 	player = p
 	max_record_tapes = n_record_tapes
-	max_record_tapes_time = record_time
+	max_record_time = record_time
+	_setup_timer()
 
 
 func _ready():
-	_setup_timer()
+	recording_timeout.connect(_on_recording_time_out)
 
 
 func _physics_process(_delta: float):
@@ -37,10 +41,6 @@ func _physics_process(_delta: float):
 			start_recording()
 		if can_start_playing:
 			play_recording()
-	
-	#if len(recording_tapes) > 0:
-		#var rt = recording_tapes[-1]
-		#print(rt.recording_data[-1], rt.current_recording_time)
 # ---------------------------------------------------------------------------- #
 # --- Record ----------------------------------------------------------------- #
 # Inicia o processo de começar a gravar as ações do player;
@@ -51,6 +51,8 @@ func prepare_to_record():
 		# Cancela gravação que está sendo feita.
 		cancel_recording()
 		return
+	# Prepara tempo de gravação:
+	current_record_time = max_record_time
 	# Indica que pode começar a gravar.
 	can_start_recording = true
 	is_recording = false
@@ -65,15 +67,14 @@ func start_recording():
 	# Add nova recording tape como atual.
 	current_recording_tape = new_recording_tape
 	# Add first recording frame.
-	new_recording_tape.add_recording_frame(0.0)
-	timer.start()
+	new_recording_tape.add_recording_frame()
+	frame_timer.start()
 
 
 # Continua gravando as ações do player.
 func _record():
 	if current_recording_tape:
-		current_recording_tape.add_recording_frame(timer.wait_time)
-		timer.start()
+		current_recording_tape.add_recording_frame()
 
 
 func get_is_recording():
@@ -82,6 +83,7 @@ func get_is_recording():
 
 # Finaliza gravação de ações.
 func finalize_recording():
+	_count_time()
 	_record()
 	can_start_recording = false
 	is_recording = false
@@ -112,6 +114,8 @@ func stop_recording():
 func prepare_to_play():
 	# Limpa lista de copias.
 	_clear_player_copy_list()
+	# Prepara tempo de gravação:
+	current_record_time = max_record_time
 	# Prepara para começar a executar gravações, se tiver gravações.
 	if len(recording_tapes) > 0:
 		can_start_playing = true
@@ -142,7 +146,7 @@ func play_recording():
 		else:
 			# Não cria copia para essa gravação.
 			player_copy_list.append(null)
-	timer.start()
+	frame_timer.start()
 
 
 # Continua executando gravações.
@@ -167,7 +171,6 @@ func _play():
 		var copy: PlayerCopy = player_copy_list[i]
 		if copy != null and data != null:
 			_copy_act(copy, data, next_data)
-	timer.start()
 
 
 func get_is_playing_recording():
@@ -180,20 +183,31 @@ func stop_playing():
 	is_playing_recording = false
 	_clear_player_copy_list()
 # ---------------------------------------------------------------------------- #
+# --- External Funcs --------------------------------------------------------- #
+# Retorna o tempo de gravação atual.
+func get_current_record_time():
+	return current_record_time
+
+
+# Finaliza a gravação (player morreu a tempo).
+func player_died():
+	stop_playing()
+	finalize_recording()
+# ---------------------------------------------------------------------------- #
 # --- Internal Funcs --------------------------------------------------------- #
 # Cria e prepara o timer.
 func _setup_timer():
-	timer = Timer.new()
-	add_child(timer)
-	timer.set_wait_time(time_per_frame)
-	timer.timeout.connect(_on_timeout)
+	# Frame timer:
+	frame_timer = Timer.new()
+	add_child(frame_timer)
+	frame_timer.one_shot = true
+	frame_timer.set_wait_time(time_per_frame)
+	frame_timer.timeout.connect(_on_timeout)
 
 
 # Cria nova RecordingTape.
 func _create_new_recording_tape():
-	var new_recording_tape := RecordingTape.new(max_record_tapes_time, player)
-	new_recording_tape.recording_timeout.connect(_recording_time_out)
-	return new_recording_tape
+	return RecordingTape.new(player)
 
 
 # Remove e apaga a ultima recording tape
@@ -228,7 +242,7 @@ func _setup_copy_inicial(copy: PlayerCopy, data:Dictionary):
 func _copy_act(copy: PlayerCopy, current_data:Dictionary, _next_data:Dictionary):
 	# Move copia.
 	var tween = create_tween()
-	tween.tween_property(copy, "global_position", current_data["position"], timer.wait_time)
+	tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
 	# Muda animação da copia.
 	copy.current_anim = current_data["animation"]
 	# Muda direção que a copia está olhando.
@@ -246,23 +260,29 @@ func _has_recording_to_play():
 # Indica se a gravação mais antiga vai ser substituida.
 func _vai_substituir_ultima():
 	return is_recording and len(recording_tapes) + 1 > max_record_tapes
+
+
+# Desconta o tempo de cada frame do timer da gravação.
+func _count_time():
+	if current_record_time <= 0.0:
+		recording_timeout.emit()
+	else:
+		current_record_time -= frame_timer.wait_time
 # ---------------------------------------------------------------------------- #
 # --- On Signal -------------------------------------------------------------- #
 # Cancela gravação pois tempo de gravação acabou e player não morreu.
-func _recording_time_out():
+func _on_recording_time_out():
 	cancel_recording()
-
-
-# Finaliza a gravação (player morreu a tempo).
-func _on_player_died():
-	stop_playing()
-	finalize_recording()
 
 
 # Fica executando, gravando e tocando as ações do player conforme o tempo passa.
 func _on_timeout():
+	_count_time()
 	if is_recording:
 		_record()
 	if is_playing_recording:
 		_play()
+	if is_recording or is_playing_recording:
+		
+		frame_timer.start()
 # ---------------------------------------------------------------------------- #

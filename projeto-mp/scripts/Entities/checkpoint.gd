@@ -12,11 +12,16 @@ enum modes {PLAY, RECORD_AND_PLAY, STOP}
 var recorder : Recorder
 var ativado = false
 var mode : modes = modes.PLAY
+var ui : CanvasLayer
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready():
 	set_ativado(false)
 	global.player_died.connect(_on_player_died)
+	ui = global.get_ui()
+
+#func _physics_process(_delta: float):
+	#_display_timer()
 # ---------------------------------------------------------------------------- #
 # --- External Funcs --------------------------------------------------------- #
 # Muda o estado de ativado do checkpoint.
@@ -52,6 +57,8 @@ func _create_recorder(player:Player):
 	if recorder != null:
 		recorder.queue_free()
 	recorder = Recorder.new(player, recording_tape_number, recording_time)
+	recorder.recording_timeout.connect(_display_timer)
+	recorder.frame_timer.timeout.connect(_display_timer)
 	add_child(recorder)
 	recorder.recording_canceled.connect(_on_recording_canceled)
 
@@ -73,15 +80,19 @@ func _execute_mode():
 		recorder.stop_recording()
 		recorder.stop_playing()
 		recorder.prepare_to_play()
+		ui.display_recording_timer()
+		ui.update_recording_timer(recorder.get_current_record_time())
 	elif mode == modes.RECORD_AND_PLAY:
 		recorder.prepare_to_record()
 		recorder.prepare_to_play()
+		ui.display_recording_timer()
+		ui.update_recording_timer(recorder.get_current_record_time())
 	elif mode == modes.STOP:
 		recorder.stop_recording()
 		recorder.stop_playing()
+		ui.hide_recording_timer()
 # ---------------------------------------------------------------------------- #
 # --- Signal Funcs ----------------------------------------------------------- #
-# Conecte o sinal "body_entered" a esta função
 func _on_body_entered(body):
 	if is_instance_of(body, Player):
 		player_ativa_checkpoint(body)
@@ -89,11 +100,21 @@ func _on_body_entered(body):
 
 func _on_recording_canceled():
 	_set_mode(modes.STOP)
+	_execute_mode()
 
 
 func _on_player_died():
-	recorder.finalize_recording()
+	recorder.player_died()
 	_set_mode(modes.STOP)
+	ui.update_recording_timer(recorder.get_current_record_time())
+
+
+# Atualiza o tempo na tela.
+func _display_timer():
+	if recorder:
+		#if recorder.get_is_recording() or recorder.get_is_playing_recording():
+		var time = recorder.get_current_record_time()
+		ui.update_recording_timer(time)
 
 
 func _on_interaction(_kargs):

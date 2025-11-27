@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://1wlk6wrii221"]
+[gd_scene load_steps=6 format=3 uid="uid://1wlk6wrii221"]
 
+[ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="2_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://d3yatfcaxhq10" path="res://Fases/fase_teste.tscn" id="3_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://65h8fdenwlx8" path="res://entities/checkpoint.tscn" id="5_0ha60"]
 
 [node name="Main" type="Node2D"]
+
+[node name="UI" parent="." instance=ExtResource("1_0ha60")]
 
 [node name="GerenciadorFase" parent="." node_paths=PackedStringArray("fases_parent") instance=ExtResource("2_brvut")]
 fases_parent = NodePath("../Fases")
