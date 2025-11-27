@@ -23,8 +23,8 @@ func set_ativado(valor:bool):
 # Executada para botar checkpoint como o checkpoint atual do player.
 func player_ativa_checkpoint(player:Player):
 	player.update_checkpoint(self)
-	_create_recorder(player)
 	if not ativado:
+		_create_recorder(player)
 		set_ativado(true)
 
 
@@ -59,5 +59,5 @@ func _on_body_exited(_body):
 
 func _on_interaction(_kargs):
 	if recorder:
-		recorder.prepare_start_recording()
+		recorder.prepare_to_record()
 # ---------------------------------------------------------------------------- #

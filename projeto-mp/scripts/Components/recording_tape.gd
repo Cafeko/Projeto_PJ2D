@@ -31,6 +31,7 @@ func reset():
 	recording_data = []
 	finalized = false
 
+
 func add_recording_frame(time_passed:float):
 	if finalized:
 		return
@@ -44,14 +45,24 @@ func add_recording_frame(time_passed:float):
 	current_recording_time -= time_passed
 	current_frame += 1
 
+
 func restart_current_frame():
 	current_frame = 0
 
-func get_next_frame_data():
+
+func get_and_play_frame_data():
 	if current_frame < len(recording_data):
 		var data = recording_data[current_frame]
 		current_frame += 1
 		return data
+
+
+func get_next_frame_data():
+	var next_frame = current_frame + 1
+	if next_frame < len(recording_data):
+		var data = recording_data[next_frame]
+		return data
+
 
 func finalize():
 	finalized = true
