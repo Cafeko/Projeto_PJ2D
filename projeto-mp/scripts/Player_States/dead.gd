@@ -16,7 +16,7 @@ func enter():
 	parent_object.velocity = Vector2.ZERO
 	if parent_object.graber.is_holding():
 		parent_object.graber.drop_object()
-	global.finalize_recording.emit()
+	global.player_died.emit()
 	respawn_timer.start()
 
 # Executes at a rate of 60 fps.

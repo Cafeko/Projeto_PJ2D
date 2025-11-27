@@ -46,10 +46,12 @@ func add_recording_frame(time_passed:float):
 	current_frame += 1
 
 
+# Volta frame atual para o inicio.
 func restart_current_frame():
 	current_frame = 0
 
 
+# Obtem dados do frame atual e avança para o proximo frame.
 func get_and_play_frame_data():
 	if current_frame < len(recording_data):
 		var data = recording_data[current_frame]
@@ -57,6 +59,7 @@ func get_and_play_frame_data():
 		return data
 
 
+# Obtem dados do proximo frame, sem avançar para o proximo.
 func get_next_frame_data():
 	var next_frame = current_frame + 1
 	if next_frame < len(recording_data):
@@ -66,4 +69,8 @@ func get_next_frame_data():
 
 func finalize():
 	finalized = true
+
+
+func in_tape_end():
+	return current_frame >= len(recording_data)
 # ---------------------------------------------------------------------------- #

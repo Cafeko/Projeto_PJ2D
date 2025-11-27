@@ -21,3 +21,4 @@ position = Vector2(72, 135)
 
 [node name="checkpoint" parent="." instance=ExtResource("5_0ha60")]
 position = Vector2(95, 132)
+recording_tape_number = 3

@@ -18,6 +18,7 @@ var can_start_recording : bool = false
 var safe_to_reset_current_fase : bool = false
 var respawn_time : float = 0.1
 var current_respawn_time : float
+var can_act : bool = true
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready() -> void:
@@ -30,13 +31,13 @@ func _physics_process(delta: float):
 	if state_machine.get_current_state() == "Dead":
 		return
 	
-	flit_to_look_side()
+	fit_to_look_side()
 	
 	gravity(delta)
 	
-	interactions_and_grab()
-	
-	move_and_slide()
+	if can_act:
+		interactions_and_grab()
+		move_and_slide()
 	
 	check_for_squish()
 	
@@ -44,7 +45,7 @@ func _physics_process(delta: float):
 # ---------------------------------------------------------------------------- #
 # --- Internal Funcs --------------------------------------------------------- #
 # Ajusta player de acordo com direção que está olhando.
-func flit_to_look_side():
+func fit_to_look_side():
 	if look_direction == direcion.LEFT:
 		anim.flip_h = true
 		graber.set_direction(-1)
@@ -63,7 +64,8 @@ func gravity(delta):
 func interactions_and_grab():
 	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
 		if interactor.get_interactable_target():
-			interactor.do_interaction()
+			var kargs := {}
+			interactor.do_interaction(kargs)
 		elif graber.is_holding() or graber.has_grabable():
 			graber.grab_and_drop()
 	if Input.is_action_just_pressed("use") and graber.is_holding():
@@ -178,6 +180,10 @@ func set_can_start_recording(valor:bool):
 
 func get_can_start_recording():
 	return can_start_recording
+
+
+func set_can_act(valor:bool):
+	can_act = valor
 
 
 # Retorna o estado atual do player para a recording_tape gravar as ações dele.
