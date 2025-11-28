@@ -175,5 +175,6 @@ script = ExtResource("3_pwb0i")
 position = Vector2(8, 28)
 shape = SubResource("RectangleShape2D_byvr5")
 
+[connection signal="area_entered" from="laser_collider" to="laser_collider" method="_on_area_entered"]
 [connection signal="body_entered" from="laser_collider" to="." method="_on_laser_collider_body_entered"]
 [connection signal="body_entered" from="laser_collider" to="laser_collider" method="_on_body_entered"]

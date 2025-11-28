@@ -11,7 +11,7 @@ func _ready():
 # --- Funcs ------------------------------------------------------------------ #
 func set_time(time):
 	if time is float:
-		label.text = "%.3f" %time
+		label.text = "%.2f" %time
 	elif time is String:
 		label.text = time
 

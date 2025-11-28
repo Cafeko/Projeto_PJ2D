@@ -8,7 +8,7 @@
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eultm"]
-size = Vector2(15.970144, 16.0298)
+size = Vector2(17, 17)
 
 [node name="caixa" type="RigidBody2D" groups=["grabbable"]]
 position = Vector2(2, 0)

@@ -55,6 +55,10 @@ func get_next_frame_data():
 		return data
 
 
+func go_to_end():
+	current_frame = len(recording_data) -1
+
+
 func finalize():
 	finalized = true
 

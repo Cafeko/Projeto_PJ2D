@@ -13,14 +13,16 @@ var player : Player
 var max_record_tapes : int
 var max_record_time : float
 var current_record_time : float
-var time_per_frame : float = 0.001
+var time_per_frame : float = 0.01
 var can_start_recording : bool = false
 var can_start_playing : bool = false
 var is_recording : bool = false
 var is_playing_recording : bool = false
 var recording_tapes = []
 var player_copy_list = []
-var current_recording_tape : RecordingTape 
+var current_recording_tape : RecordingTape
+var error_tolerance = {"floating": 3, "dead": 3}
+var current_error_tolerance = {}
 # ---------------------------------------------------------------------------- #
 # --- Init, Ready and Physics Process ---------------------------------------- #
 func _init(p:Player, n_record_tapes:int, record_time:float):
@@ -116,6 +118,8 @@ func prepare_to_play():
 	_clear_player_copy_list()
 	# Prepara tempo de gravação:
 	current_record_time = max_record_time
+	# Reinicia tolerancias:
+	current_error_tolerance = error_tolerance.duplicate()
 	# Prepara para começar a executar gravações, se tiver gravações.
 	if len(recording_tapes) > 0:
 		can_start_playing = true
@@ -170,7 +174,13 @@ func _play():
 		# Obtem copia respectiva a tape atual.
 		var copy: PlayerCopy = player_copy_list[i]
 		if copy != null and data != null:
-			_copy_act(copy, data, next_data)
+			# Faz copia agir.
+			var execution_ok = _copy_act(copy, data, next_data)
+			# Se a execução das ações tiver detectado algum problema:
+			if not execution_ok:
+				# Deleta copia.
+				player_copy_list[i] = null
+				copy.queue_free()
 
 
 func get_is_playing_recording():
@@ -239,20 +249,53 @@ func _setup_copy_inicial(copy: PlayerCopy, data:Dictionary):
 
 
 # Faz copia agir de acordo com os dados recebidos.
-func _copy_act(copy: PlayerCopy, current_data:Dictionary, _next_data:Dictionary):
+func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
+	# Copia executando ações:
 	# Move copia.
 	var tween = create_tween()
 	tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
 	# Muda animação da copia.
-	copy.current_anim = current_data["animation"]
+	copy.play_animation(current_data["animation"])
 	# Muda direção que a copia está olhando.
-	copy.anim.flip_h = current_data["flip_h"]
+	copy.flip(current_data["flip_h"])
+	# Agarra objetos:
+	if len(next_data.keys()) > 0:
+		if current_data["is_holding"] == false and next_data["is_holding"] == true:
+			copy.grab()
+		elif current_data["is_holding"] == true and next_data["is_holding"] == false:
+			copy.drop()
+	if current_data["interacted"] == true:
+		copy.interact()
+	# Detecta impedimentos:
+	# Detecta se copia está colidindo.
+	if copy.is_colliding():
+		return false
+	# Detecta se está flutuando.
+	if current_data["on_floor"] == true and copy.is_in_floor() == false:
+		current_error_tolerance["floating"] -= 1
+		if current_error_tolerance["floating"] <= 0:
+			return false
+	else:
+		current_error_tolerance["floating"] = error_tolerance["floating"]
+	# Detecta que copia morreu.
+	if copy.is_dead() != (current_data["state"] == "Dead"):
+		current_error_tolerance["dead"] -= 1
+		if current_error_tolerance["dead"] <= 0:
+			return false
+		else:
+			current_error_tolerance["dead"] = error_tolerance["dead"]
+	# Detecta se está agarrando quando não devia.
+	if copy.is_grabing() != current_data["is_holding"]:
+		return false
+	# Se chegou ao final nada impediu.
+	return true
 
 
 # Verifica se tem recording tapes validas para serem executadas.
 func _has_recording_to_play():
-	for tape in recording_tapes:
-		if not tape.in_tape_end() and tape.finalized:
+	for i in range(len(recording_tapes)):
+		var tape = recording_tapes[i]
+		if not tape.in_tape_end() and tape.finalized and player_copy_list[i]:
 			return true
 	return false
 
@@ -277,12 +320,11 @@ func _on_recording_time_out():
 
 # Fica executando, gravando e tocando as ações do player conforme o tempo passa.
 func _on_timeout():
-	_count_time()
 	if is_recording:
 		_record()
 	if is_playing_recording:
 		_play()
 	if is_recording or is_playing_recording:
-		
+		_count_time()
 		frame_timer.start()
 # ---------------------------------------------------------------------------- #

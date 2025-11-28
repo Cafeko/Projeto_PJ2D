@@ -187,19 +187,17 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4pof7"]
 size = Vector2(126, 255)
 
-[node name="Porta" type="Node2D" node_paths=PackedStringArray("anim", "collision")]
+[node name="Porta" type="RigidBody2D" node_paths=PackedStringArray("anim", "collision")]
+lock_rotation = true
+freeze = true
+freeze_mode = 1
 script = ExtResource("1_4pof7")
 anim = NodePath("AnimatedSprite2D")
-collision = NodePath("StaticBody2D/CollisionShape2D")
-metadata/_custom_type_script = "uid://b0cqvpbuql5bj"
+collision = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sw6q0")
 animation = &"Open"
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 4
-collision_mask = 23
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4pof7")

@@ -19,6 +19,9 @@ var safe_to_reset_current_fase : bool = false
 var respawn_time : float = 0.1
 var current_respawn_time : float
 var can_act : bool = true
+var interacted : bool = false
+var interacted_time : float = 0.2
+var current_interacted_time : float = 0.2
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready() -> void:
@@ -38,6 +41,8 @@ func _physics_process(delta: float):
 	if can_act:
 		interactions_and_grab()
 		move_and_slide()
+	
+	did_interaction_end(delta)
 	
 	check_for_squish()
 	
@@ -66,12 +71,26 @@ func interactions_and_grab():
 		if interactor.get_interactable_target():
 			var kargs := {}
 			interactor.do_interaction(kargs)
+			did_interaction()
 		elif graber.is_holding() or graber.has_grabable():
 			graber.grab_and_drop()
 	if Input.is_action_just_pressed("use") and graber.is_holding():
 		var item = graber.get_held_grabable().get_object()
 		if is_instance_of(item, Item) and item.is_usable():
 			item.use_item()
+
+
+# Registra que fez uma interação.
+func did_interaction():
+	interacted = true
+	current_interacted_time = interacted_time
+
+
+func did_interaction_end(delta):
+	if interacted:
+		current_interacted_time -= delta
+		if current_interacted_time <= 0.0:
+			interacted = false
 
 
 # Verifica se o player está sendo esmagado.
@@ -116,7 +135,7 @@ func check_for_squish():
 	# Se for esmagado (vertical ou horizontal), o player morre.
 	if is_squished_vertical or is_squished_horizontal:
 		print("Player Esmagado!")
-		die_and_respawn()
+		die()
 
 
 # Emite sinal para resetar fase atual, depois de um delay.
@@ -149,7 +168,7 @@ func is_moving():
 
 
 # Faz player ir para o estado morto.
-func die_and_respawn():
+func die():
 	if not state_machine.get_current_state() == "Dead":
 		state_machine.go_to_state.emit("Dead")
 
@@ -189,5 +208,7 @@ func set_can_act(valor:bool):
 # Retorna o estado atual do player para a recording_tape gravar as ações dele.
 func get_record_data():
 	return {"position" : self.global_position, "animation" : anim.animation,
-			"flip_h": anim.flip_h}
+			"flip_h": anim.flip_h, "on_floor": self.is_on_floor(),
+			"state": state_machine.current_state.name,
+			"is_holding": graber.is_holding(), "interacted": interacted}
 # ---------------------------------------------------------------------------- #

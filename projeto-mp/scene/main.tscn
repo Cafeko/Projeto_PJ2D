@@ -14,7 +14,7 @@
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(72, 135)
+position = Vector2(80, 132)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
@@ -23,5 +23,4 @@ position = Vector2(72, 135)
 [node name="FaseTeste" parent="Fases" instance=ExtResource("3_wp4xf")]
 
 [node name="checkpoint" parent="." instance=ExtResource("5_0ha60")]
-position = Vector2(95, 132)
-recording_tape_number = 3
+position = Vector2(107, 131)

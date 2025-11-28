@@ -99,6 +99,7 @@ func set_held_object_position(p):
 		target_position = get_safe_position_big(target_position, object_size.x)
 	elif p == positions.DROP:
 		target_position = drop_object_position.global_position
+		target_position = get_drop_safe_position(target_position, object_size.x)
 	held_object.set_object_position(target_position)
 
 
@@ -113,6 +114,13 @@ func get_safe_position_big(target_position:Vector2, object_size_y):
 func get_safe_position_small(target_position:Vector2, object_size_x):
 	var safe_position = Vector2.ZERO
 	safe_position = target_position + Vector2(object_size_x/2, 0) * direction
+	return safe_position
+
+
+# Retorna uma posição segura para objetos quando dropado.
+func get_drop_safe_position(target_position:Vector2, object_size_x):
+	var safe_position = Vector2.ZERO
+	safe_position = target_position + Vector2(direction*(object_size_x/4), 0)
 	return safe_position
 
 
