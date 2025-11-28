@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://de2rk7d215ef5"]
+[gd_scene load_steps=4 format=3 uid="uid://de2rk7d215ef5"]
 
 [ext_resource type="Script" uid="uid://b8qhx4vlxev4c" path="res://scripts/Components/fase.gd" id="1_6m76b"]
+[ext_resource type="TileSet" uid="uid://ccthjqvr2xvth" path="res://Assets/Tiles/game_novos_tileset.tres" id="2_1tthu"]
 
-[node name="Fase" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6m76b"]
+
+[node name="Fase" type="Node2D" node_paths=PackedStringArray("area_fase")]
 script = ExtResource("1_6m76b")
+area_fase = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_6m76b")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_1tthu")
+format = 2

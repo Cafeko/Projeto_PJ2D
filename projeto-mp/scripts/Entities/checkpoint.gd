@@ -104,9 +104,10 @@ func _on_recording_canceled():
 
 
 func _on_player_died():
-	recorder.player_died()
-	_set_mode(modes.STOP)
-	ui.update_recording_timer(recorder.get_current_record_time())
+	if recorder:
+		recorder.player_died()
+		_set_mode(modes.STOP)
+		ui.update_recording_timer(recorder.get_current_record_time())
 
 
 # Atualiza o tempo na tela.

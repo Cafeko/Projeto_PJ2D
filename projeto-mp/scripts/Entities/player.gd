@@ -7,11 +7,12 @@ class_name Player
 @export var graber : Graber
 @export var interactor : Interactor
 
-const SPEED = 70.0
-const JUMP_VELOCITY = -350.0
+const SPEED = 90.0
+const JUMP_VELOCITY = -400.0
 
 enum direcion {LEFT, RIGHT}
 
+var respawn_sem_checkpoint : Vector2
 var look_direction = direcion.RIGHT
 var current_checkpoint : Checkpoint
 var can_start_recording : bool = false
@@ -26,6 +27,7 @@ var current_interacted_time : float = 0.2
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready() -> void:
 	state_machine.init()
+	respawn_sem_checkpoint = global_position
 
 
 func _physics_process(delta: float):
@@ -191,6 +193,8 @@ func update_checkpoint(new_checkpoint: Checkpoint):
 func get_respawn_position():
 	if current_checkpoint:
 		return current_checkpoint.global_position
+	else:
+		return respawn_sem_checkpoint
 
 
 func set_can_start_recording(valor:bool):

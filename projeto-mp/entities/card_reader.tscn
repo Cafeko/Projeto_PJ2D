@@ -34,6 +34,7 @@ animations = [{
 size = Vector2(20, 27)
 
 [node name="CardReader" type="Node2D" node_paths=PackedStringArray("anim", "detection_area") groups=["card_readers"]]
+z_index = -1
 script = ExtResource("1_5il6n")
 anim = NodePath("AnimatedSprite2D")
 detection_area = NodePath("Area2D")

@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://1wlk6wrii221"]
+[gd_scene load_steps=9 format=3 uid="uid://1wlk6wrii221"]
 
 [ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="2_wp4xf"]
-[ext_resource type="PackedScene" uid="uid://d3yatfcaxhq10" path="res://Fases/fase_teste.tscn" id="3_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://bedjlppeisl02" path="res://Fases/fase_1.tscn" id="4_4j5ol"]
+[ext_resource type="PackedScene" uid="uid://bk5dsc8i1neuw" path="res://Fases/fase_4.tscn" id="4_brvut"]
 [ext_resource type="PackedScene" uid="uid://65h8fdenwlx8" path="res://entities/checkpoint.tscn" id="5_0ha60"]
+[ext_resource type="PackedScene" uid="uid://cbyng6xp3fmi7" path="res://Fases/fase_2.tscn" id="6_p1hux"]
+[ext_resource type="PackedScene" uid="uid://c0twch2sgqrps" path="res://Fases/fase_3.tscn" id="7_of57s"]
 
 [node name="Main" type="Node2D"]
 
@@ -14,13 +17,38 @@
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(80, 132)
+position = Vector2(10, 113)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
 [node name="Fases" type="Node2D" parent="."]
 
-[node name="FaseTeste" parent="Fases" instance=ExtResource("3_wp4xf")]
+[node name="Fase_1" parent="Fases" instance=ExtResource("4_4j5ol")]
 
-[node name="checkpoint" parent="." instance=ExtResource("5_0ha60")]
-position = Vector2(107, 131)
+[node name="Fase_2" parent="Fases" instance=ExtResource("6_p1hux")]
+position = Vector2(640, 0)
+
+[node name="Fase_3" parent="Fases" instance=ExtResource("7_of57s")]
+position = Vector2(1325, -96)
+
+[node name="Fase_4" parent="Fases" instance=ExtResource("4_brvut")]
+position = Vector2(2092, -224)
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="checkpoint" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(45, 116)
+recording_time = 20.0
+
+[node name="checkpoint2" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(700, 4)
+recording_time = 15.0
+
+[node name="checkpoint3" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(1333, 4)
+
+[node name="checkpoint4" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(2034, 4)
+
+[node name="checkpoint5" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(2024, -364)

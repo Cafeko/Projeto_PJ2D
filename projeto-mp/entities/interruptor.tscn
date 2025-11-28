@@ -28,6 +28,7 @@ animations = [{
 size = Vector2(15, 14)
 
 [node name="Interruptor" type="Node2D" node_paths=PackedStringArray("interactable")]
+z_index = 1
 script = ExtResource("1_01h30")
 interactable = NodePath("Interactable")
 

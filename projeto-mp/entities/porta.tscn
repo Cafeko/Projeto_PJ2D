@@ -188,6 +188,7 @@ animations = [{
 size = Vector2(126, 255)
 
 [node name="Porta" type="RigidBody2D" node_paths=PackedStringArray("anim", "collision")]
+z_index = -1
 lock_rotation = true
 freeze = true
 freeze_mode = 1

@@ -10,6 +10,8 @@ var bodys_in_area : Array
 func _ready():
 	detection_area.body_entered.connect(_on_body_entered)
 	detection_area.body_exited.connect(_on_body_exited)
+	detection_area.area_entered.connect(_on_area_entered)
+	detection_area.area_exited.connect(_on_area_exited)
 # ---------------------------------------------------------------------------- #
 # --- Funcs ------------------------------------------------------------------ #
 # Adiciona corpo na lista de corpos na area de detecção.
@@ -42,4 +44,13 @@ func _on_body_entered(body):
 # Executado quando for detectado que um corpo saiu na area.
 func _on_body_exited(body):
 	remove_body(body)
+	
+
+
+func _on_area_entered(area):
+	add_body_to_list(area)
+
+
+func _on_area_exited(area):
+	remove_body(area)
 # ---------------------------------------------------------------------------- #

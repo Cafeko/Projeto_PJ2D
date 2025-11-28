@@ -21,7 +21,7 @@ var is_playing_recording : bool = false
 var recording_tapes = []
 var player_copy_list = []
 var current_recording_tape : RecordingTape
-var error_tolerance = {"floating": 3, "dead": 3}
+var error_tolerance = {"floating": 3, "dead": 3, "grab": 3}
 var current_error_tolerance = {}
 # ---------------------------------------------------------------------------- #
 # --- Init, Ready and Physics Process ---------------------------------------- #
@@ -286,7 +286,11 @@ func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 			current_error_tolerance["dead"] = error_tolerance["dead"]
 	# Detecta se está agarrando quando não devia.
 	if copy.is_grabing() != current_data["is_holding"]:
-		return false
+		current_error_tolerance["grab"] -= 1
+		if current_error_tolerance["grab"] <= 0:
+			return false
+		else:
+			current_error_tolerance["grab"] = error_tolerance["grab"]
 	# Se chegou ao final nada impediu.
 	return true
 
