@@ -134,6 +134,7 @@ collision_mask = 5
 script = ExtResource("1_ugwka")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5019608)
 sprite_frames = SubResource("SpriteFrames_q0i8f")
 animation = &"idle"
 
