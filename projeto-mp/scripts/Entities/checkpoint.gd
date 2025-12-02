@@ -43,6 +43,10 @@ func player_ativa_checkpoint(player:Player):
 func player_desativa_checkpoint():
 	if ativado:
 		set_ativado(false)
+
+func set_recorder_time_speed(speed:float):
+	if recorder:
+		recorder.time_speed = speed
 # ---------------------------------------------------------------------------- #
 # --- Internal Funcs --------------------------------------------------------- #
 # Atuliza animação do checkpoint.

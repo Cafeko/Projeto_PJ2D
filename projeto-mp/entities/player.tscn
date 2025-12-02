@@ -150,10 +150,11 @@ parent_object = NodePath("..")
 initial_state = NodePath("Idle")
 metadata/_custom_type_script = "uid://sqtn8ax7hofh"
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("walk_state", "jump_state")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("walk_state", "jump_state", "meditating_state")]
 script = ExtResource("3_6jj0l")
 walk_state = NodePath("../Walk")
 jump_state = NodePath("../Jump")
+meditating_state = NodePath("../Meditating")
 metadata/_custom_type_script = "uid://b8guly7wlabi7"
 
 [node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state")]

@@ -9,6 +9,7 @@ class_name Player
 
 const SPEED = 90.0
 const JUMP_VELOCITY = -400.0
+const MEDITATION_TIME_SPEED = 5.0
 
 enum direcion {LEFT, RIGHT}
 
@@ -69,17 +70,18 @@ func gravity(delta):
 
 # Executa interações e agarra objetos.
 func interactions_and_grab():
-	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
-		if interactor.get_interactable_target():
-			var kargs := {}
-			interactor.do_interaction(kargs)
-			did_interaction()
-		elif graber.is_holding() or graber.has_grabable():
-			graber.grab_and_drop()
-	if Input.is_action_just_pressed("use") and graber.is_holding():
-		var item = graber.get_held_grabable().get_object()
-		if is_instance_of(item, Item) and item.is_usable():
-			item.use_item()
+	if state_machine.get_current_state() != "Meditating":
+		if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
+			if interactor.get_interactable_target():
+				var kargs := {}
+				interactor.do_interaction(kargs)
+				did_interaction()
+			elif graber.is_holding() or graber.has_grabable():
+				graber.grab_and_drop()
+		if Input.is_action_just_pressed("use") and graber.is_holding():
+			var item = graber.get_held_grabable().get_object()
+			if is_instance_of(item, Item) and item.is_usable():
+				item.use_item()
 
 
 # Registra que fez uma interação.
@@ -95,9 +97,10 @@ func did_interaction_end(delta):
 			interacted = false
 
 
-func start_meditation():
-	if (state_machine.get_current_state() == "Idle" and not graber.is_holding()):
-		state_machine.go_to_state.emit("Meditating")
+func checkpoint_set_time_speed(new_speed:float):
+	if current_checkpoint:
+		current_checkpoint.set_recorder_time_speed(new_speed)
+
 
 # Verifica se o player está sendo esmagado.
 func check_for_squish():

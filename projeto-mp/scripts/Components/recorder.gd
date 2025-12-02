@@ -22,6 +22,7 @@ var recording_tapes = []
 var player_copy_list = []
 var current_recording_tape : RecordingTape
 var error_tolerance = {"dead": 1, "floating": 3}
+var enpty_error_tolerance = {"dead": 0, "floating": 0}
 var current_error_tolerance = {}
 # ---------------------------------------------------------------------------- #
 # --- Init, Ready and Physics Process ---------------------------------------- #
@@ -120,7 +121,7 @@ func prepare_to_play():
 	# Prepara tempo de gravação:
 	current_record_time = max_record_time
 	# Reinicia tolerancias:
-	current_error_tolerance = error_tolerance.duplicate()
+	current_error_tolerance = enpty_error_tolerance.duplicate()
 	# Prepara para começar a executar gravações, se tiver gravações.
 	if len(recording_tapes) > 0:
 		can_start_playing = true
@@ -254,8 +255,11 @@ func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 	# Copia executando ações:
 	# Move copia.
 	if len(next_data.keys()) > 0:
-		var tween = create_tween()
-		tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
+		if time_speed == 1.0:
+			var tween = create_tween()
+			tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
+		else:
+			copy.global_position = current_data["position"]
 	# Muda animação da copia.
 	copy.play_animation(current_data["animation"])
 	# Muda direção que a copia está olhando.
@@ -274,18 +278,18 @@ func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 		return false
 	# Detecta que copia morreu.
 	if copy.is_dead() != (current_data["state"] == "Dead"):
-		current_error_tolerance["dead"] -= 1
-		if current_error_tolerance["dead"] <= 0:
-			return false
-		else:
-			current_error_tolerance["dead"] = error_tolerance["dead"]
-	# Detecta se está flutuando.
-	if current_data["on_floor"] == true and copy.is_in_floor() == false:
-		current_error_tolerance["floating"] -= 1
-		if current_error_tolerance["floating"] <= 0:
+		current_error_tolerance["dead"] += 1
+		if current_error_tolerance["dead"] >= error_tolerance["dead"] * time_speed:
 			return false
 	else:
-		current_error_tolerance["floating"] = error_tolerance["floating"]
+		current_error_tolerance["dead"] = 0
+	# Detecta se está flutuando.
+	if current_data["on_floor"] == true and copy.is_in_floor() == false:
+		current_error_tolerance["floating"] += 1
+		if current_error_tolerance["floating"] >= error_tolerance["floating"] * time_speed:
+			return false
+	else:
+		current_error_tolerance["floating"] = 0
 	# Se chegou ao final nada impediu.
 	return true
 
@@ -309,7 +313,7 @@ func _count_time():
 	if current_record_time <= 0.0:
 		recording_timeout.emit()
 	else:
-		current_record_time -= frame_timer.wait_time
+		current_record_time -= frame_timer.wait_time * time_speed
 # ---------------------------------------------------------------------------- #
 # --- On Signal -------------------------------------------------------------- #
 # Cancela gravação pois tempo de gravação acabou e player não morreu.
@@ -324,7 +328,7 @@ func _on_timeout():
 			_record()
 		if is_playing_recording:
 			_play()
-		if is_recording or is_playing_recording:
+	if is_recording or is_playing_recording:
 			_count_time()
 			frame_timer.start()
 # ---------------------------------------------------------------------------- #

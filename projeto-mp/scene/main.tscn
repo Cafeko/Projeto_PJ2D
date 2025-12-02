@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://1wlk6wrii221"]
+[gd_scene load_steps=13 format=3 uid="uid://1wlk6wrii221"]
 
 [ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://cbyng6xp3fmi7" path="res://Fases/fase_2.tscn" id="6_p1hux"]
 [ext_resource type="PackedScene" uid="uid://c0twch2sgqrps" path="res://Fases/fase_3.tscn" id="7_of57s"]
 [ext_resource type="AudioStream" uid="uid://dv0qhqa7te7a3" path="res://sounds/bg_music.mp3" id="9_b5f6u"]
+[ext_resource type="PackedScene" uid="uid://l2lir18835mh" path="res://entities/laser.tscn" id="11_wscrc"]
+[ext_resource type="PackedScene" uid="uid://dx7wjjvtyddwl" path="res://entities/interruptor.tscn" id="12_mswub"]
 
 [node name="Main" type="Node2D"]
 
@@ -51,6 +53,7 @@ position = Vector2(2092, -224)
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("5_0ha60")]
 position = Vector2(45, 116)
+recording_tape_number = 2
 recording_time = 20.0
 
 [node name="checkpoint2" parent="Checkpoints" instance=ExtResource("5_0ha60")]
@@ -68,3 +71,10 @@ recording_time = 45.0
 [node name="checkpoint5" parent="Checkpoints" instance=ExtResource("5_0ha60")]
 position = Vector2(2024, -364)
 recording_time = 40.0
+
+[node name="laser" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("11_wscrc")]
+position = Vector2(172, 80)
+activators_list = [NodePath("../Interruptor")]
+
+[node name="Interruptor" parent="." instance=ExtResource("12_mswub")]
+position = Vector2(9, 121)

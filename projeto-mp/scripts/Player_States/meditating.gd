@@ -5,6 +5,7 @@ extends State
 # Executed upon entering the state.
 func enter():
 	parent_object.anim.play("idle")
+	parent_object.checkpoint_set_time_speed(parent_object.MEDITATION_TIME_SPEED)
 
 # Executes at a rate of 60 fps.
 func process_physics(_delta : float):
@@ -18,4 +19,4 @@ func process_input(_event : InputEvent):
 
 # Executed when exiting in state.
 func exit():
-	pass
+	parent_object.checkpoint_set_time_speed(1.0)
