@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cs7nnrampiybu" path="res://scripts/Components/recorder.gd" id="1_8j5h1"]
 
-[node name="recorder" type="Node" node_paths=PackedStringArray("timer")]
+[node name="recorder" type="Node"]
 script = ExtResource("1_8j5h1")
-timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0

@@ -119,14 +119,14 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ugwka"]
-radius = 5.0
-height = 15.0
+radius = 4.0
+height = 13.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ugwka"]
-size = Vector2(10, 3.4749994)
+size = Vector2(6, 3.474999)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6qwxa"]
-size = Vector2(15, 16)
+size = Vector2(14.5, 16)
 
 [node name="PlayerCopy" type="CharacterBody2D"]
 collision_layer = 2
@@ -143,6 +143,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector"]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_ugwka")
 
 [node name="FloorDetector" type="Area2D" parent="."]
@@ -176,6 +177,7 @@ position = Vector2(10, 0)
 [node name="Interactor" parent="." instance=ExtResource("7_ypvnm")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactor"]
+position = Vector2(0.25, 0)
 shape = SubResource("RectangleShape2D_6qwxa")
 
 [connection signal="body_entered" from="CollisionDetector" to="." method="_on_collision_detector_body_entered"]

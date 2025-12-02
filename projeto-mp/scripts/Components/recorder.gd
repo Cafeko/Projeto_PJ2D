@@ -21,7 +21,7 @@ var is_playing_recording : bool = false
 var recording_tapes = []
 var player_copy_list = []
 var current_recording_tape : RecordingTape
-var error_tolerance = {"floating": 3, "dead": 3, "grab": 3}
+var error_tolerance = {"dead": 1, "floating": 3}
 var current_error_tolerance = {}
 # ---------------------------------------------------------------------------- #
 # --- Init, Ready and Physics Process ---------------------------------------- #
@@ -252,8 +252,9 @@ func _setup_copy_inicial(copy: PlayerCopy, data:Dictionary):
 func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 	# Copia executando ações:
 	# Move copia.
-	var tween = create_tween()
-	tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
+	if len(next_data.keys()) > 0:
+		var tween = create_tween()
+		tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
 	# Muda animação da copia.
 	copy.play_animation(current_data["animation"])
 	# Muda direção que a copia está olhando.
@@ -270,13 +271,6 @@ func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 	# Detecta se copia está colidindo.
 	if copy.is_colliding():
 		return false
-	# Detecta se está flutuando.
-	if current_data["on_floor"] == true and copy.is_in_floor() == false:
-		current_error_tolerance["floating"] -= 1
-		if current_error_tolerance["floating"] <= 0:
-			return false
-	else:
-		current_error_tolerance["floating"] = error_tolerance["floating"]
 	# Detecta que copia morreu.
 	if copy.is_dead() != (current_data["state"] == "Dead"):
 		current_error_tolerance["dead"] -= 1
@@ -284,13 +278,13 @@ func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 			return false
 		else:
 			current_error_tolerance["dead"] = error_tolerance["dead"]
-	# Detecta se está agarrando quando não devia.
-	if copy.is_grabing() != current_data["is_holding"]:
-		current_error_tolerance["grab"] -= 1
-		if current_error_tolerance["grab"] <= 0:
+	# Detecta se está flutuando.
+	if current_data["on_floor"] == true and copy.is_in_floor() == false:
+		current_error_tolerance["floating"] -= 1
+		if current_error_tolerance["floating"] <= 0:
 			return false
-		else:
-			current_error_tolerance["grab"] = error_tolerance["grab"]
+	else:
+		current_error_tolerance["floating"] = error_tolerance["floating"]
 	# Se chegou ao final nada impediu.
 	return true
 
