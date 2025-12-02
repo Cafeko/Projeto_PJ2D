@@ -1,15 +1,28 @@
-[gd_scene load_steps=9 format=3 uid="uid://1wlk6wrii221"]
+[gd_scene load_steps=11 format=3 uid="uid://1wlk6wrii221"]
 
 [ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
+[ext_resource type="Script" uid="uid://c005yncmr1l3o" path="res://scripts/Components/AudioManager.gd" id="2_tqoya"]
 [ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="2_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://bedjlppeisl02" path="res://Fases/fase_1.tscn" id="4_4j5ol"]
 [ext_resource type="PackedScene" uid="uid://bk5dsc8i1neuw" path="res://Fases/fase_4.tscn" id="4_brvut"]
 [ext_resource type="PackedScene" uid="uid://65h8fdenwlx8" path="res://entities/checkpoint.tscn" id="5_0ha60"]
 [ext_resource type="PackedScene" uid="uid://cbyng6xp3fmi7" path="res://Fases/fase_2.tscn" id="6_p1hux"]
 [ext_resource type="PackedScene" uid="uid://c0twch2sgqrps" path="res://Fases/fase_3.tscn" id="7_of57s"]
+[ext_resource type="AudioStream" uid="uid://dv0qhqa7te7a3" path="res://sounds/bg_music.mp3" id="9_b5f6u"]
 
 [node name="Main" type="Node2D"]
+
+[node name="bg_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_b5f6u")
+volume_db = -25.0
+autoplay = true
+bus = &"Music"
+
+[node name="AudioManager" parent="." instance=ExtResource("2_brvut")]
+script = ExtResource("2_tqoya")
+sfx_volume = 5.0
+bg_music_volume = 3.0
 
 [node name="UI" parent="." instance=ExtResource("1_0ha60")]
 
@@ -17,7 +30,7 @@
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(16, 103)
+position = Vector2(18, 119)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 

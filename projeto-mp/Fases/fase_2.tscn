@@ -61,4 +61,4 @@ activators_list = [NodePath("../CardReader")]
 position = Vector2(538, -1)
 
 [node name="Keycard" parent="." instance=ExtResource("7_ijjcp")]
-position = Vector2(215, 7)
+position = Vector2(216, 6)

@@ -7,6 +7,7 @@ class_name Graber
 @export var small_object_position : Marker2D
 @export var drop_object_position : Marker2D
 @export var graber_object : CharacterBody2D
+@onready var drop_object_sfx = $DropObjectSFX as AudioStreamPlayer
 
 enum positions {SMALL, BIG, DROP}
 
@@ -51,15 +52,34 @@ func grab_object():
 
 
 # Solta objeto agarrado, se tiver, colocando ele na posição de drop.
+# No script Graber.gd
+
 func drop_object():
+	
 	if not held_object:
 		return
+	
+	# 1. CONEXÃO: Conecta o sinal "landed_on_floor" do objeto (Grabable)
+	# à função que toca o SFX.
+	held_object.landed_on_floor.connect(_on_object_landed)
+
 	set_held_object_position(positions.DROP)
 	held_object.object.set_deferred("freeze", false)
 	held_object.object.remove_collision_exception_with(graber_object)
 	grabbable_object = held_object
 	held_object = null
-
+	
+# Esta função é chamada quando o sinal é emitido pelo Grabable.
+func _on_object_landed():
+	if drop_object_sfx:
+		drop_object_sfx.play()
+		
+		# Recomendação de Limpeza:
+		# Após tocar o som, é bom desconectar o sinal para que ele não toque
+		# novamente se o objeto for empurrado no chão.
+		# O objeto que está no chão agora é o 'grabbable_object' (o antigo held_object)
+		if grabbable_object and grabbable_object.landed_on_floor.is_connected(_on_object_landed):
+			grabbable_object.landed_on_floor.disconnect(_on_object_landed)
 
 # Atualiza posição do objeto agarrado de acordo com seu tamanho.
 func _update_held_object_position():

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbi2id2f6lmus"]
+[gd_scene load_steps=8 format=3 uid="uid://dbi2id2f6lmus"]
 
 [ext_resource type="Script" uid="uid://dmjqovtpdlm4s" path="res://scripts/Entities/card_reader.gd" id="1_5il6n"]
 [ext_resource type="Texture2D" uid="uid://28dme1ek4wlu" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/leitor_keycard.png" id="2_5il6n"]
+[ext_resource type="AudioStream" uid="uid://dw823xd2xjyju" path="res://sounds/unlock_leitor_keycard.wav" id="3_dmyud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dmyud"]
 atlas = ExtResource("2_5il6n")
@@ -39,6 +40,11 @@ script = ExtResource("1_5il6n")
 anim = NodePath("AnimatedSprite2D")
 detection_area = NodePath("Area2D")
 metadata/_custom_type_script = "uid://f006jkw4s2fx"
+
+[node name="unlock_leitor_keycard" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dmyud")
+volume_db = -30.0
+bus = &"SFX"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k1pid")

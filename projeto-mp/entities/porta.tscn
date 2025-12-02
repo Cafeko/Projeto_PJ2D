@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://divjwei35kd32"]
+[gd_scene load_steps=30 format=3 uid="uid://divjwei35kd32"]
 
 [ext_resource type="Script" uid="uid://cruhxdfv0omoc" path="res://scripts/Entities/porta.gd" id="1_4pof7"]
 [ext_resource type="Texture2D" uid="uid://w63pkyd1v035" path="res://Assets/sprites/Scifi_Door.png" id="2_sw6q0"]
+[ext_resource type="AudioStream" uid="uid://d0wk7hbsa1dt7" path="res://sounds/open_door_sfx.wav" id="3_6eeel"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6eeel"]
 atlas = ExtResource("2_sw6q0")
@@ -202,3 +203,7 @@ animation = &"Open"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4pof7")
+
+[node name="door_open_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6eeel")
+bus = &"SFX"

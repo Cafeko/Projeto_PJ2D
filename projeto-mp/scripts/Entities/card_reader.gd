@@ -4,6 +4,7 @@ class_name CardReader
 
 @export var anim: AnimatedSprite2D
 @export var detection_area: Area2D
+@onready var unlock_leitor_keycard = $unlock_leitor_keycard as AudioStreamPlayer
 
 # --- Ready ---
 func _ready():
@@ -22,7 +23,10 @@ func _on_body_entered(body):
 		# Mudar a animação do CardReader para "unlocked"
 		if anim and anim.animation != "unlocked":
 			anim.play("unlocked")
-		
+
+		if unlock_leitor_keycard:
+			print("DEBUG: O som está sendo chamado!")
+			unlock_leitor_keycard.play()
 		# Muda estado para ativo.
 		activate()
 		

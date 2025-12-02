@@ -3,6 +3,7 @@ extends Activator
 # --- Vars ------------------------------------------------------------------- #
 @export var detection_area :  Area2D
 @export var anim : AnimatedSprite2D
+@onready var button_click_sfx = $button_click_sfx as AudioStreamPlayer
 
 var bodys_in_area : Array
 # ---------------------------------------------------------------------------- #
@@ -31,6 +32,7 @@ func update_activator_state():
 	if len(bodys_in_area) > 0:
 		activate()
 		anim.play("Pressed")
+		button_click_sfx.play()
 	else:
 		deactivate()
 		anim.play("Not_Pressed")

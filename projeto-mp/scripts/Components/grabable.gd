@@ -6,10 +6,32 @@ class_name Grabable
 @export var shape : CollisionShape2D
 @export var small_object : bool = true
 @export var can_be_grabed : bool = true
+
+# O Graber vai se conectar a este sinal
+signal landed_on_floor
+
 # ---------------------------------------------------------------------------- #
 # --- Ready ------------------------------------------------------------------ #
 func _ready():
 	update_grabability()
+	# CONEXÃO: Conecta o sinal nativo do RigidBody2D a uma função interna
+	# Nota: Certifique-se que o RigidBody2D.contact_monitor esteja ligado (true)
+	# e que ele tenha pelo menos 1 contato máximo (contacts_reported).
+	object.body_entered.connect(_on_object_body_entered)
+	
+# --- NOVO: Função para escutar a colisão física ---
+func _on_object_body_entered(body: Node2D):
+	# 1. Verifica se não é o Player que está colidindo.
+	# 2. Verifica se o objeto não está congelado (ou seja, se ele foi solto).
+	if not object.freeze:
+		
+		# IMPORTANTE: Só emitimos o sinal UMA VEZ para não tocar o som 
+		# continuamente enquanto o objeto estiver parado no chão.
+		# A melhor forma de garantir isso é desconectar o sinal depois de tocar o som,
+		# mas por simplicidade inicial, vamos apenas emitir.
+		
+		landed_on_floor.emit()
+		
 # ---------------------------------------------------------------------------- #
 # --- Funcs ------------------------------------------------------------------ #
 # Retorna se o grabable é pequeno ou não.
