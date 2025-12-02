@@ -5,6 +5,7 @@ class_name Checkpoint
 @export var interactable : Interactable
 @export var recording_tape_number : int = 1
 @export var recording_time : float = 10.0
+@export var frame_time : float = 0.01
 
 enum modes {PLAY, RECORD_AND_PLAY, STOP}
 
@@ -56,7 +57,7 @@ func _update_anim():
 func _create_recorder(player:Player):
 	if recorder != null:
 		recorder.queue_free()
-	recorder = Recorder.new(player, recording_tape_number, recording_time)
+	recorder = Recorder.new(player, recording_tape_number, recording_time, frame_time)
 	recorder.recording_timeout.connect(_display_timer)
 	recorder.frame_timer.timeout.connect(_display_timer)
 	add_child(recorder)

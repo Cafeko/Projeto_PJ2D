@@ -11,10 +11,10 @@
 [ext_resource type="Script" uid="uid://dp3h2ot6f2eih" path="res://scripts/Player_States/jump.gd" id="5_ua6mu"]
 [ext_resource type="Script" uid="uid://bddx73ca1yvhg" path="res://scripts/Player_States/dead.gd" id="6_xy0x1"]
 [ext_resource type="AudioStream" uid="uid://85ms4j8q5xmk" path="res://sounds/die_sfx.wav" id="8_q0i8f"]
+[ext_resource type="Script" uid="uid://biaa373rum5gp" path="res://scripts/Player_States/meditating.gd" id="9_0i614"]
 [ext_resource type="PackedScene" uid="uid://whdgu748wqwy" path="res://Components/graber.tscn" id="11_xakct"]
 [ext_resource type="PackedScene" uid="uid://ch8sgooa863fd" path="res://Components/interactor.tscn" id="12_dchgp"]
 [ext_resource type="AudioStream" uid="uid://8qtwkrx3y5rp" path="res://sounds/jump_sfx.wav" id="13_kdgjc"]
-[ext_resource type="AudioStream" uid="uid://d1nd3q0wi01qx" path="res://sounds/drop_object_sfx.wav" id="14_0i614"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e4p34"]
 atlas = ExtResource("2_b0kkn")
@@ -182,6 +182,11 @@ metadata/_custom_type_script = "uid://b8guly7wlabi7"
 stream = ExtResource("8_q0i8f")
 bus = &"SFX"
 
+[node name="Meditating" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("9_0i614")
+idle_state = NodePath("../Idle")
+metadata/_custom_type_script = "uid://b8guly7wlabi7"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q0i8f")
 animation = &"idle"
@@ -214,11 +219,7 @@ position = Vector2(7, 2)
 position = Vector2(0, -8.2)
 
 [node name="DropSpot" type="Marker2D" parent="Graber"]
-position = Vector2(10, 0)
-
-[node name="DropObjectSFX" type="AudioStreamPlayer" parent="Graber"]
-stream = ExtResource("14_0i614")
-volume_db = 24.0
+position = Vector2(8, 0)
 
 [node name="Interactor" parent="." instance=ExtResource("12_dchgp")]
 

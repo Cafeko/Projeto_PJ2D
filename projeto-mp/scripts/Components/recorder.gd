@@ -8,12 +8,12 @@ signal recording_canceled
 # --- Vars ------------------------------------------------------------------- #
 @onready var player_copy = preload("res://entities/player_copy.tscn")
 var frame_timer : Timer
-var recording_timer : Timer
 var player : Player
 var max_record_tapes : int
 var max_record_time : float
 var current_record_time : float
 var time_per_frame : float = 0.01
+var time_speed : float = 1.0
 var can_start_recording : bool = false
 var can_start_playing : bool = false
 var is_recording : bool = false
@@ -25,10 +25,11 @@ var error_tolerance = {"dead": 1, "floating": 3}
 var current_error_tolerance = {}
 # ---------------------------------------------------------------------------- #
 # --- Init, Ready and Physics Process ---------------------------------------- #
-func _init(p:Player, n_record_tapes:int, record_time:float):
+func _init(p:Player, n_record_tapes:int, record_time:float, frame_time:float):
 	player = p
 	max_record_tapes = n_record_tapes
 	max_record_time = record_time
+	time_per_frame = frame_time
 	_setup_timer()
 
 
@@ -318,11 +319,12 @@ func _on_recording_time_out():
 
 # Fica executando, gravando e tocando as ações do player conforme o tempo passa.
 func _on_timeout():
-	if is_recording:
-		_record()
-	if is_playing_recording:
-		_play()
-	if is_recording or is_playing_recording:
-		_count_time()
-		frame_timer.start()
+	for t in range(time_speed):
+		if is_recording:
+			_record()
+		if is_playing_recording:
+			_play()
+		if is_recording or is_playing_recording:
+			_count_time()
+			frame_timer.start()
 # ---------------------------------------------------------------------------- #

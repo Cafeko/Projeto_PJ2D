@@ -140,7 +140,7 @@ func get_safe_position_small(target_position:Vector2, object_size_x):
 # Retorna uma posição segura para objetos quando dropado.
 func get_drop_safe_position(target_position:Vector2, object_size_x):
 	var safe_position = Vector2.ZERO
-	safe_position = target_position + Vector2(direction*(object_size_x/4), 0)
+	safe_position = target_position + Vector2(direction*(object_size_x/2), 0)
 	return safe_position
 
 

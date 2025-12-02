@@ -1,7 +1,6 @@
 extends State
 
-@export var walk_state : State
-@export var jump_state : State
+@export var idle_state : State
 
 # Executed upon entering the state.
 func enter():
@@ -9,13 +8,8 @@ func enter():
 
 # Executes at a rate of 60 fps.
 func process_physics(_delta : float):
-	parent_object.move()
-	if parent_object.velocity.x != 0:
-		return walk_state
-	if Input.is_action_just_pressed("jump") and parent_object.is_on_floor():
-		return jump_state
 	if Input.is_action_just_pressed("meditate"):
-		parent_object.start_meditation()
+		return idle_state
 	return null
 
 # Executed when recive a InputEvent.

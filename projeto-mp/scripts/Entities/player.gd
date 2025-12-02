@@ -95,6 +95,10 @@ func did_interaction_end(delta):
 			interacted = false
 
 
+func start_meditation():
+	if (state_machine.get_current_state() == "Idle" and not graber.is_holding()):
+		state_machine.go_to_state.emit("Meditating")
+
 # Verifica se o player está sendo esmagado.
 func check_for_squish():
 	# Só checamos se não estamos mortos ou pulando (por simplicidade inicial)
