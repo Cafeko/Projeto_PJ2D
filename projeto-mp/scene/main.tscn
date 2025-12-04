@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://1wlk6wrii221"]
+[gd_scene load_steps=16 format=3 uid="uid://1wlk6wrii221"]
 
 [ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
@@ -10,8 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://cbyng6xp3fmi7" path="res://Fases/fase_2.tscn" id="6_p1hux"]
 [ext_resource type="PackedScene" uid="uid://c0twch2sgqrps" path="res://Fases/fase_3.tscn" id="7_of57s"]
 [ext_resource type="AudioStream" uid="uid://dv0qhqa7te7a3" path="res://sounds/bg_music.mp3" id="9_b5f6u"]
+[ext_resource type="PackedScene" uid="uid://cbbuksucu31gg" path="res://Fases/fase_5.tscn" id="10_mswub"]
+[ext_resource type="PackedScene" uid="uid://did21t6lfr3lv" path="res://Fases/fase_6.tscn" id="11_hybxs"]
 [ext_resource type="PackedScene" uid="uid://l2lir18835mh" path="res://entities/laser.tscn" id="11_wscrc"]
 [ext_resource type="PackedScene" uid="uid://dx7wjjvtyddwl" path="res://entities/interruptor.tscn" id="12_mswub"]
+[ext_resource type="PackedScene" uid="uid://7yfgvc2lhqm3" path="res://Fases/fase_7.tscn" id="12_v2gmf"]
 
 [node name="Main" type="Node2D"]
 
@@ -23,8 +26,8 @@ bus = &"Music"
 
 [node name="AudioManager" parent="." instance=ExtResource("2_brvut")]
 script = ExtResource("2_tqoya")
-sfx_volume = 5.0
-bg_music_volume = 3.0
+sfx_volume = 0.0
+bg_music_volume = 0.0
 
 [node name="UI" parent="." instance=ExtResource("1_0ha60")]
 
@@ -32,7 +35,7 @@ bg_music_volume = 3.0
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(18, 119)
+position = Vector2(4004, -7)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
@@ -48,6 +51,15 @@ position = Vector2(1325, -96)
 
 [node name="Fase_4" parent="Fases" instance=ExtResource("4_brvut")]
 position = Vector2(2092, -224)
+
+[node name="Fase_5" parent="Fases" instance=ExtResource("10_mswub")]
+position = Vector2(2982, -240)
+
+[node name="Fase_6" parent="Fases" instance=ExtResource("11_hybxs")]
+position = Vector2(3477, -288)
+
+[node name="Fase_7" parent="Fases" instance=ExtResource("12_v2gmf")]
+position = Vector2(3972, -288)
 
 [node name="Checkpoints" type="Node2D" parent="."]
 
@@ -71,6 +83,17 @@ recording_time = 45.0
 [node name="checkpoint5" parent="Checkpoints" instance=ExtResource("5_0ha60")]
 position = Vector2(2024, -364)
 recording_time = 40.0
+
+[node name="checkpoint6" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(3043, 37)
+
+[node name="checkpoint7" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(3543, -11)
+recording_tape_number = 2
+
+[node name="checkpoint8" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(4027, -11)
+recording_tape_number = 2
 
 [node name="laser" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("11_wscrc")]
 position = Vector2(172, 80)
