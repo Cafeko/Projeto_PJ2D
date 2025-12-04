@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://boj7wo8p32vi5"]
+[gd_scene load_steps=7 format=3 uid="uid://boj7wo8p32vi5"]
 
 [ext_resource type="Script" uid="uid://blrc8rn53qmbd" path="res://scripts/Components/item.gd" id="1_wqvmm"]
 [ext_resource type="PackedScene" uid="uid://dg8sf7fnqspnf" path="res://Components/grabable.tscn" id="2_eultm"]
 [ext_resource type="Texture2D" uid="uid://cn7mums7iaarw" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/caixa.png" id="2_ws6cs"]
+[ext_resource type="AudioStream" uid="uid://d1nd3q0wi01qx" path="res://sounds/drop_object_sfx.wav" id="4_86ich"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50p3q"]
 size = Vector2(16, 16)
@@ -28,14 +29,20 @@ texture = ExtResource("2_ws6cs")
 visible = false
 shape = SubResource("RectangleShape2D_50p3q")
 
-[node name="Grabable" parent="." node_paths=PackedStringArray("object", "shape") instance=ExtResource("2_eultm")]
+[node name="Grabable" parent="." node_paths=PackedStringArray("object", "shape", "drop_object_sfx") instance=ExtResource("2_eultm")]
 rotation = -0.0018643067
 monitoring = true
 object = NodePath("..")
 shape = NodePath("CollisionShape2D")
 small_object = false
+drop_object_sfx = NodePath("DropObjectSFX")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grabable"]
 shape = SubResource("RectangleShape2D_eultm")
+
+[node name="DropObjectSFX" type="AudioStreamPlayer" parent="Grabable"]
+stream = ExtResource("4_86ich")
+volume_db = 24.0
+bus = &"Efeios Sonoros"
 
 [editable path="Grabable"]

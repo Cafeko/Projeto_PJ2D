@@ -49,4 +49,3 @@ shape = SubResource("RectangleShape2D_abock")
 [node name="button_click_sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jry63")
 volume_db = -5.0
-bus = &"SFX"

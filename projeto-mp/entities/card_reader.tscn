@@ -43,8 +43,8 @@ metadata/_custom_type_script = "uid://f006jkw4s2fx"
 
 [node name="unlock_leitor_keycard" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_dmyud")
-volume_db = -30.0
-bus = &"SFX"
+volume_db = -10.0
+bus = &"Efeios Sonoros"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k1pid")

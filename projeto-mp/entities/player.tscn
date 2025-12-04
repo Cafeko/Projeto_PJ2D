@@ -171,7 +171,7 @@ metadata/_custom_type_script = "uid://b8guly7wlabi7"
 
 [node name="jump_sfx" type="AudioStreamPlayer" parent="StateMachine/Jump"]
 stream = ExtResource("13_kdgjc")
-bus = &"SFX"
+bus = &"Efeios Sonoros"
 
 [node name="Dead" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "respawn_timer")]
 script = ExtResource("6_xy0x1")
@@ -181,7 +181,7 @@ metadata/_custom_type_script = "uid://b8guly7wlabi7"
 
 [node name="die_sfx" type="AudioStreamPlayer" parent="StateMachine/Dead"]
 stream = ExtResource("8_q0i8f")
-bus = &"SFX"
+bus = &"Efeios Sonoros"
 
 [node name="Meditating" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
 script = ExtResource("9_0i614")

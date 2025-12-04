@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://jqb0j6hygtdp"]
+[gd_scene load_steps=9 format=3 uid="uid://jqb0j6hygtdp"]
 
 [ext_resource type="Script" uid="uid://cf8jeyll2u272" path="res://scripts/Entities/keycard.gd" id="1_h742u"]
 [ext_resource type="Script" uid="uid://12t5r8ub8qvr" path="res://scripts/Components/grabable.gd" id="2_h742u"]
 [ext_resource type="Texture2D" uid="uid://crhlutkrtj3ep" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/key.png" id="2_i82wh"]
+[ext_resource type="AudioStream" uid="uid://d1nd3q0wi01qx" path="res://sounds/drop_object_sfx.wav" id="4_i82wh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_io687"]
 atlas = ExtResource("2_i82wh")
@@ -28,7 +29,6 @@ size = Vector2(16, 13)
 [node name="Keycard" type="RigidBody2D" node_paths=PackedStringArray("anim", "grabable") groups=["grabbable"]]
 z_index = 1
 collision_layer = 16
-collision_mask = 5
 lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 1
@@ -46,14 +46,21 @@ animation = &"keycard"
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_h742u")
 
-[node name="Grabable" type="Area2D" parent="." node_paths=PackedStringArray("object", "shape")]
+[node name="Grabable" type="Area2D" parent="." node_paths=PackedStringArray("object", "shape", "drop_object_sfx")]
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("2_h742u")
 object = NodePath("..")
 shape = NodePath("CollisionShape2D")
+drop_object_sfx = NodePath("DropObjectSFX")
 metadata/_custom_type_script = "uid://12t5r8ub8qvr"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grabable"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_i82wh")
+
+[node name="DropObjectSFX" type="AudioStreamPlayer" parent="Grabable"]
+stream = ExtResource("4_i82wh")
+volume_db = 20.0
+pitch_scale = 3.0
+bus = &"Efeios Sonoros"

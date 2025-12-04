@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://whdgu748wqwy"]
+[gd_scene load_steps=3 format=3 uid="uid://whdgu748wqwy"]
 
 [ext_resource type="Script" uid="uid://bn4xbdu8ywtkq" path="res://scripts/Components/graber.gd" id="1_mgwef"]
-[ext_resource type="AudioStream" uid="uid://d1nd3q0wi01qx" path="res://sounds/drop_object_sfx.wav" id="2_707r4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgwef"]
 size = Vector2(10, 14.6875)
@@ -14,7 +13,3 @@ script = ExtResource("1_mgwef")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mgwef")
-
-[node name="DropObjectSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_707r4")
-volume_db = 24.0

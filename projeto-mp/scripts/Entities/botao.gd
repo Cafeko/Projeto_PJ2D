@@ -30,12 +30,14 @@ func remove_body(body):
 # Atualiza o estado do botão caso tenha ou não corpos na area de detecção.
 func update_activator_state():
 	if len(bodys_in_area) > 0:
-		activate()
-		anim.play("Pressed")
-		button_click_sfx.play()
+		if not is_active():
+			activate()
+			anim.play("Pressed")
+			button_click_sfx.play()
 	else:
-		deactivate()
-		anim.play("Not_Pressed")
+		if is_active():
+			deactivate()
+			anim.play("Not_Pressed")
 # ---------------------------------------------------------------------------- #
 # --- Signal Funcs ----------------------------------------------------------- #
 # Executado quando for detectado que um corpo entrou na area.

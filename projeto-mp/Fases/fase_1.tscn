@@ -1,11 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bedjlppeisl02"]
+[gd_scene load_steps=6 format=3 uid="uid://bedjlppeisl02"]
 
 [ext_resource type="Script" uid="uid://b8qhx4vlxev4c" path="res://scripts/Components/fase.gd" id="1_iciit"]
 [ext_resource type="TileSet" uid="uid://ccthjqvr2xvth" path="res://Assets/Tiles/game_novos_tileset.tres" id="2_0ecli"]
 [ext_resource type="PackedScene" uid="uid://c8hs307w0kbou" path="res://entities/espinho.tscn" id="2_5me8a"]
 [ext_resource type="PackedScene" uid="uid://boj7wo8p32vi5" path="res://entities/caixa.tscn" id="3_iciit"]
-[ext_resource type="PackedScene" uid="uid://jqb0j6hygtdp" path="res://entities/keycard.tscn" id="5_nxvxg"]
-[ext_resource type="PackedScene" uid="uid://dbi2id2f6lmus" path="res://entities/card_reader.tscn" id="6_8dqw3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxvxg"]
 size = Vector2(759, 832)
@@ -45,12 +43,3 @@ position = Vector2(78, 0)
 
 [node name="caixa" parent="." instance=ExtResource("3_iciit")]
 position = Vector2(293, 121)
-contact_monitor = true
-max_contacts_reported = 1
-
-[node name="Keycard" parent="." instance=ExtResource("5_nxvxg")]
-position = Vector2(81, 119)
-max_contacts_reported = 1
-
-[node name="CardReader" parent="." instance=ExtResource("6_8dqw3")]
-position = Vector2(109, 117)

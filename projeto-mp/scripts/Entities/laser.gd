@@ -25,6 +25,6 @@ func inactive():
 	tile_on.set_deferred("visible", true)
 	tile_off.set_deferred("visible", false)
 	
-	$laser_collider/CollisionShape2D.disabled = false
+	$laser_collider/CollisionShape2D.set_deferred("disabled", false)
 
 	#print("Laser ON")

@@ -206,4 +206,6 @@ shape = SubResource("RectangleShape2D_4pof7")
 
 [node name="door_open_sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_6eeel")
-bus = &"SFX"
+volume_db = -5.0
+pitch_scale = 2.0
+bus = &"Efeios Sonoros"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://1wlk6wrii221"]
+[gd_scene load_steps=14 format=3 uid="uid://1wlk6wrii221"]
 
 [ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
@@ -12,8 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://dv0qhqa7te7a3" path="res://sounds/bg_music.mp3" id="9_b5f6u"]
 [ext_resource type="PackedScene" uid="uid://cbbuksucu31gg" path="res://Fases/fase_5.tscn" id="10_mswub"]
 [ext_resource type="PackedScene" uid="uid://did21t6lfr3lv" path="res://Fases/fase_6.tscn" id="11_hybxs"]
-[ext_resource type="PackedScene" uid="uid://l2lir18835mh" path="res://entities/laser.tscn" id="11_wscrc"]
-[ext_resource type="PackedScene" uid="uid://dx7wjjvtyddwl" path="res://entities/interruptor.tscn" id="12_mswub"]
 [ext_resource type="PackedScene" uid="uid://7yfgvc2lhqm3" path="res://Fases/fase_7.tscn" id="12_v2gmf"]
 
 [node name="Main" type="Node2D"]
@@ -22,7 +20,7 @@
 stream = ExtResource("9_b5f6u")
 volume_db = -25.0
 autoplay = true
-bus = &"Music"
+bus = &"Musicas"
 
 [node name="AudioManager" parent="." instance=ExtResource("2_brvut")]
 script = ExtResource("2_tqoya")
@@ -35,7 +33,7 @@ bg_music_volume = 0.0
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(4004, -7)
+position = Vector2(654, -6)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
@@ -94,10 +92,3 @@ recording_tape_number = 2
 [node name="checkpoint8" parent="Checkpoints" instance=ExtResource("5_0ha60")]
 position = Vector2(4027, -11)
 recording_tape_number = 2
-
-[node name="laser" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("11_wscrc")]
-position = Vector2(172, 80)
-activators_list = [NodePath("../Interruptor")]
-
-[node name="Interruptor" parent="." instance=ExtResource("12_mswub")]
-position = Vector2(9, 121)
