@@ -172,7 +172,7 @@ position = Vector2(7, 2)
 position = Vector2(0, -8.2)
 
 [node name="DropSpot" type="Marker2D" parent="Graber"]
-position = Vector2(10, 0)
+position = Vector2(8, 6)
 
 [node name="Interactor" parent="." instance=ExtResource("7_ypvnm")]
 

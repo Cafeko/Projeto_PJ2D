@@ -48,9 +48,19 @@ func get_size():
 	return shape.shape.size
 
 
+# Retorna o shape do grabable.
+func get_grabable_shape():
+	return shape
+
+
 # Retorna objeto do grabable.
 func get_object():
 	return object
+
+
+# Retorna a mask de colisões do objeto.
+func get_object_collision_mask():
+	return object.collision_mask
 
 
 # Update nodes to make object can be grabed or not.

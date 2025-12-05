@@ -182,6 +182,8 @@ func _play():
 			if not execution_ok:
 				# Deleta copia.
 				player_copy_list[i] = null
+				if copy.is_grabing():
+					copy.drop()
 				copy.queue_free()
 
 
@@ -254,12 +256,11 @@ func _setup_copy_inicial(copy: PlayerCopy, data:Dictionary):
 func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 	# Copia executando ações:
 	# Move copia.
-	if len(next_data.keys()) > 0:
-		if time_speed == 1.0:
-			var tween = create_tween()
-			tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
-		else:
-			copy.global_position = current_data["position"]
+	if time_speed == 1.0:
+		var tween = create_tween()
+		tween.tween_property(copy, "global_position", current_data["position"], frame_timer.wait_time)
+	else:
+		copy.global_position = current_data["position"]
 	# Muda animação da copia.
 	copy.play_animation(current_data["animation"])
 	# Muda direção que a copia está olhando.

@@ -33,7 +33,7 @@ bg_music_volume = 0.0
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(654, -6)
+position = Vector2(648, -3)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
@@ -63,7 +63,6 @@ position = Vector2(3972, -288)
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("5_0ha60")]
 position = Vector2(45, 116)
-recording_tape_number = 2
 recording_time = 20.0
 
 [node name="checkpoint2" parent="Checkpoints" instance=ExtResource("5_0ha60")]
