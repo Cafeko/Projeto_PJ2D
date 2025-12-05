@@ -43,6 +43,8 @@ func player_ativa_checkpoint(player:Player):
 func player_desativa_checkpoint():
 	if ativado:
 		set_ativado(false)
+		_set_mode(modes.STOP)
+		_execute_mode()
 
 func set_recorder_time_speed(speed:float):
 	if recorder:
