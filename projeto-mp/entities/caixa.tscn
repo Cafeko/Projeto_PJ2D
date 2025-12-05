@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://boj7wo8p32vi5"]
 
-[ext_resource type="Script" uid="uid://blrc8rn53qmbd" path="res://scripts/Components/item.gd" id="1_wqvmm"]
+[ext_resource type="Script" uid="uid://dxog33xl704di" path="res://scripts/Entities/caixa.gd" id="1_86ich"]
 [ext_resource type="PackedScene" uid="uid://dg8sf7fnqspnf" path="res://Components/grabable.tscn" id="2_eultm"]
 [ext_resource type="Texture2D" uid="uid://cn7mums7iaarw" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/caixa.png" id="2_ws6cs"]
 [ext_resource type="AudioStream" uid="uid://d1nd3q0wi01qx" path="res://sounds/drop_object_sfx.wav" id="4_86ich"]
@@ -18,7 +18,7 @@ collision_mask = 7
 lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 1
-script = ExtResource("1_wqvmm")
+script = ExtResource("1_86ich")
 usable = false
 metadata/_custom_type_script = "uid://blrc8rn53qmbd"
 

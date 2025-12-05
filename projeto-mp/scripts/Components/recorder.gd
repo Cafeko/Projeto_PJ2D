@@ -235,6 +235,8 @@ func _delete_last_tape():
 func _clear_player_copy_list():
 	for copy in player_copy_list:
 		if copy:
+			if copy.is_grabing():
+					copy.drop()
 			copy.queue_free()
 	player_copy_list = []
 
