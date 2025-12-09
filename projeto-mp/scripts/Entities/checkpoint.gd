@@ -10,6 +10,7 @@ class_name Checkpoint
 enum modes {PLAY, RECORD_AND_PLAY, STOP, INTERACTING}
 
 @onready var anim = $AnimatedSprite2D
+@onready var checkpoint_info_box : InfoBox = $Control/CheckpointBox
 var recorder : Recorder
 var ativado = false
 var mode : modes = modes.STOP
@@ -24,6 +25,7 @@ func _ready():
 	set_ativado(false)
 	global.player_died.connect(_on_player_died)
 	ui = global.get_ui()
+	checkpoint_info_box.set_visibility(false)
 
 func _physics_process(delta: float):
 	if mode == modes.INTERACTING and interacting_input_delay <= 0.0:
@@ -114,6 +116,10 @@ func _execute_mode():
 func _start_interacting():
 	interacting_input_delay = 0.2
 	player.set_can_act(false)
+	checkpoint_info_box.set_visibility(true)
+	checkpoint_info_box.set_page_visible(selected_mode_index)
+	checkpoint_info_box.update_infos(recorder.get_recording_tapes_list_len(),
+				recorder.get_max_record_tapes(), recorder.get_max_record_time())
 	_set_mode(modes.INTERACTING)
 
 
@@ -129,13 +135,15 @@ func _interacting():
 		selected_mode_index = 0
 	elif selected_mode_index >= len(selected_modes_list):
 		selected_mode_index = len(selected_modes_list) - 1
+	checkpoint_info_box.set_page_visible(selected_mode_index)
 
 
-# Finaliza a interação permitindo que o player se mova e colocando o checkpoin
+# Finaliza a interação permitindo que o player se mova e colocando o checkpoint
 # no modo selecionado.
 func _end_interacting():
 	_set_mode(selected_modes_list[selected_mode_index])
 	_execute_mode()
+	checkpoint_info_box.set_visibility(false)
 	player.set_can_act(true)
 # ---------------------------------------------------------------------------- #
 # --- Signal Funcs ----------------------------------------------------------- #

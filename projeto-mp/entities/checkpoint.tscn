@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://65h8fdenwlx8"]
+[gd_scene load_steps=19 format=3 uid="uid://65h8fdenwlx8"]
 
 [ext_resource type="Script" uid="uid://blggesj5efadr" path="res://scripts/Entities/checkpoint.gd" id="1_hjeaj"]
 [ext_resource type="Texture2D" uid="uid://bmxmxx2ne6baj" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/Raised Flag.png" id="3_6wqo1"]
 [ext_resource type="Texture2D" uid="uid://dg62uqrjvkg1m" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/Unraised Flag.png" id="4_8w72o"]
 [ext_resource type="PackedScene" uid="uid://dpk8x8ormxb7i" path="res://Components/interactable.tscn" id="5_8w72o"]
+[ext_resource type="PackedScene" uid="uid://dkq348hg3jfi0" path="res://Visual/checkpoint_box.tscn" id="5_nos5s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hjeaj"]
 radius = 3.0
@@ -117,6 +118,26 @@ parent = NodePath("..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
 position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_8w72o")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(200, 90)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -100.0
+offset_right = 60.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CheckpointBox" parent="Control" instance=ExtResource("5_nos5s")]
+visible = false
+z_as_relative = false
+layout_mode = 1
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="interaction" from="Interactable" to="." method="_on_interaction"]

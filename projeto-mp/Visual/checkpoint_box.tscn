@@ -1,0 +1,114 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkq348hg3jfi0"]
+
+[ext_resource type="PackedScene" uid="uid://dhd84utwqmyd8" path="res://Visual/info_box.tscn" id="1_v2qcx"]
+[ext_resource type="Script" uid="uid://d0yvg26i6b117" path="res://scripts/Visual/checkpoint_box.gd" id="2_ldpts"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hckbn"]
+bg_color = Color(0.05490196, 0.05490196, 0.05490196, 0.78431374)
+border_width_top = 3
+border_width_bottom = 3
+border_color = Color(0.05490196, 0.05490196, 0.05490196, 0.78431374)
+
+[node name="CheckpointBox" node_paths=PackedStringArray("pages_list") instance=ExtResource("1_v2qcx")]
+script = ExtResource("2_ldpts")
+pages_list = [NodePath("Control/StopPage"), NodePath("Control/RecordingPage"), NodePath("Control/PlayPage")]
+
+[node name="StopPage" type="VBoxContainer" parent="Control" index="0"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/StopPage" index="0"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hckbn")
+
+[node name="Title" type="Label" parent="Control/StopPage/PanelContainer" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Stop Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Control/StopPage" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 8
+text = "Exit checkpoint menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RecordingPage" type="VBoxContainer" parent="Control" index="1"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/RecordingPage" index="0"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hckbn")
+
+[node name="Title" type="Label" parent="Control/RecordingPage/PanelContainer" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Record and Play Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Control/RecordingPage" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 8
+text = "Fitas: 0/0
+Tempo de gravação: 0.00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Control/RecordingPage" index="2"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.78715754, 8.5744934e-05, 0.10764436, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 7
+text = "Numero maximo de gravações atingido
+Criar um nova gravação irá apagar gravação mais antiga"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayPage" type="VBoxContainer" parent="Control" index="2"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/PlayPage" index="0"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hckbn")
+
+[node name="Title" type="Label" parent="Control/PlayPage/PanelContainer" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Play Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Control/PlayPage" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 8
+text = "Play 0 gravações"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
