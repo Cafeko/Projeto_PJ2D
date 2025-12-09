@@ -34,30 +34,37 @@ bg_music_volume = 0.0
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(651, -1)
+position = Vector2(2413, -278)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
 [node name="Fases" type="Node2D" parent="."]
 
 [node name="Fase_1" parent="Fases" instance=ExtResource("4_4j5ol")]
+z_index = -3
 
 [node name="Fase_2" parent="Fases" instance=ExtResource("6_p1hux")]
+z_index = -3
 position = Vector2(640, 0)
 
 [node name="Fase_3" parent="Fases" instance=ExtResource("7_of57s")]
+z_index = -3
 position = Vector2(1325, -96)
 
 [node name="Fase_4" parent="Fases" instance=ExtResource("4_brvut")]
+z_index = -3
 position = Vector2(2092, -224)
 
 [node name="Fase_5" parent="Fases" instance=ExtResource("10_mswub")]
+z_index = -3
 position = Vector2(2982, -240)
 
 [node name="Fase_6" parent="Fases" instance=ExtResource("11_hybxs")]
+z_index = -3
 position = Vector2(3477, -288)
 
 [node name="Fase_7" parent="Fases" instance=ExtResource("12_v2gmf")]
+z_index = -3
 position = Vector2(3972, -288)
 
 [node name="Checkpoints" type="Node2D" parent="."]

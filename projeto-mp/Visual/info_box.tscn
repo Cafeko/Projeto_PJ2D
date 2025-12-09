@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhd84utwqmyd8"]
+
+[ext_resource type="Script" uid="uid://ctxb0gfqf0n5w" path="res://scripts/Visual/info_box.gd" id="1_og7v5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q85le"]
+bg_color = Color(0.2051174, 0.20511746, 0.20511732, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="InfoBox" type="PanelContainer"]
+z_index = -2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q85le")
+script = ExtResource("1_og7v5")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2

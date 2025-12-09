@@ -5,6 +5,7 @@ class_name Interruptor
 #@export_group("Configurações do Interruptor")
 @export var duration: float = 10.0 # Tempo em segundos
 @export var interactable : Interactable
+@export var timer_box : InfoBox
 
 # --- Referências aos Nós --- #
 # O Timer é um nó padrão do Godot chamado "Timer"
@@ -31,6 +32,12 @@ func _ready():
 	update_visuals()
 
 
+func _physics_process(_delta: float):
+	if not timer.is_stopped():
+		var time_string = "%.2f" %timer.time_left
+		timer_box.update_text(time_string)
+
+
 # --- Lógica Principal --- #
 func trigger_switch():
 	# Ativa a lógica base (classe Activator)
@@ -41,25 +48,27 @@ func trigger_switch():
 	# Inicia ou Reinicia a contagem dos 10 segundos
 	timer.start(duration)
 	
-	# Atualiza a animação
+	# Atualiza a animação Exibe caixa com tempo.
 	update_visuals()
-	#print("Interruptor ligado por ", duration, " segundos.")
 
 
 func _on_timer_timeout():
 	# Ocorre quando o Timer chega a 0
-	deactivate() # Desativa a lógica base
+	deactivate()
+	# Desativa a lógica base
 	interactable.set_can_interact_with(true)
+	# Atualiza sprite e esconde caixa com tempo.
 	update_visuals()
-	#print("Tempo acabou. Interruptor desligado.")
 
 
 func update_visuals():
 	# Verifica o estado herdado da classe pai (Activator)
 	if is_active():
 		anim.play("interruptor_on")
+		timer_box.set_visibility(true)
 	else:
 		anim.play("interruptor_off")
+		timer_box.set_visibility(false)
 
 
 func _on_interaction(_kargs:Dictionary):

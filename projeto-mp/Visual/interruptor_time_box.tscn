@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://x3sbpns17vux"]
+
+[ext_resource type="Script" uid="uid://ca60eeh3qiff4" path="res://scripts/Visual/interruptor_time_box.gd" id="1_bwfk6"]
+[ext_resource type="PackedScene" uid="uid://dhd84utwqmyd8" path="res://Visual/info_box.tscn" id="2_6fb8b"]
+
+[node name="InterruptorTimeBox" instance=ExtResource("2_6fb8b")]
+script = ExtResource("1_bwfk6")
+
+[node name="Label" type="Label" parent="Control" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "0.00"
+horizontal_alignment = 1
+vertical_alignment = 1

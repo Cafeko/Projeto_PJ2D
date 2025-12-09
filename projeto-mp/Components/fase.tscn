@@ -6,6 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6m76b"]
 
 [node name="Fase" type="Node2D" node_paths=PackedStringArray("area_fase")]
+z_index = -3
 script = ExtResource("1_6m76b")
 area_fase = NodePath("Area2D")
 
