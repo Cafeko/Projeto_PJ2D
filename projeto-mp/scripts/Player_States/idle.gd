@@ -2,6 +2,7 @@ extends State
 
 @export var walk_state : State
 @export var jump_state : State
+@export var meditating_state : State
 
 # Executed upon entering the state.
 func enter():
@@ -14,6 +15,8 @@ func process_physics(_delta : float):
 		return walk_state
 	if Input.is_action_just_pressed("jump") and parent_object.is_on_floor():
 		return jump_state
+	if Input.is_action_just_pressed("meditate"):
+		return meditating_state
 	return null
 
 # Executed when recive a InputEvent.

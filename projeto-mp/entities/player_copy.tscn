@@ -1,10 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0ef6ooao23eh"]
+[gd_scene load_steps=24 format=3 uid="uid://d0ef6ooao23eh"]
 
 [ext_resource type="Script" uid="uid://c066uqel8nsfw" path="res://scripts/Entities/player_copy.gd" id="1_ugwka"]
 [ext_resource type="Texture2D" uid="uid://5bkfhmxp1j7i" path="res://Assets/sprites/1 - Penguin/Lying_On_Ground (16 x 16).png" id="2_v2mfr"]
 [ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://Assets/sprites/1 - Penguin/Idle (16 x 16).png" id="3_ypvnm"]
 [ext_resource type="Texture2D" uid="uid://bfc7nichnufc8" path="res://Assets/sprites/1 - Penguin/Jump (16 x 16).png" id="4_6qwxa"]
 [ext_resource type="Texture2D" uid="uid://cf7ymtg110npq" path="res://Assets/sprites/1 - Penguin/Waddling (16 x 16).png" id="5_6p2kb"]
+[ext_resource type="PackedScene" uid="uid://whdgu748wqwy" path="res://Components/graber.tscn" id="6_v2mfr"]
+[ext_resource type="PackedScene" uid="uid://ch8sgooa863fd" path="res://Components/interactor.tscn" id="7_ypvnm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e4p34"]
 atlas = ExtResource("3_ypvnm")
@@ -116,9 +118,68 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="player" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ugwka"]
+radius = 4.0
+height = 8.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ugwka"]
+size = Vector2(6, 3.474999)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6qwxa"]
+size = Vector2(14.5, 16)
+
+[node name="PlayerCopy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_ugwka")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5019608)
 sprite_frames = SubResource("SpriteFrames_q0i8f")
 animation = &"idle"
+
+[node name="CollisionDetector" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector"]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_ugwka")
+
+[node name="FloorDetector" type="Area2D" parent="."]
+position = Vector2(0, 8.8)
+collision_layer = 0
+collision_mask = 5
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorDetector"]
+position = Vector2(0, 0.46250057)
+shape = SubResource("RectangleShape2D_ugwka")
+
+[node name="Graber" parent="." node_paths=PackedStringArray("big_object_position", "small_object_position", "drop_object_position", "graber_object") instance=ExtResource("6_v2mfr")]
+big_object_position = NodePath("BigHoldingSpot")
+small_object_position = NodePath("SmallHoldingSpot")
+drop_object_position = NodePath("DropSpot")
+graber_object = NodePath("..")
+
+[node name="CollisionShape2D" parent="Graber" index="0"]
+position = Vector2(4.5, -1.65625)
+
+[node name="SmallHoldingSpot" type="Marker2D" parent="Graber"]
+position = Vector2(7, 2)
+
+[node name="BigHoldingSpot" type="Marker2D" parent="Graber"]
+position = Vector2(0, -8.2)
+
+[node name="DropSpot" type="Marker2D" parent="Graber"]
+position = Vector2(8, 6)
+
+[node name="Interactor" parent="." instance=ExtResource("7_ypvnm")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactor"]
+position = Vector2(0.25, 0)
+shape = SubResource("RectangleShape2D_6qwxa")
+
+[connection signal="body_entered" from="CollisionDetector" to="." method="_on_collision_detector_body_entered"]
+
+[editable path="Graber"]

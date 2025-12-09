@@ -1,44 +1,59 @@
 extends CharacterBody2D
-
 class_name Player
 
 # --- Vars ------------------------------------------------------------------- #
 @export var state_machine : StateMachine
 @export var anim : AnimatedSprite2D
 @export var graber : Graber
+@export var interactor : Interactor
 
-const SPEED = 70.0
-const JUMP_VELOCITY = -350.0
+const SPEED = 90.0
+const JUMP_VELOCITY = -400.0
+const MEDITATION_TIME_SPEED = 5.0
 
 enum direcion {LEFT, RIGHT}
 
+var respawn_sem_checkpoint : Vector2
 var look_direction = direcion.RIGHT
-var respawn_position: Vector2 = Vector2.ZERO
+var current_checkpoint : Checkpoint
 var can_start_recording : bool = false
+var safe_to_reset_current_fase : bool = false
+var respawn_time : float = 0.1
+var current_respawn_time : float
+var can_act : bool = true
+var interacted : bool = false
+var interacted_time : float = 0.2
+var current_interacted_time : float = 0.2
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready() -> void:
 	state_machine.init()
-	respawn_position = global_position
+	respawn_sem_checkpoint = global_position
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float):
 	state_machine.process_physics(delta)
 	
 	if state_machine.get_current_state() == "Dead":
 		return
 	
-	flit_to_look_side()
+	fit_to_look_side()
 	
 	gravity(delta)
 	
-	interactions_and_grab()
-
-	move_and_slide()
+	if can_act:
+		interactions_and_grab()
+		move_and_slide()
+	
+	did_interaction_end(delta)
+	
+	check_for_squish()
+	
+	make_safe_reset_current_fase(delta)
 # ---------------------------------------------------------------------------- #
 # --- Internal Funcs --------------------------------------------------------- #
 # Ajusta player de acordo com direção que está olhando.
-func flit_to_look_side():
+func fit_to_look_side():
 	if look_direction == direcion.LEFT:
 		anim.flip_h = true
 		graber.set_direction(-1)
@@ -55,16 +70,90 @@ func gravity(delta):
 
 # Executa interações e agarra objetos.
 func interactions_and_grab():
-	if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
-		if graber.is_holding() or graber.has_grabable():
-			graber.grab_and_drop()
-		elif can_start_recording:
-			global.start_recording.emit(self)
-			global.play_recording.emit()
-	if Input.is_action_just_pressed("use") and graber.is_holding():
-		var item = graber.get_held_grabable().get_object()
-		if is_instance_of(item, Item) and item.is_usable():
-			item.use_item()
+	if state_machine.get_current_state() != "Meditating":
+		if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
+			if interactor.get_interactable_target():
+				var kargs := {}
+				interactor.do_interaction(kargs)
+				did_interaction()
+			elif graber.is_holding() or graber.has_grabable():
+				graber.grab_and_drop()
+		if Input.is_action_just_pressed("use") and graber.is_holding():
+			var item = graber.get_held_grabable().get_object()
+			if is_instance_of(item, Item) and item.is_usable():
+				item.use_item()
+
+
+# Registra que fez uma interação.
+func did_interaction():
+	interacted = true
+	current_interacted_time = interacted_time
+
+
+func did_interaction_end(delta):
+	if interacted:
+		current_interacted_time -= delta
+		if current_interacted_time <= 0.0:
+			interacted = false
+
+
+func checkpoint_set_time_speed(new_speed:float):
+	if current_checkpoint:
+		current_checkpoint.set_recorder_time_speed(new_speed)
+
+
+# Verifica se o player está sendo esmagado.
+func check_for_squish():
+	# Só checamos se não estamos mortos ou pulando (por simplicidade inicial)
+	if state_machine.get_current_state() == "Dead":
+		return
+	
+	# 1. Colisão vertical: Pego entre chão e teto/plataforma acima
+	# Note: is_on_ceiling() não é garantido para colisões ativas/movimento.
+	# Vamos checar se is_on_floor() E tem colisões no topo.
+	
+	var is_squished_vertical = false
+	var is_squished_horizontal = false
+	
+	if is_on_floor():
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+			# Se há uma colisão onde a normal aponta para baixo (colisão no topo)
+			if collision.get_normal().y > 0: 
+				is_squished_vertical = true
+				break
+	
+	# 2. Colisão horizontal: Pego entre paredes ou objetos laterais.
+	var collision_left_count = 0
+	var collision_right_count = 0
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var normal = collision.get_normal()
+		
+		# Colisão no lado esquerdo (normal.x > 0)
+		if normal.x > 0.5:
+			collision_left_count += 1
+		# Colisão no lado direito (normal.x < 0)
+		elif normal.x < -0.5:
+			collision_right_count += 1
+			
+	if collision_left_count > 0 and collision_right_count > 0:
+		is_squished_horizontal = true
+
+	# Se for esmagado (vertical ou horizontal), o player morre.
+	if is_squished_vertical or is_squished_horizontal:
+		print("Player Esmagado!")
+		die()
+
+
+# Emite sinal para resetar fase atual, depois de um delay.
+func make_safe_reset_current_fase(delta):
+	if safe_to_reset_current_fase:
+		current_respawn_time -= delta
+		if current_respawn_time <= 0:
+			safe_to_reset_current_fase = false
+			global.reset_current_fase.emit()
 # ---------------------------------------------------------------------------- #
 # --- External Funcs --------------------------------------------------------- #
 # Faz movimento do player.
@@ -82,20 +171,55 @@ func move():
 		look_direction = direcion.RIGHT
 
 
+# Retorna se o player está movendo ou não.
+func is_moving():
+	return state_machine.get_current_state() == "Walk" or state_machine.get_current_state() == "Jump"
+
+
 # Faz player ir para o estado morto.
-func die_and_respawn():
-	state_machine.go_to_state.emit("Dead")
+func die():
+	if not state_machine.get_current_state() == "Dead":
+		state_machine.go_to_state.emit("Dead")
+
+
+# Enable to reset current fase when is safe.
+func safely_reset_current_fase():
+	current_respawn_time = respawn_time
+	safe_to_reset_current_fase = true
 
 
 # Atualiza a posição que vai respawnar.
-func update_checkpoint(new_position: Vector2):
-	if new_position != respawn_position:
-		print("Checkpoint salvo!")
-		respawn_position = new_position
+func update_checkpoint(new_checkpoint: Checkpoint):
+	if new_checkpoint != current_checkpoint:
+		if current_checkpoint != null:
+			current_checkpoint.player_desativa_checkpoint()
+		current_checkpoint = new_checkpoint
+
+
+# Retorna posição de respawn que o player deve ir quando respawnar.
+func get_respawn_position():
+	if current_checkpoint:
+		return current_checkpoint.global_position
+	else:
+		return respawn_sem_checkpoint
+
+
+func set_can_start_recording(valor:bool):
+	can_start_recording = valor
+
+
+func get_can_start_recording():
+	return can_start_recording
+
+
+func set_can_act(valor:bool):
+	can_act = valor
 
 
 # Retorna o estado atual do player para a recording_tape gravar as ações dele.
 func get_record_data():
 	return {"position" : self.global_position, "animation" : anim.animation,
-			"flip_h": anim.flip_h}
+			"flip_h": anim.flip_h, "on_floor": self.is_on_floor(),
+			"state": state_machine.current_state.name,
+			"is_holding": graber.is_holding(), "interacted": interacted}
 # ---------------------------------------------------------------------------- #

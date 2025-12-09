@@ -1,23 +1,121 @@
-[gd_scene load_steps=4 format=3 uid="uid://65h8fdenwlx8"]
+[gd_scene load_steps=18 format=3 uid="uid://65h8fdenwlx8"]
 
 [ext_resource type="Script" uid="uid://blggesj5efadr" path="res://scripts/Entities/checkpoint.gd" id="1_hjeaj"]
-[ext_resource type="Texture2D" uid="uid://cqp6sgm1ml14j" path="res://Assets/sprites/Pixel Adventure 1/Items/Checkpoints/Checkpoint/Checkpoint (No Flag).png" id="1_wpuaw"]
+[ext_resource type="Texture2D" uid="uid://bmxmxx2ne6baj" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/Raised Flag.png" id="3_6wqo1"]
+[ext_resource type="Texture2D" uid="uid://dg62uqrjvkg1m" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/Unraised Flag.png" id="4_8w72o"]
+[ext_resource type="PackedScene" uid="uid://dpk8x8ormxb7i" path="res://Components/interactable.tscn" id="5_8w72o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hjeaj"]
 radius = 3.0
-height = 46.0
+height = 18.0
 
-[node name="checkpoint" type="Area2D"]
-collision_layer = 4
+[sub_resource type="AtlasTexture" id="AtlasTexture_nos5s"]
+atlas = ExtResource("3_6wqo1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1e67b"]
+atlas = ExtResource("3_6wqo1")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ivja"]
+atlas = ExtResource("3_6wqo1")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4abvr"]
+atlas = ExtResource("3_6wqo1")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3toe"]
+atlas = ExtResource("3_6wqo1")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_byq8c"]
+atlas = ExtResource("4_8w72o")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8myr"]
+atlas = ExtResource("4_8w72o")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnqfk"]
+atlas = ExtResource("4_8w72o")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18lkg"]
+atlas = ExtResource("4_8w72o")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fl5ay"]
+atlas = ExtResource("4_8w72o")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8d6sf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nos5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1e67b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ivja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4abvr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3toe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_byq8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8myr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnqfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18lkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fl5ay")
+}],
+"loop": true,
+"name": &"unraised_flag",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8w72o"]
+radius = 3.0
+height = 18.0
+
+[node name="checkpoint" type="Area2D" node_paths=PackedStringArray("interactable")]
+z_index = -1
+collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_hjeaj")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_wpuaw")
+interactable = NodePath("Interactable")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-8, 9)
+position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_hjeaj")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(6, 4)
+sprite_frames = SubResource("SpriteFrames_8d6sf")
+
+[node name="Interactable" parent="." instance=ExtResource("5_8w72o")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_8w72o")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="interaction" from="Interactable" to="." method="_on_interaction"]

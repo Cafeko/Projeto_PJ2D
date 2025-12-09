@@ -1,0 +1,77 @@
+[gd_scene load_steps=13 format=4 uid="uid://i27rgotalnsb"]
+
+[ext_resource type="TileSet" uid="uid://ccthjqvr2xvth" path="res://Assets/Tiles/game_novos_tileset.tres" id="1_2r7fx"]
+[ext_resource type="Texture2D" uid="uid://v1jf8kln0g43" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/background2.png" id="2_re4cn"]
+[ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="3_sgj8p"]
+[ext_resource type="PackedScene" uid="uid://brtm4ryn3w7wh" path="res://entities/plataforma_ativavel.tscn" id="4_q1cl6"]
+[ext_resource type="PackedScene" uid="uid://c8hs307w0kbou" path="res://entities/espinho.tscn" id="5_mwqjf"]
+[ext_resource type="PackedScene" uid="uid://divjwei35kd32" path="res://entities/porta.tscn" id="6_8hnrp"]
+[ext_resource type="PackedScene" uid="uid://l2lir18835mh" path="res://entities/laser.tscn" id="7_auqwp"]
+[ext_resource type="PackedScene" uid="uid://cpagmvgnjn4sw" path="res://entities/botao.tscn" id="8_fmrgo"]
+[ext_resource type="PackedScene" uid="uid://boj7wo8p32vi5" path="res://entities/caixa.tscn" id="9_ljy13"]
+[ext_resource type="PackedScene" uid="uid://65h8fdenwlx8" path="res://entities/checkpoint.tscn" id="10_04ni3"]
+[ext_resource type="PackedScene" uid="uid://dbi2id2f6lmus" path="res://entities/card_reader.tscn" id="11_2r7fx"]
+[ext_resource type="PackedScene" uid="uid://jqb0j6hygtdp" path="res://entities/keycard.tscn" id="12_njxtn"]
+
+[node name="Game_novos_sprites" type="Node2D"]
+
+[node name="Tiles" type="Node2D" parent="."]
+
+[node name="Terrain" type="TileMapLayer" parent="Tiles"]
+position = Vector2(-3, 0)
+tile_map_data = PackedByteArray("AAACAA8AAgALAAIAAAADAA8AAgALAAIAAAAEAA8AAgALAAIAAAAFAA8AAgALAAIAAAAGAA8AAgALAAIAAAAHAA8AAgALAAIAAAAIAA8AAgALAAIAAAAJAA8AAgALAAIAAAAJABAAAgAKAAQAAAAJABEAAgAKAAQAAAAIABEAAgAKAAQAAAAHABEAAgAKAAQAAAAGABEAAgAKAAQAAAAFABEAAgAKAAQAAAAEABEAAgAKAAQAAAADABEAAgAKAAQAAAACABEAAgAKAAQAAAACABAAAgAKAAQAAAADABAAAgAKAAQAAAAEABAAAgAKAAQAAAAFABAAAgAKAAQAAAAGABAAAgAKAAQAAAAHABAAAgAKAAQAAAAIABAAAgAKAAQAAAAJABIAAgAKAAQAAAAIABIAAgAKAAQAAAAHABIAAgAKAAQAAAAGABIAAgAKAAQAAAAFABIAAgAKAAQAAAAEABIAAgAKAAQAAAADABIAAgAKAAQAAAACABIAAgAKAAQAAAABAA8AAgAJAAIAAAABABAAAgAJAAMAAAABABEAAgAJAAMAAAABABIAAgAJAAMAAAAGAAwAAgATAAIAAAAHAAwAAgAUAAIAAAAIAAwAAgAVAAIAAAAKAA8AAgALAAIAAAALAA8AAgALAAIAAAAMAA8AAgALAAIAAAANAA8AAgALAAIAAAAOAA8AAgALAAIAAAAPAA8AAgALAAIAAAAQAA8AAgALAAIAAAARAA8AAgALAAIAAAASAA8AAgAMAAIAAAASABAAAgAMAAQAAAASABEAAgAMAAQAAAASABIAAgAMAAQAAAAKABAAAgAKAAQAAAALABAAAgAKAAQAAAAMABAAAgAKAAQAAAANABAAAgAKAAQAAAAOABAAAgAKAAQAAAAPABAAAgAKAAQAAAAQABAAAgAKAAQAAAARABAAAgAKAAQAAAARABEAAgAKAAQAAAARABIAAgAKAAQAAAAQABIAAgAKAAQAAAAPABIAAgAKAAQAAAAOABIAAgAKAAQAAAANABIAAgAKAAQAAAAMABIAAgAKAAQAAAALABIAAgAKAAQAAAAKABIAAgAKAAQAAAAKABEAAgAKAAQAAAALABEAAgAKAAQAAAAMABEAAgAKAAQAAAANABEAAgAKAAQAAAAOABEAAgAKAAQAAAAPABEAAgAKAAQAAAAQABEAAgAKAAQAAAALAAoAAgACAAUAAAAMAAoAAgADAAUAAAANAAoAAgAEAAUAAAA=")
+tile_set = ExtResource("1_2r7fx")
+
+[node name="background" type="TextureRect" parent="Tiles"]
+z_index = -2
+offset_left = -407.0
+offset_top = -118.0
+offset_right = 745.0
+offset_bottom = 530.0
+scale = Vector2(1.5200005, 1)
+mouse_filter = 2
+texture = ExtResource("2_re4cn")
+stretch_mode = 1
+
+[node name="player" parent="." instance=ExtResource("3_sgj8p")]
+position = Vector2(29, 233)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+
+[node name="PlataformaAtivavel" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("4_q1cl6")]
+position = Vector2(367, 203)
+activators_list = [NodePath("../CardReader")]
+
+[node name="Espinhos" type="Node" parent="."]
+
+[node name="Espinho" parent="Espinhos" instance=ExtResource("5_mwqjf")]
+position = Vector2(171, 232)
+
+[node name="Espinho2" parent="Espinhos" instance=ExtResource("5_mwqjf")]
+position = Vector2(186, 232)
+
+[node name="Porta" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("6_8hnrp")]
+position = Vector2(281, 214)
+scale = Vector2(0.18, 0.205)
+activators_list = [NodePath("../CardReader")]
+
+[node name="laser" parent="." node_paths=PackedStringArray("activators_list") instance=ExtResource("7_auqwp")]
+position = Vector2(216, 193)
+activators_list = [NodePath("../Botao")]
+
+[node name="Botao" parent="." instance=ExtResource("8_fmrgo")]
+position = Vector2(100, 237.00002)
+scale = Vector2(5, 5)
+
+[node name="caixa" parent="." instance=ExtResource("9_ljy13")]
+position = Vector2(116, 183)
+
+[node name="checkpoint" parent="." instance=ExtResource("10_04ni3")]
+position = Vector2(75, 230.00002)
+scale = Vector2(1.32, 1.32)
+
+[node name="CardReader" parent="." instance=ExtResource("11_2r7fx")]
+position = Vector2(250, 222)
+
+[node name="Keycard" parent="." instance=ExtResource("12_njxtn")]
+position = Vector2(196, 152)

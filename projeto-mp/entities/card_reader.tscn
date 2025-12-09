@@ -1,21 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbi2id2f6lmus"]
+[gd_scene load_steps=8 format=3 uid="uid://dbi2id2f6lmus"]
 
 [ext_resource type="Script" uid="uid://dmjqovtpdlm4s" path="res://scripts/Entities/card_reader.gd" id="1_5il6n"]
-[ext_resource type="Texture2D" uid="uid://cy7qw8vd1e2b8" path="res://Assets/sprites/leitor_keycard.png" id="1_br7ob"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5il6n"]
-atlas = ExtResource("1_br7ob")
-region = Rect2(0, 0, 16, 16)
+[ext_resource type="Texture2D" uid="uid://28dme1ek4wlu" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/leitor_keycard.png" id="2_5il6n"]
+[ext_resource type="AudioStream" uid="uid://dw823xd2xjyju" path="res://sounds/unlock_leitor_keycard.wav" id="3_dmyud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dmyud"]
-atlas = ExtResource("1_br7ob")
+atlas = ExtResource("2_5il6n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1pid"]
+atlas = ExtResource("2_5il6n")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k1pid"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5il6n")
+"texture": SubResource("AtlasTexture_dmyud")
 }],
 "loop": true,
 "name": &"locked",
@@ -23,7 +24,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dmyud")
+"texture": SubResource("AtlasTexture_k1pid")
 }],
 "loop": true,
 "name": &"unlocked",
@@ -31,13 +32,19 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lajxq"]
-size = Vector2(25, 27)
+size = Vector2(20, 27)
 
 [node name="CardReader" type="Node2D" node_paths=PackedStringArray("anim", "detection_area") groups=["card_readers"]]
+z_index = -1
 script = ExtResource("1_5il6n")
 anim = NodePath("AnimatedSprite2D")
 detection_area = NodePath("Area2D")
 metadata/_custom_type_script = "uid://f006jkw4s2fx"
+
+[node name="unlock_leitor_keycard" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dmyud")
+volume_db = -10.0
+bus = &"Efeios Sonoros"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k1pid")

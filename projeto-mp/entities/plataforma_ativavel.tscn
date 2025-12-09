@@ -1,17 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://brtm4ryn3w7wh"]
+[gd_scene load_steps=5 format=3 uid="uid://brtm4ryn3w7wh"]
 
 [ext_resource type="Script" uid="uid://dtg2eul8rppsa" path="res://scripts/Entities/plataforma_ativavel.gd" id="1_3v4i5"]
-[ext_resource type="Texture2D" uid="uid://nccbxmqh03ad" path="res://Assets/sprites/Pixel Adventure 1/Terrain/Terrain (16x16).png" id="2_1wyl8"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_he6qo"]
-atlas = ExtResource("2_1wyl8")
-region = Rect2(192, 64, 48, 16)
+[ext_resource type="Texture2D" uid="uid://o3uys34klnyo" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/plataforma.png" id="2_1wyl8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3v4i5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_he6qo")
+"texture": ExtResource("2_1wyl8")
 }],
 "loop": true,
 "name": &"default",

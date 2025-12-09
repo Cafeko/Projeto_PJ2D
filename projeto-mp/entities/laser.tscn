@@ -152,6 +152,7 @@ sources/0 = SubResource("TileSetAtlasSource_byvr5")
 size = Vector2(10, 40)
 
 [node name="laser" type="Node2D" node_paths=PackedStringArray("tile_on", "tile_off", "collision")]
+z_index = 1
 script = ExtResource("1_byvr5")
 tile_on = NodePath("laser_on_tilemap")
 tile_off = NodePath("laser_off_tilemap")
@@ -175,5 +176,6 @@ script = ExtResource("3_pwb0i")
 position = Vector2(8, 28)
 shape = SubResource("RectangleShape2D_byvr5")
 
+[connection signal="area_entered" from="laser_collider" to="laser_collider" method="_on_area_entered"]
 [connection signal="body_entered" from="laser_collider" to="." method="_on_laser_collider_body_entered"]
 [connection signal="body_entered" from="laser_collider" to="laser_collider" method="_on_body_entered"]

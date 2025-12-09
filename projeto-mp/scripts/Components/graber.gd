@@ -54,6 +54,12 @@ func grab_object():
 func drop_object():
 	if not held_object:
 		return
+	var target_position = drop_object_position.global_position
+	target_position = get_drop_safe_position(target_position, held_object.get_size())
+	if test_position_is_empty(held_object.get_grabable_shape(), target_position,
+			held_object.get_object_collision_mask(), [held_object.get_object()]):
+		#debug_show_shape(held_object.get_grabable_shape(), target_position)
+		return
 	set_held_object_position(positions.DROP)
 	held_object.object.set_deferred("freeze", false)
 	held_object.object.remove_collision_exception_with(graber_object)
@@ -69,6 +75,38 @@ func _update_held_object_position():
 		set_held_object_position(positions.SMALL)
 	else:
 		set_held_object_position(positions.BIG)
+
+
+# Detecta se forma de colisão pode ficar na posição indicada sem colidir com algo.
+func test_position_is_empty(collision_shape: CollisionShape2D,
+							test_position:Vector2, mask_value := 1, ignore:Array=[]):
+	var shape = collision_shape.shape
+	var params := PhysicsShapeQueryParameters2D.new()
+	
+	params.shape_rid = shape.get_rid()
+	params.collision_mask = mask_value
+	params.transform = Transform2D(collision_shape.global_transform.get_rotation(),
+								   test_position)
+	
+	var space = collision_shape.get_world_2d().direct_space_state
+	var hits = space.intersect_shape(params)
+	
+	var valid = []
+	for h in hits:
+		if h.collider not in ignore:
+			valid.append(h)
+	return valid.size() > 0
+
+
+# Mostra o shape na posição indicada.
+func debug_show_shape(cshape: CollisionShape2D, pos: Vector2, duration := 0.5):
+	var debug_node = load("res://Components/debug.tscn").instantiate()
+	debug_node.shape = cshape.shape.duplicate()
+	debug_node.global_position = pos
+	get_tree().current_scene.add_child(debug_node)
+
+	var timer := get_tree().create_timer(duration)
+	timer.timeout.connect(func(): debug_node.queue_free())
 
 
 # Retorna se tem um objeto sendo agarrado ou não.
@@ -99,6 +137,7 @@ func set_held_object_position(p):
 		target_position = get_safe_position_big(target_position, object_size.x)
 	elif p == positions.DROP:
 		target_position = drop_object_position.global_position
+		target_position = get_drop_safe_position(target_position, object_size)
 	held_object.set_object_position(target_position)
 
 
@@ -113,6 +152,13 @@ func get_safe_position_big(target_position:Vector2, object_size_y):
 func get_safe_position_small(target_position:Vector2, object_size_x):
 	var safe_position = Vector2.ZERO
 	safe_position = target_position + Vector2(object_size_x/2, 0) * direction
+	return safe_position
+
+
+# Retorna uma posição segura para objetos quando dropado.
+func get_drop_safe_position(target_position:Vector2, object_size):
+	var safe_position = Vector2.ZERO
+	safe_position = target_position + Vector2(direction*(object_size.x/2), -(object_size.y/2))
 	return safe_position
 
 

@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://1wlk6wrii221"]
+
+[ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
+[ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
+[ext_resource type="Script" uid="uid://c005yncmr1l3o" path="res://scripts/Components/AudioManager.gd" id="2_tqoya"]
+[ext_resource type="PackedScene" uid="uid://tsvnbubb6bg4" path="res://entities/player.tscn" id="2_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://bedjlppeisl02" path="res://Fases/fase_1.tscn" id="4_4j5ol"]
+[ext_resource type="PackedScene" uid="uid://bk5dsc8i1neuw" path="res://Fases/fase_4.tscn" id="4_brvut"]
+[ext_resource type="PackedScene" uid="uid://65h8fdenwlx8" path="res://entities/checkpoint.tscn" id="5_0ha60"]
+[ext_resource type="PackedScene" uid="uid://cbyng6xp3fmi7" path="res://Fases/fase_2.tscn" id="6_p1hux"]
+[ext_resource type="PackedScene" uid="uid://c0twch2sgqrps" path="res://Fases/fase_3.tscn" id="7_of57s"]
+[ext_resource type="AudioStream" uid="uid://dv0qhqa7te7a3" path="res://sounds/bg_music.mp3" id="9_b5f6u"]
+[ext_resource type="PackedScene" uid="uid://cbbuksucu31gg" path="res://Fases/fase_5.tscn" id="10_mswub"]
+[ext_resource type="PackedScene" uid="uid://did21t6lfr3lv" path="res://Fases/fase_6.tscn" id="11_hybxs"]
+[ext_resource type="PackedScene" uid="uid://7yfgvc2lhqm3" path="res://Fases/fase_7.tscn" id="12_v2gmf"]
+
+[node name="Main" type="Node2D"]
+position = Vector2(-217, -28)
+
+[node name="bg_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_b5f6u")
+volume_db = -35.0
+autoplay = true
+bus = &"Musicas"
+
+[node name="AudioManager" parent="." instance=ExtResource("2_brvut")]
+script = ExtResource("2_tqoya")
+sfx_volume = 0.0
+bg_music_volume = 0.0
+
+[node name="UI" parent="." instance=ExtResource("1_0ha60")]
+
+[node name="GerenciadorFase" parent="." node_paths=PackedStringArray("fases_parent") instance=ExtResource("2_brvut")]
+fases_parent = NodePath("../Fases")
+
+[node name="player" parent="." instance=ExtResource("2_wp4xf")]
+position = Vector2(651, -1)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+
+[node name="Fases" type="Node2D" parent="."]
+
+[node name="Fase_1" parent="Fases" instance=ExtResource("4_4j5ol")]
+
+[node name="Fase_2" parent="Fases" instance=ExtResource("6_p1hux")]
+position = Vector2(640, 0)
+
+[node name="Fase_3" parent="Fases" instance=ExtResource("7_of57s")]
+position = Vector2(1325, -96)
+
+[node name="Fase_4" parent="Fases" instance=ExtResource("4_brvut")]
+position = Vector2(2092, -224)
+
+[node name="Fase_5" parent="Fases" instance=ExtResource("10_mswub")]
+position = Vector2(2982, -240)
+
+[node name="Fase_6" parent="Fases" instance=ExtResource("11_hybxs")]
+position = Vector2(3477, -288)
+
+[node name="Fase_7" parent="Fases" instance=ExtResource("12_v2gmf")]
+position = Vector2(3972, -288)
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="checkpoint" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(45, 116)
+recording_time = 20.0
+
+[node name="checkpoint2" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(700, 4)
+recording_time = 15.0
+
+[node name="checkpoint3" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(1333, 4)
+
+[node name="checkpoint4" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(2034, 4)
+recording_tape_number = 2
+recording_time = 45.0
+
+[node name="checkpoint5" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(2024, -364)
+recording_time = 40.0
+
+[node name="checkpoint6" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(3043, 37)
+
+[node name="checkpoint7" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(3543, -11)
+recording_tape_number = 2
+
+[node name="checkpoint8" parent="Checkpoints" instance=ExtResource("5_0ha60")]
+position = Vector2(4027, -11)
+recording_tape_number = 2

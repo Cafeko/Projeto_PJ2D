@@ -3,6 +3,7 @@ extends Activator
 # --- Vars ------------------------------------------------------------------- #
 @export var detection_area :  Area2D
 @export var anim : AnimatedSprite2D
+@onready var button_click_sfx = $button_click_sfx as AudioStreamPlayer
 
 var bodys_in_area : Array
 # ---------------------------------------------------------------------------- #
@@ -10,6 +11,8 @@ var bodys_in_area : Array
 func _ready():
 	detection_area.body_entered.connect(_on_body_entered)
 	detection_area.body_exited.connect(_on_body_exited)
+	detection_area.area_entered.connect(_on_area_entered)
+	detection_area.area_exited.connect(_on_area_exited)
 # ---------------------------------------------------------------------------- #
 # --- Funcs ------------------------------------------------------------------ #
 # Adiciona corpo na lista de corpos na area de detecção.
@@ -27,11 +30,14 @@ func remove_body(body):
 # Atualiza o estado do botão caso tenha ou não corpos na area de detecção.
 func update_activator_state():
 	if len(bodys_in_area) > 0:
-		activate()
-		anim.play("Pressed")
+		if not is_active():
+			activate()
+			anim.play("Pressed")
+			button_click_sfx.play()
 	else:
-		deactivate()
-		anim.play("Not_Pressed")
+		if is_active():
+			deactivate()
+			anim.play("Not_Pressed")
 # ---------------------------------------------------------------------------- #
 # --- Signal Funcs ----------------------------------------------------------- #
 # Executado quando for detectado que um corpo entrou na area.
@@ -42,4 +48,13 @@ func _on_body_entered(body):
 # Executado quando for detectado que um corpo saiu na area.
 func _on_body_exited(body):
 	remove_body(body)
+	
+
+
+func _on_area_entered(area):
+	add_body_to_list(area)
+
+
+func _on_area_exited(area):
+	remove_body(area)
 # ---------------------------------------------------------------------------- #

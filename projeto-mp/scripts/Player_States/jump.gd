@@ -2,10 +2,12 @@ extends State
 
 @export var idle_state : State
 @export var walk_state : State
+@onready var jump_sfx = $jump_sfx as AudioStreamPlayer
 
 # Executed upon entering the state.
 func enter():
 	parent_object.anim.play("jump")
+	jump_sfx.play()
 	parent_object.velocity.y = parent_object.JUMP_VELOCITY
 
 # Executes at a rate of 60 fps.
