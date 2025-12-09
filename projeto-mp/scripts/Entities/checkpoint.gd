@@ -7,13 +7,17 @@ class_name Checkpoint
 @export var recording_time : float = 10.0
 @export var frame_time : float = 0.01
 
-enum modes {PLAY, RECORD_AND_PLAY, STOP}
+enum modes {PLAY, RECORD_AND_PLAY, STOP, INTERACTING}
 
 @onready var anim = $AnimatedSprite2D
 var recorder : Recorder
 var ativado = false
-var mode : modes = modes.PLAY
+var mode : modes = modes.STOP
+var selected_modes_list = [modes.STOP, modes.RECORD_AND_PLAY, modes.PLAY]
+var selected_mode_index : int = 1
 var ui : CanvasLayer
+var player : Player
+var interacting_input_delay : float = 0.2
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 func _ready():
@@ -21,7 +25,11 @@ func _ready():
 	global.player_died.connect(_on_player_died)
 	ui = global.get_ui()
 
-#func _physics_process(_delta: float):
+func _physics_process(delta: float):
+	if mode == modes.INTERACTING and interacting_input_delay <= 0.0:
+		_interacting()
+	else:
+		interacting_input_delay -= delta
 	#_display_timer()
 # ---------------------------------------------------------------------------- #
 # --- External Funcs --------------------------------------------------------- #
@@ -32,10 +40,10 @@ func set_ativado(valor:bool):
 
 
 # Executada para botar checkpoint como o checkpoint atual do player.
-func player_ativa_checkpoint(player:Player):
-	player.update_checkpoint(self)
+func player_ativa_checkpoint(p:Player):
+	p.update_checkpoint(self)
 	if not ativado:
-		_create_recorder(player)
+		_create_recorder(p)
 		set_ativado(true)
 
 
@@ -60,10 +68,10 @@ func _update_anim():
 
 
 # Cria e prepara recorder.
-func _create_recorder(player:Player):
+func _create_recorder(p:Player):
 	if recorder != null:
 		recorder.queue_free()
-	recorder = Recorder.new(player, recording_tape_number, recording_time, frame_time)
+	recorder = Recorder.new(p, recording_tape_number, recording_time, frame_time)
 	recorder.recording_timeout.connect(_display_timer)
 	recorder.frame_timer.timeout.connect(_display_timer)
 	add_child(recorder)
@@ -79,6 +87,8 @@ func _set_mode(new_mode:modes):
 		print("PLay and Record")
 	elif mode == modes.STOP:
 		print("Stop")
+	elif  mode == modes.INTERACTING:
+		print("Interacting")
 
 
 # Executa de acordo com o modo atual.
@@ -98,6 +108,35 @@ func _execute_mode():
 		recorder.stop_recording()
 		recorder.stop_playing()
 		ui.hide_recording_timer()
+
+
+# Inicia processo de inteção com o checkpoint, impede que player possa agir.
+func _start_interacting():
+	interacting_input_delay = 0.2
+	player.set_can_act(false)
+	_set_mode(modes.INTERACTING)
+
+
+# Executado durante interação.
+func _interacting():
+	if Input.is_action_just_pressed("interact"):
+		_end_interacting()
+	if Input.is_action_just_pressed("left"):
+		selected_mode_index -= 1
+	elif Input.is_action_just_pressed("right"):
+		selected_mode_index += 1
+	if selected_mode_index < 0:
+		selected_mode_index = 0
+	elif selected_mode_index >= len(selected_modes_list):
+		selected_mode_index = len(selected_modes_list) - 1
+
+
+# Finaliza a interação permitindo que o player se mova e colocando o checkpoin
+# no modo selecionado.
+func _end_interacting():
+	_set_mode(selected_modes_list[selected_mode_index])
+	_execute_mode()
+	player.set_can_act(true)
 # ---------------------------------------------------------------------------- #
 # --- Signal Funcs ----------------------------------------------------------- #
 func _on_body_entered(body):
@@ -120,17 +159,16 @@ func _on_player_died():
 # Atualiza o tempo na tela.
 func _display_timer():
 	if recorder:
-		#if recorder.get_is_recording() or recorder.get_is_playing_recording():
 		var time = recorder.get_current_record_time()
 		ui.update_recording_timer(time)
 
 
-func _on_interaction(_kargs):
-	if mode == modes.PLAY:
-		_set_mode(modes.RECORD_AND_PLAY)
-	elif mode == modes.RECORD_AND_PLAY:
+func _on_interaction(kargs:Dictionary):
+	if (mode == modes.PLAY and recorder.get_is_playing_recording()) or mode == modes.RECORD_AND_PLAY:
 		_set_mode(modes.STOP)
-	elif mode == modes.STOP:
-		_set_mode(modes.PLAY)
-	_execute_mode()
+		_execute_mode()
+	var player_interacting = kargs.get("player")
+	if player_interacting:
+		player = player_interacting
+		_start_interacting()
 # ---------------------------------------------------------------------------- #

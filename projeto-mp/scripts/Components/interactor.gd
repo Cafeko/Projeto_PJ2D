@@ -18,6 +18,10 @@ func set_interactable_target(target:Interactable):
 # Retorna o interagivel que está disponivel para interagir.
 func get_interactable_target():
 	return interactable_target
+
+# Retorna o parente do interagivel alvo.
+func get_interactable_target_parent():
+	return interactable_target.parent
 # ---------------------------------------------------------------------------- #
 # --- On signal Funcs -------------------------------------------------------- #
 # Detecta interagivel que entrar na area de interação.

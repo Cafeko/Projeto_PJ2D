@@ -34,7 +34,7 @@ bg_music_volume = 0.0
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(2413, -278)
+position = Vector2(1987, 7)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 

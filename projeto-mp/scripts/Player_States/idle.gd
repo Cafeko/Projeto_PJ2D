@@ -10,13 +10,14 @@ func enter():
 
 # Executes at a rate of 60 fps.
 func process_physics(_delta : float):
-	parent_object.move()
-	if parent_object.velocity.x != 0:
-		return walk_state
-	if Input.is_action_just_pressed("jump") and parent_object.is_on_floor():
-		return jump_state
-	if Input.is_action_just_pressed("meditate"):
-		return meditating_state
+	if parent_object.can_act:
+		parent_object.move()
+		if parent_object.velocity.x != 0:
+			return walk_state
+		if Input.is_action_just_pressed("jump") and parent_object.is_on_floor():
+			return jump_state
+		if Input.is_action_just_pressed("meditate"):
+			return meditating_state
 	return null
 
 # Executed when recive a InputEvent.

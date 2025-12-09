@@ -111,7 +111,8 @@ shape = SubResource("CapsuleShape2D_hjeaj")
 position = Vector2(6, 4)
 sprite_frames = SubResource("SpriteFrames_8d6sf")
 
-[node name="Interactable" parent="." instance=ExtResource("5_8w72o")]
+[node name="Interactable" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("5_8w72o")]
+parent = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
 position = Vector2(0, 4)
