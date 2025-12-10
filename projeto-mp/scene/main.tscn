@@ -61,7 +61,7 @@ position = Vector2(1196, 332)
 [node name="Fase_4" parent="Fases" instance=ExtResource("4_brvut")]
 z_index = -5
 z_as_relative = false
-position = Vector2(1898, 204)
+position = Vector2(1899, 204)
 
 [node name="Fase_5" parent="Fases" instance=ExtResource("10_mswub")]
 z_index = -5
@@ -79,30 +79,32 @@ z_as_relative = false
 position = Vector2(3972, -288)
 
 [node name="Checkpoints" type="Node2D" parent="."]
+z_index = -6
+z_as_relative = false
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(270, 557)
+position = Vector2(272, 544)
 recording_time = 20.0
 
 [node name="checkpoint2" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(686, 445)
+position = Vector2(686, 432)
 recording_time = 15.0
 
 [node name="checkpoint3" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(1244, 445)
+position = Vector2(1244, 432)
 
 [node name="checkpoint4" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(1840, 444)
+position = Vector2(1840, 431)
 recording_tape_number = 2
 recording_time = 7.0
 
 [node name="checkpoint5" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(3086, 49)
+position = Vector2(3086, 36)
 
 [node name="checkpoint6" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(3543, 1)
+position = Vector2(3543, -12)
 recording_tape_number = 2
 
 [node name="checkpoint7" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(4017, 1)
+position = Vector2(4017, -12)
 recording_tape_number = 2
