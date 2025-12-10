@@ -34,7 +34,7 @@ bg_music_volume = 0.0
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(3031, 34)
+position = Vector2(1185, 425)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(1.5, 1.5)
@@ -53,21 +53,6 @@ z_index = -5
 z_as_relative = false
 position = Vector2(684, 444)
 
-[node name="Fase_3" parent="Fases" instance=ExtResource("7_of57s")]
-z_index = -5
-z_as_relative = false
-position = Vector2(1196, 332)
-
-[node name="Fase_4" parent="Fases" instance=ExtResource("4_brvut")]
-z_index = -5
-z_as_relative = false
-position = Vector2(1899, 204)
-
-[node name="Fase_5" parent="Fases" instance=ExtResource("10_mswub")]
-z_index = -5
-z_as_relative = false
-position = Vector2(2982, -240)
-
 [node name="Fase_6" parent="Fases" instance=ExtResource("11_hybxs")]
 z_index = -5
 z_as_relative = false
@@ -77,6 +62,21 @@ position = Vector2(3477, -288)
 z_index = -5
 z_as_relative = false
 position = Vector2(3972, -288)
+
+[node name="Fase_5" parent="Fases" instance=ExtResource("10_mswub")]
+z_index = -5
+z_as_relative = false
+position = Vector2(2982, -240)
+
+[node name="Fase_3" parent="Fases" instance=ExtResource("7_of57s")]
+z_index = -5
+z_as_relative = false
+position = Vector2(1196, 332)
+
+[node name="Fase_4" parent="Fases" instance=ExtResource("4_brvut")]
+z_index = -5
+z_as_relative = false
+position = Vector2(1899, 204)
 
 [node name="Checkpoints" type="Node2D" parent="."]
 z_index = -6
@@ -92,6 +92,7 @@ recording_time = 15.0
 
 [node name="checkpoint3" parent="Checkpoints" instance=ExtResource("5_0ha60")]
 position = Vector2(1244, 432)
+recording_time = 6.0
 
 [node name="checkpoint4" parent="Checkpoints" instance=ExtResource("5_0ha60")]
 position = Vector2(1840, 431)
