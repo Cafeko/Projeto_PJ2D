@@ -38,10 +38,12 @@ timer_box = NodePath("Control/InterruptorTimeBox")
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_01h30")
 animation = &"interruptor_off"
 
 [node name="Interactable" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("4_01h30")]
+position = Vector2(0, -8)
 collision_mask = 0
 parent = NodePath("..")
 
@@ -58,9 +60,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -15.0
-offset_top = -40.0
+offset_top = -48.0
 offset_right = 15.0
-offset_bottom = -15.0
+offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 2
 

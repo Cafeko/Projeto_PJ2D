@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://boj7wo8p32vi5" path="res://entities/caixa.tscn" id="4_t5ue0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5ue0"]
-size = Vector2(462, 423)
+size = Vector2(337, 380.5)
 
 [node name="fase_5" type="Node2D" node_paths=PackedStringArray("area_fase")]
 script = ExtResource("1_hu2y1")
@@ -18,7 +18,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(252, 266)
+position = Vector2(253.5, 287.25)
 shape = SubResource("RectangleShape2D_t5ue0")
 
 [node name="TileMap" type="TileMapLayer" parent="."]
@@ -26,10 +26,10 @@ tile_map_data = PackedByteArray("AAAOABIAAgAMAAIAAAAOABMAAgAMAAQAAAAOABQAAgAMAAQ
 tile_set = ExtResource("2_bfk36")
 
 [node name="caixa" parent="." instance=ExtResource("4_t5ue0")]
-position = Vector2(189, 278)
+position = Vector2(189, 279)
 
 [node name="Espinho" parent="." instance=ExtResource("3_t5ue0")]
-position = Vector2(247, 393)
+position = Vector2(247, 400)
 
 [node name="Espinho2" parent="." instance=ExtResource("3_t5ue0")]
-position = Vector2(262, 393)
+position = Vector2(262, 400)

@@ -21,10 +21,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h742u"]
-size = Vector2(16, 13)
+size = Vector2(14, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i82wh"]
-size = Vector2(16, 13)
+size = Vector2(14, 9)
 
 [node name="Keycard" type="RigidBody2D" node_paths=PackedStringArray("anim", "grabable") groups=["grabbable"]]
 z_index = 1
@@ -40,6 +40,7 @@ usable = false
 metadata/_custom_type_script = "uid://blrc8rn53qmbd"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.9, 0.9)
 sprite_frames = SubResource("SpriteFrames_pbcut")
 animation = &"keycard"
 

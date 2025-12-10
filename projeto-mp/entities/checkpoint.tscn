@@ -105,14 +105,16 @@ script = ExtResource("1_hjeaj")
 interactable = NodePath("Interactable")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_hjeaj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(6, 4)
+position = Vector2(7, -10)
+scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_8d6sf")
 
 [node name="Interactable" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("5_8w72o")]
+position = Vector2(0, -13)
 parent = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
@@ -125,10 +127,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -60.0
-offset_top = -100.0
-offset_right = 60.0
-offset_bottom = -20.0
+offset_left = -100.0
+offset_top = -117.0
+offset_right = 100.0
+offset_bottom = -27.0
 grow_horizontal = 2
 grow_vertical = 2
 
