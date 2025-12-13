@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkq348hg3jfi0"]
+[gd_scene load_steps=7 format=3 uid="uid://dkq348hg3jfi0"]
 
 [ext_resource type="PackedScene" uid="uid://dhd84utwqmyd8" path="res://Visual/info_box.tscn" id="1_v2qcx"]
 [ext_resource type="Script" uid="uid://d0yvg26i6b117" path="res://scripts/Visual/checkpoint_box.gd" id="2_ldpts"]
+[ext_resource type="Texture2D" uid="uid://l875380et8ki" path="res://Assets/sprites/invisible_block.png" id="3_hckbn"]
+[ext_resource type="Texture2D" uid="uid://dbwxfam54t7cy" path="res://Assets/sprites/A.png" id="5_boq4p"]
+[ext_resource type="Texture2D" uid="uid://cxgsroapl0mxu" path="res://Assets/sprites/D.png" id="6_s8as1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hckbn"]
 bg_color = Color(0.05490196, 0.05490196, 0.05490196, 0.78431374)
@@ -15,6 +18,7 @@ script = ExtResource("2_ldpts")
 pages_list = [NodePath("Control/StopPage"), NodePath("Control/RecordingPage"), NodePath("Control/PlayPage")]
 
 [node name="StopPage" type="VBoxContainer" parent="Control" index="0"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,12 +30,26 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hckbn")
 
-[node name="Title" type="Label" parent="Control/StopPage/PanelContainer" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/StopPage/PanelContainer" index="0"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/StopPage/PanelContainer/HBoxContainer" index="0"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_hckbn")
+
+[node name="Title" type="Label" parent="Control/StopPage/PanelContainer/HBoxContainer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 10
 text = "Stop Mode"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Control/StopPage/PanelContainer/HBoxContainer" index="2"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_s8as1")
 
 [node name="Label" type="Label" parent="Control/StopPage" index="1"]
 layout_mode = 2
@@ -55,12 +73,26 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hckbn")
 
-[node name="Title" type="Label" parent="Control/RecordingPage/PanelContainer" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/RecordingPage/PanelContainer" index="0"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/RecordingPage/PanelContainer/HBoxContainer" index="0"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("5_boq4p")
+
+[node name="Title" type="Label" parent="Control/RecordingPage/PanelContainer/HBoxContainer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 10
 text = "Record and Play Mode"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Control/RecordingPage/PanelContainer/HBoxContainer" index="2"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_s8as1")
 
 [node name="Label" type="Label" parent="Control/RecordingPage" index="1"]
 layout_mode = 2
@@ -97,12 +129,26 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hckbn")
 
-[node name="Title" type="Label" parent="Control/PlayPage/PanelContainer" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayPage/PanelContainer" index="0"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/PlayPage/PanelContainer/HBoxContainer" index="0"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("5_boq4p")
+
+[node name="Title" type="Label" parent="Control/PlayPage/PanelContainer/HBoxContainer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 10
 text = "Play Mode"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Control/PlayPage/PanelContainer/HBoxContainer" index="2"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_hckbn")
 
 [node name="Label" type="Label" parent="Control/PlayPage" index="1"]
 layout_mode = 2
