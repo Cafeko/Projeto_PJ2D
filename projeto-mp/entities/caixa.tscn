@@ -26,9 +26,11 @@ metadata/_custom_type_script = "uid://blrc8rn53qmbd"
 texture = ExtResource("2_ws6cs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_50p3q")
 
 [node name="Grabable" parent="." node_paths=PackedStringArray("object", "shape", "drop_object_sfx") instance=ExtResource("2_eultm")]
+visible = false
 rotation = -0.0018643067
 monitoring = true
 object = NodePath("..")
@@ -44,5 +46,8 @@ shape = SubResource("RectangleShape2D_eultm")
 stream = ExtResource("4_86ich")
 volume_db = 24.0
 bus = &"Efeios Sonoros"
+
+[node name="DustPoint" type="Marker2D" parent="."]
+position = Vector2(0, 7.5)
 
 [editable path="Grabable"]

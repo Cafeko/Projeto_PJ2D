@@ -56,6 +56,7 @@ func player_desativa_checkpoint():
 		_set_mode(modes.STOP)
 		_execute_mode()
 
+
 func set_recorder_time_speed(speed:float):
 	if recorder:
 		recorder.time_speed = speed
