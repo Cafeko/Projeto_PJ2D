@@ -83,7 +83,7 @@ z_index = -6
 z_as_relative = false
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("5_0ha60")]
-position = Vector2(272, 544)
+position = Vector2(276, 544)
 recording_time = 20.0
 
 [node name="checkpoint2" parent="Checkpoints" instance=ExtResource("5_0ha60")]

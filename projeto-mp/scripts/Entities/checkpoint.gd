@@ -7,10 +7,12 @@ class_name Checkpoint
 @export var recording_time : float = 10.0
 @export var frame_time : float = 0.01
 
-enum modes {PLAY, RECORD_AND_PLAY, STOP, INTERACTING}
-
 @onready var anim = $AnimatedSprite2D
 @onready var checkpoint_info_box : InfoBox = $Control/CheckpointBox
+@onready var interaction_icon : InteractionIcon = $InteractionIcon 
+
+enum modes {PLAY, RECORD_AND_PLAY, STOP, INTERACTING}
+
 var recorder : Recorder
 var ativado = false
 var mode : modes = modes.STOP
@@ -115,6 +117,7 @@ func _execute_mode():
 
 # Inicia processo de inteção com o checkpoint, impede que player possa agir.
 func _start_interacting():
+	interaction_icon.set_visibility(false)
 	interacting_input_delay = 0.2
 	player.set_can_act(false)
 	checkpoint_info_box.set_visibility(true)
@@ -142,6 +145,7 @@ func _interacting():
 # Finaliza a interação permitindo que o player se mova e colocando o checkpoint
 # no modo selecionado.
 func _end_interacting():
+	interaction_icon.set_visibility(true)
 	_set_mode(selected_modes_list[selected_mode_index])
 	_execute_mode()
 	checkpoint_info_box.set_visibility(false)
