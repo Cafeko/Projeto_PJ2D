@@ -103,11 +103,13 @@ func _execute_mode():
 		recorder.stop_playing()
 		recorder.prepare_to_play()
 		ui.display_recording_timer()
+		ui.display_play_texture()
 		ui.update_recording_timer(recorder.get_current_record_time())
 	elif mode == modes.RECORD_AND_PLAY:
 		recorder.prepare_to_record()
 		recorder.prepare_to_play()
 		ui.display_recording_timer()
+		ui.display_rec_texture()
 		ui.update_recording_timer(recorder.get_current_record_time())
 	elif mode == modes.STOP:
 		recorder.stop_recording()

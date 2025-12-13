@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://tsvnbubb6bg4"]
+[gd_scene load_steps=60 format=3 uid="uid://tsvnbubb6bg4"]
 
 [ext_resource type="Script" uid="uid://b0f3mbd042g1f" path="res://scripts/Entities/player.gd" id="1_merdl"]
 [ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://Assets/sprites/1 - Penguin/Idle (16 x 16).png" id="2_b0kkn"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://m63k3widbfml" path="res://scripts/Player_States/walk.gd" id="4_6jj0l"]
 [ext_resource type="Script" uid="uid://dp3h2ot6f2eih" path="res://scripts/Player_States/jump.gd" id="5_ua6mu"]
 [ext_resource type="Script" uid="uid://bddx73ca1yvhg" path="res://scripts/Player_States/dead.gd" id="6_xy0x1"]
+[ext_resource type="AudioStream" uid="uid://d1nd3q0wi01qx" path="res://sounds/drop_object_sfx.wav" id="7_1n8aq"]
 [ext_resource type="AudioStream" uid="uid://85ms4j8q5xmk" path="res://sounds/die_sfx.wav" id="8_q0i8f"]
 [ext_resource type="Script" uid="uid://biaa373rum5gp" path="res://scripts/Player_States/meditating.gd" id="9_0i614"]
 [ext_resource type="Texture2D" uid="uid://d4mox4ihiwunv" path="res://Assets/16x16 2D Platformer - Programmer Art/Animations/Walking Enemy/Walking Enemy - Death.png" id="10_oprnr"]
@@ -356,6 +357,12 @@ metadata/_custom_type_script = "uid://b8guly7wlabi7"
 
 [node name="jump_sfx" type="AudioStreamPlayer" parent="StateMachine/Jump"]
 stream = ExtResource("13_kdgjc")
+bus = &"Efeios Sonoros"
+
+[node name="land_sfx" type="AudioStreamPlayer" parent="StateMachine/Jump"]
+stream = ExtResource("7_1n8aq")
+volume_db = 1.0
+pitch_scale = 2.5
 bus = &"Efeios Sonoros"
 
 [node name="Dead" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "respawn_timer")]
