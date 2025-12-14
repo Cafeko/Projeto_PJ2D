@@ -32,7 +32,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lajxq"]
-size = Vector2(20, 27)
+size = Vector2(24, 24)
 
 [node name="CardReader" type="Node2D" node_paths=PackedStringArray("anim", "detection_area") groups=["card_readers"]]
 z_index = -1
@@ -58,5 +58,4 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 light_mask = 5
 visibility_layer = 2
-position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_lajxq")

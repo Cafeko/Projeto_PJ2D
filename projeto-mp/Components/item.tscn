@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://blrc8rn53qmbd" path="res://scripts/Components/item.gd" id="1_cbn0a"]
 
 [node name="Item" type="RigidBody2D"]
+z_index = 1
+z_as_relative = false
 collision_layer = 16
 lock_rotation = true
 script = ExtResource("1_cbn0a")

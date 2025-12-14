@@ -30,6 +30,7 @@ visible = false
 shape = SubResource("RectangleShape2D_50p3q")
 
 [node name="Grabable" parent="." node_paths=PackedStringArray("object", "shape", "drop_object_sfx") instance=ExtResource("2_eultm")]
+visible = false
 rotation = -0.0018643067
 monitoring = true
 object = NodePath("..")
@@ -38,11 +39,15 @@ small_object = false
 drop_object_sfx = NodePath("DropObjectSFX")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Grabable"]
+position = Vector2(0.0009316206, 2.470333e-07)
 shape = SubResource("RectangleShape2D_eultm")
 
 [node name="DropObjectSFX" type="AudioStreamPlayer" parent="Grabable"]
 stream = ExtResource("4_86ich")
 volume_db = 24.0
 bus = &"Efeios Sonoros"
+
+[node name="DustPoint" type="Marker2D" parent="."]
+position = Vector2(0, 7.5)
 
 [editable path="Grabable"]

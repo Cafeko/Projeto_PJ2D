@@ -1,6 +1,8 @@
 extends Area2D
 class_name Interactable
 
+@export var parent : Node2D
+
 # --- Signals ---------------------------------------------------------------- #
 signal interaction
 # ---------------------------------------------------------------------------- #

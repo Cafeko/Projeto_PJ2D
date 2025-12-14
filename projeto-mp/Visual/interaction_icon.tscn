@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2b2svfr7fjj0"]
+
+[ext_resource type="Script" uid="uid://bf13mxtv1c2yx" path="res://scripts/Visual/interaction_icon.gd" id="1_vxrs3"]
+[ext_resource type="Texture2D" uid="uid://csueb5hn7khbc" path="res://Assets/sprites/interaction_icon(neutro).png" id="1_yfbqf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vxrs3"]
+radius = 5.0
+height = 18.0
+
+[node name="InteractionIcon" type="Node2D"]
+script = ExtResource("1_vxrs3")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_vxrs3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(7.9897045e-06, 0.9115097, 0.615361, 0.78431374)
+position = Vector2(0, -16)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_yfbqf")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

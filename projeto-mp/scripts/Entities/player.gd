@@ -37,13 +37,14 @@ func _physics_process(delta: float):
 	if state_machine.get_current_state() == "Dead":
 		return
 	
-	fit_to_look_side()
-	
 	gravity(delta)
 	
 	if can_act:
+		fit_to_look_side()
 		interactions_and_grab()
 		move_and_slide()
+	else:
+		state_machine.go_to_state.emit("Idle")
 	
 	did_interaction_end(delta)
 	
@@ -72,12 +73,14 @@ func gravity(delta):
 func interactions_and_grab():
 	if state_machine.get_current_state() != "Meditating":
 		if Input.is_action_just_pressed("interact") and state_machine.get_current_state() != "Jump":
-			if interactor.get_interactable_target():
+			if graber.is_holding() or graber.has_grabable():
+				graber.grab_and_drop()
+			elif interactor.get_interactable_target():
 				var kargs := {}
+				if is_instance_of(interactor.get_interactable_target_parent(), Checkpoint):
+					kargs = {"player": self}
 				interactor.do_interaction(kargs)
 				did_interaction()
-			elif graber.is_holding() or graber.has_grabable():
-				graber.grab_and_drop()
 		if Input.is_action_just_pressed("use") and graber.is_holding():
 			var item = graber.get_held_grabable().get_object()
 			if is_instance_of(item, Item) and item.is_usable():

@@ -207,6 +207,21 @@ func get_current_record_time():
 func player_died():
 	stop_playing()
 	finalize_recording()
+
+
+# Retorna quantas gravações tem atualmente.
+func get_recording_tapes_list_len():
+	return len(recording_tapes)
+
+
+# Retorna o numero maximo de gravações que podem ser feitas.
+func get_max_record_tapes():
+	return max_record_tapes
+
+
+# Retorna o tempo maximo que as gravações podem ter.
+func get_max_record_time():
+	return max_record_time
 # ---------------------------------------------------------------------------- #
 # --- Internal Funcs --------------------------------------------------------- #
 # Cria e prepara o timer.

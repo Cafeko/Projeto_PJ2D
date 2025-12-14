@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://tsvnbubb6bg4"]
+[gd_scene load_steps=60 format=3 uid="uid://tsvnbubb6bg4"]
 
 [ext_resource type="Script" uid="uid://b0f3mbd042g1f" path="res://scripts/Entities/player.gd" id="1_merdl"]
 [ext_resource type="Texture2D" uid="uid://bax86e83wjcuo" path="res://Assets/sprites/1 - Penguin/Idle (16 x 16).png" id="2_b0kkn"]
@@ -10,11 +10,60 @@
 [ext_resource type="Script" uid="uid://m63k3widbfml" path="res://scripts/Player_States/walk.gd" id="4_6jj0l"]
 [ext_resource type="Script" uid="uid://dp3h2ot6f2eih" path="res://scripts/Player_States/jump.gd" id="5_ua6mu"]
 [ext_resource type="Script" uid="uid://bddx73ca1yvhg" path="res://scripts/Player_States/dead.gd" id="6_xy0x1"]
+[ext_resource type="AudioStream" uid="uid://d1nd3q0wi01qx" path="res://sounds/drop_object_sfx.wav" id="7_1n8aq"]
 [ext_resource type="AudioStream" uid="uid://85ms4j8q5xmk" path="res://sounds/die_sfx.wav" id="8_q0i8f"]
 [ext_resource type="Script" uid="uid://biaa373rum5gp" path="res://scripts/Player_States/meditating.gd" id="9_0i614"]
+[ext_resource type="Texture2D" uid="uid://d4mox4ihiwunv" path="res://Assets/16x16 2D Platformer - Programmer Art/Animations/Walking Enemy/Walking Enemy - Death.png" id="10_oprnr"]
 [ext_resource type="PackedScene" uid="uid://whdgu748wqwy" path="res://Components/graber.tscn" id="11_xakct"]
+[ext_resource type="Texture2D" uid="uid://nvice24t1ryc" path="res://Assets/16x16 2D Platformer - Programmer Art/Animations/Walking Enemy/Walking Enemy - Idle.png" id="12_cgp7q"]
 [ext_resource type="PackedScene" uid="uid://ch8sgooa863fd" path="res://Components/interactor.tscn" id="12_dchgp"]
 [ext_resource type="AudioStream" uid="uid://8qtwkrx3y5rp" path="res://sounds/jump_sfx.wav" id="13_kdgjc"]
+[ext_resource type="Texture2D" uid="uid://dh3npd4q26jpv" path="res://Assets/16x16 2D Platformer - Programmer Art/Animations/Walking Enemy/Walking Enemy - Jump.png" id="14_1n8aq"]
+[ext_resource type="Texture2D" uid="uid://b0emnn3dn8uhd" path="res://Assets/16x16 2D Platformer - Programmer Art/Animations/Walking Enemy/Walking Enemy - Move.png" id="16_28s6d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rie4"]
+atlas = ExtResource("10_oprnr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dp3pk"]
+atlas = ExtResource("10_oprnr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgp7q"]
+atlas = ExtResource("10_oprnr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n8aq"]
+atlas = ExtResource("10_oprnr")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28s6d"]
+atlas = ExtResource("10_oprnr")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cicqb"]
+atlas = ExtResource("12_cgp7q")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj0ki"]
+atlas = ExtResource("12_cgp7q")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fruft"]
+atlas = ExtResource("12_cgp7q")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slxql"]
+atlas = ExtResource("12_cgp7q")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evlff"]
+atlas = ExtResource("12_cgp7q")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7db53"]
+atlas = ExtResource("12_cgp7q")
+region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e4p34"]
 atlas = ExtResource("2_b0kkn")
@@ -36,9 +85,57 @@ region = Rect2(48, 0, 16, 16)
 atlas = ExtResource("2_b0kkn")
 region = Rect2(64, 0, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_plaij"]
+atlas = ExtResource("14_1n8aq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib8tg"]
+atlas = ExtResource("14_1n8aq")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcwxb"]
+atlas = ExtResource("14_1n8aq")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2i2q"]
+atlas = ExtResource("14_1n8aq")
+region = Rect2(48, 0, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_q0i8f"]
 atlas = ExtResource("3_rfe5m")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdqif"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egchw"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykqge"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sn2x3"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y10x8"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sc42"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t50q"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qcl2"]
+atlas = ExtResource("16_28s6d")
+region = Rect2(112, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i623q"]
 atlas = ExtResource("3_e4p34")
@@ -68,11 +165,54 @@ region = Rect2(80, 0, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_8rie4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dp3pk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgp7q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n8aq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28s6d")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_qly61")
 }],
 "loop": true,
-"name": &"die",
+"name": &"die_old",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cicqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj0ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fruft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slxql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_evlff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7db53")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -91,16 +231,62 @@ animations = [{
 "texture": SubResource("AtlasTexture_6nm46")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"idle_old",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plaij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ib8tg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcwxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2i2q")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q0i8f")
 }],
 "loop": true,
-"name": &"jump",
+"name": &"jump_old",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdqif")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egchw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykqge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sn2x3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y10x8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sc42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0t50q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qcl2")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -122,7 +308,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_kdgjc")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"walk_old",
 "speed": 12.0
 }]
 
@@ -133,7 +319,7 @@ height = 16.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qly61"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdgjc"]
-size = Vector2(15, 16)
+size = Vector2(12, 16)
 
 [node name="player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "anim", "graber", "interactor") groups=["player"]]
 collision_layer = 2
@@ -171,6 +357,12 @@ metadata/_custom_type_script = "uid://b8guly7wlabi7"
 
 [node name="jump_sfx" type="AudioStreamPlayer" parent="StateMachine/Jump"]
 stream = ExtResource("13_kdgjc")
+bus = &"Efeios Sonoros"
+
+[node name="land_sfx" type="AudioStreamPlayer" parent="StateMachine/Jump"]
+stream = ExtResource("7_1n8aq")
+volume_db = 1.0
+pitch_scale = 2.5
 bus = &"Efeios Sonoros"
 
 [node name="Dead" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "respawn_timer")]

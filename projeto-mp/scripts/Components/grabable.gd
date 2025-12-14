@@ -31,6 +31,8 @@ func _on_object_body_entered(body: Node2D):
 				first_sound = false
 			else:
 				drop_object_sfx.play()
+				if object.has_method("emit_collision_particle"):
+					object.emit_collision_particle()
 # ---------------------------------------------------------------------------- #
 # --- Funcs ------------------------------------------------------------------ #
 # Retorna se o grabable é pequeno ou não.
