@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://jeur56qy0g1j"]
+[gd_scene load_steps=5 format=3 uid="uid://jeur56qy0g1j"]
 
 [ext_resource type="PackedScene" uid="uid://csfhy6xsl4mnq" path="res://UserInterface/recording_timer.tscn" id="1_ax1bc"]
 [ext_resource type="Script" uid="uid://ci8owqrgoeqjl" path="res://scripts/UserInterface/ui.gd" id="1_wrtwv"]
 [ext_resource type="PackedScene" uid="uid://bjug0qvvuqpig" path="res://Visual/screen_effect.tscn" id="3_evv07"]
+[ext_resource type="PackedScene" uid="uid://dju8swfwe2j5t" path="res://Visual/transition_rect.tscn" id="4_e05nq"]
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("recording_timer", "screen_effect")]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("recording_timer", "screen_effect", "transition_rect")]
 script = ExtResource("1_wrtwv")
 recording_timer = NodePath("RecordingTimer")
 screen_effect = NodePath("ScreenEffect")
+transition_rect = NodePath("TransitionRect")
 
 [node name="RecordingTimer" parent="." instance=ExtResource("1_ax1bc")]
+
+[node name="TransitionRect" parent="." instance=ExtResource("4_e05nq")]
 
 [node name="ScreenEffect" parent="." instance=ExtResource("3_evv07")]

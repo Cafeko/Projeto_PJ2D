@@ -19,6 +19,7 @@ func enter():
 	if parent_object.graber.is_holding():
 		parent_object.graber.drop_object()
 	global.player_died.emit()
+	global.ui.transition_fade_out()
 	respawn_timer.start()
 
 # Executes at a rate of 60 fps.
@@ -33,7 +34,7 @@ func process_input(_event : InputEvent):
 
 # Executed when exiting in state.
 func exit():
-	pass
+	global.ui.transition_fade_in()
 
 func _on_respawn_timer_timeout():
 	#print("Revivendo no checkpoint!")

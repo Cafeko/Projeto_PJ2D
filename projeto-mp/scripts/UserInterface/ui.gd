@@ -3,6 +3,7 @@ extends CanvasLayer
 # --- Vars ------------------------------------------------------------------- #
 @export var recording_timer : Control
 @export var screen_effect : ScreenEffect
+@export var transition_rect : ColorRect
 # ---------------------------------------------------------------------------- #
 # --- Ready ------------------------------------------------------------------ #
 func _ready():
@@ -44,4 +45,16 @@ func screen_effect_normal():
 # Muda efeito para o modo rapido.
 func screen_effect_fast():
 	screen_effect.set_screen_fast()
+
+
+# Toca o efeito de fade in na tela.
+func transition_fade_in():
+	if transition_rect.has_method("play_fade_in"):
+		transition_rect.play_fade_in()
+
+
+# Toca o efeito de fade out na tela.
+func transition_fade_out():
+	if transition_rect.has_method("play_fade_out"):
+		transition_rect.play_fade_out()
 # ---------------------------------------------------------------------------- #
