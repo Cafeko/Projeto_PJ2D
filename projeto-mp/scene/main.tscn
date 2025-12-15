@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://1wlk6wrii221"]
+[gd_scene load_steps=15 format=3 uid="uid://1wlk6wrii221"]
 
 [ext_resource type="PackedScene" uid="uid://jeur56qy0g1j" path="res://UserInterface/ui.tscn" id="1_0ha60"]
 [ext_resource type="PackedScene" uid="uid://bhsftsenqsfre" path="res://Components/gerenciador_fase.tscn" id="2_brvut"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cbbuksucu31gg" path="res://Fases/fase_5.tscn" id="10_mswub"]
 [ext_resource type="PackedScene" uid="uid://did21t6lfr3lv" path="res://Fases/fase_3.tscn" id="11_hybxs"]
 [ext_resource type="PackedScene" uid="uid://7yfgvc2lhqm3" path="res://Fases/fase_4.tscn" id="12_v2gmf"]
+[ext_resource type="PackedScene" uid="uid://co2a312kyi8uu" path="res://entities/end_flag.tscn" id="14_hybxs"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(-217, -28)
@@ -29,12 +30,13 @@ sfx_volume = 0.0
 bg_music_volume = 0.0
 
 [node name="UI" parent="." instance=ExtResource("1_0ha60")]
+visible = false
 
 [node name="GerenciadorFase" parent="." node_paths=PackedStringArray("fases_parent") instance=ExtResource("2_brvut")]
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(232, 544)
+position = Vector2(230, 547)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(1.5, 1.5)
@@ -109,3 +111,6 @@ recording_time = 6.0
 position = Vector2(3232, 447)
 recording_tape_number = 2
 recording_time = 7.0
+
+[node name="EndFlag" parent="Checkpoints" instance=ExtResource("14_hybxs")]
+position = Vector2(3234, 84)

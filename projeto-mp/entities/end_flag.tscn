@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://co2a312kyi8uu"]
+
+[ext_resource type="Script" uid="uid://cpk4w88n65jmi" path="res://scripts/Entities/end_flag.gd" id="1_indrr"]
+[ext_resource type="Texture2D" uid="uid://dufvsrdlcl7aw" path="res://Assets/sprites/End_Flag.png" id="1_o3bbl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_indrr"]
+atlas = ExtResource("1_o3bbl")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lyro"]
+atlas = ExtResource("1_o3bbl")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mquum"]
+atlas = ExtResource("1_o3bbl")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewxkh"]
+atlas = ExtResource("1_o3bbl")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilrqs"]
+atlas = ExtResource("1_o3bbl")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_epndl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_indrr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2lyro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mquum")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewxkh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilrqs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aseqb"]
+radius = 2.0
+height = 8.0
+
+[node name="EndFlag" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_indrr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(7, -1)
+scale = Vector2(1.2, 1.2)
+sprite_frames = SubResource("SpriteFrames_epndl")
+frame_progress = 0.44365788
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 5)
+shape = SubResource("CapsuleShape2D_aseqb")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
