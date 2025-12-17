@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://65h8fdenwlx8"]
+[gd_scene load_steps=22 format=3 uid="uid://65h8fdenwlx8"]
 
 [ext_resource type="Script" uid="uid://blggesj5efadr" path="res://scripts/Entities/checkpoint.gd" id="1_hjeaj"]
 [ext_resource type="Texture2D" uid="uid://bmxmxx2ne6baj" path="res://Assets/16x16 2D Platformer - Programmer Art/Tileset/Raised Flag.png" id="3_6wqo1"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dpk8x8ormxb7i" path="res://Components/interactable.tscn" id="5_8w72o"]
 [ext_resource type="PackedScene" uid="uid://dkq348hg3jfi0" path="res://Visual/checkpoint_box.tscn" id="5_nos5s"]
 [ext_resource type="PackedScene" uid="uid://c2b2svfr7fjj0" path="res://Visual/interaction_icon.tscn" id="6_nos5s"]
+[ext_resource type="AudioStream" uid="uid://csbvo6xwtmh3m" path="res://sounds/Checkpoint_sound.mp3" id="7_1e67b"]
+[ext_resource type="AudioStream" uid="uid://dq5xhippv5gae" path="res://sounds/Checkpoint_menu_sound.mp3" id="8_2ivja"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hjeaj"]
 radius = 5.0
@@ -143,6 +145,14 @@ grow_vertical = 1
 
 [node name="InteractionIcon" parent="." instance=ExtResource("6_nos5s")]
 position = Vector2(0, 4)
+
+[node name="Checkpoint_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_1e67b")
+volume_db = -10.0
+
+[node name="Checkpoint_menu_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_2ivja")
+volume_db = -15.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="interaction" from="Interactable" to="." method="_on_interaction"]

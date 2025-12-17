@@ -10,6 +10,8 @@ class_name Checkpoint
 @onready var anim = $AnimatedSprite2D
 @onready var checkpoint_info_box : InfoBox = $Control/CheckpointBox
 @onready var interaction_icon : InteractionIcon = $InteractionIcon 
+@onready var checkpoint_sfx : AudioStreamPlayer = $Checkpoint_sfx
+@onready var checkpoint_menu_sfx : AudioStreamPlayer = $Checkpoint_menu_sfx
 
 enum modes {PLAY, RECORD_AND_PLAY, STOP, INTERACTING}
 
@@ -47,6 +49,7 @@ func set_ativado(valor:bool):
 func player_ativa_checkpoint(p:Player):
 	p.update_checkpoint(self)
 	if not ativado:
+		checkpoint_sfx.play()
 		_create_recorder(p)
 		set_ativado(true)
 
@@ -122,6 +125,7 @@ func _start_interacting():
 	interaction_icon.set_visibility(false)
 	interacting_input_delay = 0.2
 	player.set_can_act(false)
+	checkpoint_menu_sfx.play()
 	checkpoint_info_box.set_visibility(true)
 	checkpoint_info_box.set_page_visible(selected_mode_index)
 	checkpoint_info_box.update_infos(recorder.get_recording_tapes_list_len(),
@@ -135,12 +139,17 @@ func _interacting():
 		_end_interacting()
 	if Input.is_action_just_pressed("left"):
 		selected_mode_index -= 1
+		if selected_mode_index < 0:
+			selected_mode_index = 0
+		else:
+			checkpoint_menu_sfx.play()
 	elif Input.is_action_just_pressed("right"):
 		selected_mode_index += 1
-	if selected_mode_index < 0:
-		selected_mode_index = 0
-	elif selected_mode_index >= len(selected_modes_list):
-		selected_mode_index = len(selected_modes_list) - 1
+		if selected_mode_index >= len(selected_modes_list):
+			selected_mode_index = len(selected_modes_list) - 1
+		else:
+			checkpoint_menu_sfx.play()
+	
 	checkpoint_info_box.set_page_visible(selected_mode_index)
 
 
@@ -150,6 +159,7 @@ func _end_interacting():
 	interaction_icon.set_visibility(true)
 	_set_mode(selected_modes_list[selected_mode_index])
 	_execute_mode()
+	checkpoint_menu_sfx.play()
 	checkpoint_info_box.set_visibility(false)
 	player.set_can_act(true)
 # ---------------------------------------------------------------------------- #
