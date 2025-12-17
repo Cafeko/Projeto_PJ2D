@@ -282,12 +282,6 @@ func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 	copy.play_animation(current_data["animation"])
 	# Muda direção que a copia está olhando.
 	copy.flip(current_data["flip_h"])
-	# Agarra objetos:
-	if len(next_data.keys()) > 0:
-		if current_data["is_holding"] == false and next_data["is_holding"] == true:
-			copy.grab()
-		elif current_data["is_holding"] == true and next_data["is_holding"] == false:
-			copy.drop()
 	if current_data["interacted"] == true:
 		copy.interact()
 	# Detecta impedimentos:
@@ -301,6 +295,15 @@ func _copy_act(copy: PlayerCopy, current_data:Dictionary, next_data:Dictionary):
 			return false
 	else:
 		current_error_tolerance["dead"] = 0
+	# Agarra objetos:
+	if len(next_data.keys()) > 0:
+		if current_data["is_holding"] == false and next_data["is_holding"] == true:
+			copy.grab()
+		elif current_data["is_holding"] == true and next_data["is_holding"] == false:
+			if copy.is_dead() or next_data["state"] == "Dead":
+				copy.force_drop()
+			else:
+				copy.drop()
 	# Detecta se está flutuando.
 	if current_data["on_floor"] == true and copy.is_in_floor() == false:
 		current_error_tolerance["floating"] += 1

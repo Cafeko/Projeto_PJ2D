@@ -36,7 +36,7 @@ visible = false
 fases_parent = NodePath("../Fases")
 
 [node name="player" parent="." instance=ExtResource("2_wp4xf")]
-position = Vector2(230, 547)
+position = Vector2(229, 547)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(1.5, 1.5)
