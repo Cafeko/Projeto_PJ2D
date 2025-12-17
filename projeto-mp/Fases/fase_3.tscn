@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ijwyvk26va8p" path="res://entities/laser_big.tscn" id="5_canpi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5v368"]
-size = Vector2(461, 420)
+size = Vector2(407, 420)
 
 [node name="Fase_31" type="Node2D" node_paths=PackedStringArray("area_fase")]
 script = ExtResource("1_0f03c")
@@ -15,12 +15,11 @@ area_fase = NodePath("Area2D")
 metadata/_custom_type_script = "uid://b8qhx4vlxev4c"
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(248.5, 299)
+position = Vector2(221.5, 299)
 shape = SubResource("RectangleShape2D_5v368")
 
 [node name="TileMap" type="TileMap" parent="."]

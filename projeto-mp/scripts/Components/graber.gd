@@ -15,6 +15,7 @@ var direction : float = 1
 var grabbable_object : Grabable
 var held_object : Grabable
 var update_position : bool = true
+var temp_holder : Grabable = null
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 # Called when the node enters the scene tree for the first time.
@@ -64,7 +65,7 @@ func drop_object():
 		return
 	set_held_object_position(positions.DROP)
 	held_object.object.set_deferred("freeze", false)
-	remove_collision_exception()
+	held_object.object.remove_collision_exception_with(graber_object)
 	grabbable_object = held_object
 	held_object = null
 
@@ -74,15 +75,15 @@ func force_drop():
 	if not held_object:
 		return
 	held_object.object.set_deferred("freeze", false)
+	temp_holder = held_object
+	grabbable_object = held_object
+	held_object = null
 	_timed_force_drop()
 
 func _timed_force_drop():
 	update_position = false
 	collision_timer.start()
 
-func remove_collision_exception():
-	if held_object:
-		held_object.object.remove_collision_exception_with(graber_object)
 
 # Atualiza posição do objeto agarrado de acordo com seu tamanho.
 func _update_held_object_position():
@@ -199,8 +200,8 @@ func _on_area_exited(area):
 		grabbable_object = null
 
 func _on_collision_timer_timeout() -> void:
-	remove_collision_exception()
-	grabbable_object = held_object
-	held_object = null
+	if temp_holder:
+		temp_holder.object.remove_collision_exception_with(graber_object)
+		temp_holder = null
 	update_position = true
 # ---------------------------------------------------------------------------- #
