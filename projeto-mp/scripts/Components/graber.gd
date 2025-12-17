@@ -7,12 +7,14 @@ class_name Graber
 @export var small_object_position : Marker2D
 @export var drop_object_position : Marker2D
 @export var graber_object : CharacterBody2D
+@export var collision_timer : Timer
 
 enum positions {SMALL, BIG, DROP}
 
 var direction : float = 1
 var grabbable_object : Grabable
 var held_object : Grabable
+var update_position : bool = true
 # ---------------------------------------------------------------------------- #
 # --- Ready and Physics Process ---------------------------------------------- #
 # Called when the node enters the scene tree for the first time.
@@ -62,13 +64,30 @@ func drop_object():
 		return
 	set_held_object_position(positions.DROP)
 	held_object.object.set_deferred("freeze", false)
-	held_object.object.remove_collision_exception_with(graber_object)
+	remove_collision_exception()
 	grabbable_object = held_object
 	held_object = null
 
 
+# Força o drop do objeto na posição que ele está.
+func force_drop():
+	if not held_object:
+		return
+	held_object.object.set_deferred("freeze", false)
+	_timed_force_drop()
+
+func _timed_force_drop():
+	update_position = false
+	collision_timer.start()
+
+func remove_collision_exception():
+	if held_object:
+		held_object.object.remove_collision_exception_with(graber_object)
+
 # Atualiza posição do objeto agarrado de acordo com seu tamanho.
 func _update_held_object_position():
+	if not update_position:
+		return
 	if not held_object:
 		return
 	if held_object.is_small():
@@ -178,4 +197,10 @@ func _on_area_entered(area):
 func _on_area_exited(area):
 	if area == grabbable_object:
 		grabbable_object = null
+
+func _on_collision_timer_timeout() -> void:
+	remove_collision_exception()
+	grabbable_object = held_object
+	held_object = null
+	update_position = true
 # ---------------------------------------------------------------------------- #

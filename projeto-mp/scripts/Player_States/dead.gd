@@ -17,7 +17,7 @@ func enter():
 	die_sfx.play()
 	parent_object.velocity = Vector2.ZERO
 	if parent_object.graber.is_holding():
-		parent_object.graber.drop_object()
+		parent_object.graber.force_drop()
 	global.player_died.emit()
 	global.ui.transition_fade_out()
 	respawn_timer.start()

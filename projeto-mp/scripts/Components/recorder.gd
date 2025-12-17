@@ -183,7 +183,7 @@ func _play():
 				# Deleta copia.
 				player_copy_list[i] = null
 				if copy.is_grabing():
-					copy.drop()
+					copy.force_drop()
 				copy.queue_free()
 
 
@@ -251,7 +251,7 @@ func _clear_player_copy_list():
 	for copy in player_copy_list:
 		if copy:
 			if copy.is_grabing():
-					copy.drop()
+					copy.force_drop()
 			copy.queue_free()
 	player_copy_list = []
 

@@ -63,6 +63,7 @@ func is_dead():
 # Executada quando algo faz ele morrer.
 func die():
 	dead = true
+	force_drop()
 
 
 # Faz copia agarrar objeto.
@@ -73,6 +74,10 @@ func grab():
 # Faz copia soltar objeto.
 func drop():
 	graber.drop_object()
+
+
+func force_drop():
+	graber.force_drop()
 
 
 # Retorna se copia está agarrando ou não.
